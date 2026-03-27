@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Odins.ai - Brand Guidelines</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: #262625;
+    background-color: #fffbf9;
+    line-height: 1.6;
+  }
+
+  /* Page container */
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 80px 40px;
+  }
+
+  /* Header */
+  .brand-header {
+    text-align: center;
+    margin-bottom: 80px;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(38, 38, 37, 0.1);
+  }
+
+  .brand-header h1 {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .brand-header p {
+    font-size: 18px;
+    color: rgba(38, 38, 37, 0.6);
+    font-weight: 400;
+  }
+
+  /* Section styles */
+  .section {
+    margin-bottom: 72px;
+  }
+
+  .section-label {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #1d8675;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .section-desc {
+    font-size: 16px;
+    color: rgba(38, 38, 37, 0.65);
+    margin-bottom: 40px;
+    max-width: 600px;
+  }
+
+  /* Color palette */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .color-card {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(38, 38, 37, 0.08);
+    background: #fff;
+  }
+
+  .color-swatch {
+    height: 120px;
+    position: relative;
+  }
+
+  .color-info {
+    padding: 16px;
+  }
+
+  .color-name {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 2px;
+  }
+
+  .color-role {
+    font-size: 13px;
+    color: rgba(38, 38, 37, 0.5);
+    margin-bottom: 8px;
+  }
+
+  .color-hex {
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'DM Sans', monospace;
+    color: rgba(38, 38, 37, 0.75);
+  }
+
+  /* Typography section */
+  .type-specimen {
+    margin-bottom: 36px;
+    padding: 32px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid rgba(38, 38, 37, 0.08);
+  }
+
+  .type-specimen-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: rgba(38, 38, 37, 0.4);
+    margin-bottom: 12px;
+  }
+
+  .type-h1 {
+    font-size: 54px;
+    font-weight: 700;
+    letter-spacing: -3.24px;
+    line-height: 1.1;
+    margin-bottom: 4px;
+  }
+
+  .type-h2 {
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: -1.35px;
+    line-height: 1.15;
+    margin-bottom: 4px;
+  }
+
+  .type-h3 {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.9px;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .type-h4 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.6px;
+    line-height: 1.25;
+    margin-bottom: 4px;
+  }
+
+  .type-body {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: rgba(38, 38, 37, 0.8);
+  }
+
+  .type-meta {
+    font-size: 13px;
+    color: rgba(38, 38, 37, 0.4);
+    margin-top: 6px;
+  }
+
+  /* Weight specimens */
+  .weight-row {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(38, 38, 37, 0.06);
+  }
+
+  .weight-row:last-child {
+    border-bottom: none;
+  }
+
+  .weight-label {
+    font-size: 13px;
+    color: rgba(38, 38, 37, 0.4);
+    min-width: 120px;
+    flex-shrink: 0;
+  }
+
+  .weight-sample {
+    font-size: 28px;
+    letter-spacing: -0.5px;
+  }
+
+  /* Buttons section */
+  .button-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .button-example {
+    text-align: center;
+  }
+
+  .button-example-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: rgba(38, 38, 37, 0.4);
+    margin-bottom: 12px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 24px;
+    text-decoration: none;
+    border-radius: 100px;
+    padding: 14px 24px;
+    min-width: 150px;
+    height: 54px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .btn--primary {
+    background-color: #1d8675;
+    color: #FFFFFF;
+    border: none;
+  }
+
+  .btn--primary:hover {
+    background-color: #166b5c;
+  }
+
+  .btn--secondary {
+    background-color: transparent;
+    color: #262625;
+    border: 1px solid #262625;
+  }
+
+  .btn--secondary:hover {
+    background-color: rgba(38, 38, 37, 0.05);
+  }
+
+  .btn--dark-bg {
+    background-color: transparent;
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .button-spec {
+    font-size: 13px;
+    color: rgba(38, 38, 37, 0.4);
+    margin-top: 10px;
+  }
+
+  /* Specs table */
+  .specs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .spec-card {
+    padding: 20px 24px;
+    border-radius: 12px;
+    background: #fff;
+    border: 1px solid rgba(38, 38, 37, 0.08);
+  }
+
+  .spec-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: rgba(38, 38, 37, 0.4);
+    margin-bottom: 6px;
+  }
+
+  .spec-value {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  /* Dark preview section */
+  .dark-preview {
+    background-color: #262625;
+    border-radius: 16px;
+    padding: 48px;
+    margin-top: 40px;
+  }
+
+  .dark-preview .section-label {
+    color: #1d8675;
+  }
+
+  .dark-preview h3 {
+    color: #FFFFFF;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.9px;
+    margin-bottom: 8px;
+  }
+
+  .dark-preview p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 15px;
+    margin-bottom: 24px;
+  }
+
+  .dark-color-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .dark-color-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .dark-color-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dark-color-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+  }
+
+  /* Footer */
+  .guidelines-footer {
+    margin-top: 80px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(38, 38, 37, 0.1);
+    text-align: center;
+    color: rgba(38, 38, 37, 0.35);
+    font-size: 14px;
+  }
+
+  @media (max-width: 640px) {
+    .page { padding: 48px 20px; }
+    .brand-header h1 { font-size: 36px; }
+    .section-title { font-size: 26px; }
+    .color-grid { grid-template-columns: 1fr 1fr; }
+    .specs-grid { grid-template-columns: 1fr; }
+    .type-h1 { font-size: 36px; }
+    .type-h2 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Header -->
+  <header class="brand-header">
+    <h1>Odins.ai</h1>
+    <p>Brand Guidelines</p>
+  </header>
+
+  <!-- COLORS -->
+  <section class="section">
+    <div class="section-label">01 / Colour Palette</div>
+    <h2 class="section-title">Colours</h2>
+    <p class="section-desc">The Odins palette is built around a confident teal green, grounded by a near-black neutral and softened with warm off-whites.</p>
+
+    <div class="color-grid">
+      <div class="color-card">
+        <div class="color-swatch" style="background-color: #1d8675;"></div>
+        <div class="color-info">
+          <div class="color-name">Odins Green</div>
+          <div class="color-role">Primary / CTA / Accent</div>
+          <div class="color-hex">#1D8675</div>
+        </div>
+      </div>
+
+      <div class="color-card">
+        <div class="color-swatch" style="background-color: #166b5c;"></div>
+        <div class="color-info">
+          <div class="color-name">Odins Green Dark</div>
+          <div class="color-role">Hover / Active states</div>
+          <div class="color-hex">#166B5C</div>
+        </div>
+      </div>
+
+      <div class="color-card">
+        <div class="color-swatch" style="background-color: #262625;"></div>
+        <div class="color-info">
+          <div class="color-name">Charcoal</div>
+          <div class="color-role">Primary text / Dark backgrounds</div>
+          <div class="color-hex">#262625</div>
+        </div>
+      </div>
+
+      <div class="color-card">
+        <div class="color-swatch" style="background-color: #fffbf9;"></div>
+        <div class="color-info">
+          <div class="color-name">Warm White</div>
+          <div class="color-role">Page background / Dropdowns</div>
+          <div class="color-hex">#FFFBF9</div>
+        </div>
+      </div>
+
+      <div class="color-card">
+        <div class="color-swatch" style="background-color: #e7e5df;"></div>
+        <div class="color-info">
+          <div class="color-name">Sand</div>
+          <div class="color-role">Header (scrolled) / Subtle surfaces</div>
+          <div class="color-hex">#E7E5DF</div>
+        </div>
+      </div>
+
+      <div class="color-card">
+        <div class="color-swatch" style="background-color: #EF6B51;"></div>
+        <div class="color-info">
+          <div class="color-name">Coral Red</div>
+          <div class="color-role">Validation / Error states</div>
+          <div class="color-hex">#EF6B51</div>
+        </div>
+      </div>
+
+      <div class="color-card">
+        <div class="color-swatch" style="background-color: #FFFFFF; border-bottom: 1px solid rgba(38,38,37,0.08);"></div>
+        <div class="color-info">
+          <div class="color-name">White</div>
+          <div class="color-role">Cards / Surfaces / Button text</div>
+          <div class="color-hex">#FFFFFF</div>
+        </div>
+      </div>
+
+      <div class="color-card">
+        <div class="color-swatch" style="background-color: #D0D0D0;"></div>
+        <div class="color-info">
+          <div class="color-name">Silver</div>
+          <div class="color-role">Disabled states</div>
+          <div class="color-hex">#D0D0D0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dark background preview -->
+    <div class="dark-preview">
+      <div class="section-label">On dark backgrounds</div>
+      <h3>Text and accents on Charcoal</h3>
+      <p>When using the dark background (#262625), these colours appear on top of it.</p>
+      <div class="dark-color-row">
+        <div class="dark-color-chip">
+          <div class="dark-color-dot" style="background-color: #FFFFFF;"></div>
+          <span class="dark-color-text">White text</span>
+        </div>
+        <div class="dark-color-chip">
+          <div class="dark-color-dot" style="background-color: rgba(255,255,255,0.85);"></div>
+          <span class="dark-color-text">Muted text (85%)</span>
+        </div>
+        <div class="dark-color-chip">
+          <div class="dark-color-dot" style="background-color: #1d8675;"></div>
+          <span class="dark-color-text">Green accent</span>
+        </div>
+        <div class="dark-color-chip">
+          <div class="dark-color-dot" style="background-color: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);"></div>
+          <span class="dark-color-text">Dividers (10%)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TYPOGRAPHY -->
+  <section class="section">
+    <div class="section-label">02 / Typography</div>
+    <h2 class="section-title">DM Sans</h2>
+    <p class="section-desc">DM Sans is used across the entire site for headings, body copy, navigation, and buttons. Tight letter-spacing on headings gives them weight and presence.</p>
+
+    <!-- Font weights -->
+    <div class="type-specimen" style="margin-bottom: 24px;">
+      <div class="type-specimen-label">Font Weights</div>
+      <div class="weight-row">
+        <span class="weight-label">Light (300)</span>
+        <span class="weight-sample" style="font-weight: 300;">The quick brown fox jumps</span>
+      </div>
+      <div class="weight-row">
+        <span class="weight-label">Regular (400)</span>
+        <span class="weight-sample" style="font-weight: 400;">The quick brown fox jumps</span>
+      </div>
+      <div class="weight-row">
+        <span class="weight-label">Medium (500)</span>
+        <span class="weight-sample" style="font-weight: 500;">The quick brown fox jumps</span>
+      </div>
+      <div class="weight-row">
+        <span class="weight-label">Semibold (600)</span>
+        <span class="weight-sample" style="font-weight: 600;">The quick brown fox jumps</span>
+      </div>
+      <div class="weight-row">
+        <span class="weight-label">Bold (700)</span>
+        <span class="weight-sample" style="font-weight: 700;">The quick brown fox jumps</span>
+      </div>
+    </div>
+
+    <!-- Heading scale -->
+    <div class="type-specimen">
+      <div class="type-specimen-label">Heading Scale</div>
+
+      <div style="margin-bottom: 28px;">
+        <div class="type-h1">Heading 1</div>
+        <div class="type-meta">54px / 700 weight / -3.24px tracking / 1.1 line-height</div>
+      </div>
+
+      <div style="margin-bottom: 28px;">
+        <div class="type-h2">Heading 2</div>
+        <div class="type-meta">40px / 600 weight / -1.35px tracking / 1.15 line-height</div>
+      </div>
+
+      <div style="margin-bottom: 28px;">
+        <div class="type-h3">Heading 3</div>
+        <div class="type-meta">28px / 600 weight / -0.9px tracking / 1.2 line-height</div>
+      </div>
+
+      <div style="margin-bottom: 28px;">
+        <div class="type-h4">Heading 4</div>
+        <div class="type-meta">22px / 600 weight / -0.6px tracking / 1.25 line-height</div>
+      </div>
+
+      <div>
+        <div class="type-body">Body text looks like this. Odins collects all your marketing and sales data, models what actually drives results, and tells you whether you should be spending more, less, or differently for maximum effect.</div>
+        <div class="type-meta">16px / 400 weight / normal tracking / 1.4 line-height</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUTTONS -->
+  <section class="section">
+    <div class="section-label">03 / Buttons</div>
+    <h2 class="section-title">Buttons</h2>
+    <p class="section-desc">Pill-shaped buttons with full rounding. Two main variants: primary (filled green) and secondary (ghost with border).</p>
+
+    <div class="type-specimen">
+      <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-start;">
+
+        <div class="button-example">
+          <div class="button-example-label">Primary</div>
+          <button class="btn btn--primary">Book a demo</button>
+          <div class="button-spec">#1D8675 bg / #FFF text</div>
+        </div>
+
+        <div class="button-example">
+          <div class="button-example-label">Secondary / Ghost</div>
+          <button class="btn btn--secondary">Log in</button>
+          <div class="button-spec">Transparent / #262625 border</div>
+        </div>
+
+        <div class="button-example" style="background: #262625; padding: 24px; border-radius: 12px;">
+          <div class="button-example-label" style="color: rgba(255,255,255,0.4);">On Dark</div>
+          <button class="btn btn--dark-bg">Log in</button>
+          <div class="button-spec" style="color: rgba(255,255,255,0.35);">#FFF text / 30% border</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="specs-grid" style="margin-top: 24px;">
+      <div class="spec-card">
+        <div class="spec-label">Border Radius</div>
+        <div class="spec-value">100px (full pill)</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-label">Height</div>
+        <div class="spec-value">54px</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-label">Padding</div>
+        <div class="spec-value">14px 24px</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-label">Font</div>
+        <div class="spec-value">DM Sans / 16px / 500 weight</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-label">Hover (Primary)</div>
+        <div class="spec-value">#166B5C</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-label">Transition</div>
+        <div class="spec-value">200ms ease</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UI DETAILS -->
+  <section class="section">
+    <div class="section-label">04 / UI Details</div>
+    <h2 class="section-title">Key Details</h2>
+    <p class="section-desc">A few recurring patterns that keep the design consistent across the site.</p>
+
+    <div class="specs-grid">
+      <div class="spec-card">
+        <div class="spec-label">Max Content Width</div>
+        <div class="spec-value">1440px</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-label">Card Border Radius</div>
+        <div class="spec-value">8px - 12px</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-label">Active Nav Indicator</div>
+        <div class="spec-value">3px bar / #1D8675</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-label">Box Shadows</div>
+        <div class="spec-value">0 4px 20px rgba(0,0,0,0.1)</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-label">Nav Font Size</div>
+        <div class="spec-value">16px / 500 weight</div>
+      </div>
+      <div class="spec-card">
+        <div class="spec-label">Body Line Height</div>
+        <div class="spec-value">1.4</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="guidelines-footer">
+    <p>Odins.ai Brand Guidelines / Extracted March 2026</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
