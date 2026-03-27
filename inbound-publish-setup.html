@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inbound Publish — Setup Guide</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f9f9f7; color: #1a1a1a; line-height: 1.6; }
+  .page { max-width: 680px; margin: 0 auto; padding: 60px 24px; }
+  .logo { font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #888; margin-bottom: 48px; }
+  h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
+  .subtitle { font-size: 17px; color: #555; margin-bottom: 48px; }
+  .step { margin-bottom: 40px; }
+  .step-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: #1a1a1a; color: white; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .step-title { font-size: 18px; font-weight: 600; }
+  .step-body { padding-left: 46px; }
+  .step-body p { color: #444; margin-bottom: 12px; font-size: 15px; }
+  .step-body p:last-child { margin-bottom: 0; }
+  code { background: #efefed; padding: 2px 7px; border-radius: 4px; font-size: 13px; font-family: 'SF Mono', 'Menlo', monospace; color: #c0392b; }
+  pre { background: #1a1a1a; color: #e8e8e8; padding: 16px 20px; border-radius: 8px; font-size: 13px; font-family: 'SF Mono', 'Menlo', monospace; overflow-x: auto; margin: 12px 0; line-height: 1.7; }
+  .tag { display: inline-block; background: #eaf6f0; color: #1a7a55; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 20px; margin-bottom: 16px; }
+  .divider { border: none; border-top: 1px solid #e5e5e5; margin: 48px 0; }
+  .usage-box { background: white; border: 1px solid #e5e5e5; border-radius: 12px; padding: 24px; margin-top: 40px; }
+  .usage-box h2 { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+  .usage-row { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; font-size: 15px; }
+  .usage-row:last-child { margin-bottom: 0; }
+  .usage-trigger { background: #f0f0ee; color: #333; padding: 4px 12px; border-radius: 6px; font-size: 13px; font-weight: 500; white-space: nowrap; }
+  .usage-desc { color: #555; }
+  .note { background: #fffbec; border-left: 3px solid #f0c040; padding: 12px 16px; border-radius: 0 6px 6px 0; font-size: 14px; color: #665c00; margin-top: 12px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="logo">Inbound</div>
+
+  <h1>Publish to Web — Setup Guide</h1>
+  <p class="subtitle">Get set up in 2 steps. After that, just say "publish this" in Cowork and you'll get a shareable client URL instantly.</p>
+
+  <!-- Step 1 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">1</div>
+      <div class="step-title">Connect GitHub to Cowork</div>
+    </div>
+    <div class="step-body">
+      <p>In Cowork, go to <strong>Settings → Developer → Edit Config</strong>. This opens a file called <code>claude_desktop_config.json</code>.</p>
+      <p>Replace the contents with the following (the token has already been filled in for you):</p>
+      <pre>{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ASK_BEN_FOR_TOKEN"
+      }
+    }
+  }
+}</pre>
+      <p>Save the file, then <strong>restart Cowork</strong>.</p>
+      <div class="note">⚠️ Ask Ben for the token to paste in — don't share it over Slack or email.</div>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="step">
+    <div class="step-header">
+      <div class="step-num">2</div>
+      <div class="step-title">Install the plugin</div>
+    </div>
+    <div class="step-body">
+      <p>Ben will send you a file called <code>inbound-publish.plugin</code>.</p>
+      <p>In Cowork, go to <strong>Settings → Plugins</strong> and drag the file onto the install area (or click to browse for it).</p>
+      <p>That's it — you're done.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- How to use -->
+  <div class="usage-box">
+    <h2>How to use it</h2>
+    <div class="usage-row">
+      <span class="usage-trigger">publish this</span>
+      <span class="usage-desc">Publishes the HTML file you just made and gives you a live URL</span>
+    </div>
+    <div class="usage-row">
+      <span class="usage-trigger">share this with the client</span>
+      <span class="usage-desc">Same thing — triggers the publish flow</span>
+    </div>
+    <div class="usage-row">
+      <span class="usage-trigger">/publish</span>
+      <span class="usage-desc">Explicit command if you prefer that style</span>
+    </div>
+    <div style="margin-top: 16px; font-size: 14px; color: #666;">
+      Files are named automatically based on the client and content (e.g. <code>odins-brand-guidelines.html</code>) and live at:<br>
+      <strong>inbound-client-assets.netlify.app/{filename}</strong><br><br>
+      The link goes live within about 30 seconds. Nothing is ever named <code>index.html</code>, so you can't overwrite someone else's work.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
