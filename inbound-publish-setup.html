@@ -47,8 +47,11 @@
     </div>
     <div class="step-body">
       <p>In Cowork, go to <strong>Settings → Developer → Edit Config</strong>. This opens a file called <code>claude_desktop_config.json</code>.</p>
-      <p>Replace the contents with the following (the token has already been filled in for you):</p>
+      <p>Your file probably already has some content in it. You need to <strong>add</strong> the <code>mcpServers</code> block — don't delete what's already there. The result should look like this:</p>
       <pre>{
+  "preferences": {
+    ... (your existing preferences stay here)
+  },
   "mcpServers": {
     "github": {
       "command": "npx",
@@ -59,6 +62,7 @@
     }
   }
 }</pre>
+      <p>In other words: add a comma after your last existing block, then paste the <code>"mcpServers": { ... }</code> section before the final closing <code>}</code>.</p>
       <p>Save the file, then <strong>restart Cowork</strong>.</p>
       <div class="note">⚠️ Ask Ben for the token to paste in — don't share it over Slack or email.</div>
     </div>
