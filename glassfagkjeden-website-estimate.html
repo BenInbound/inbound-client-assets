@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Redesign Estimate: Glassfagkjeden | Inbound</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary-500: #1f1d49;
+      --color-primary-100: #c6c5e8;
+      --color-accent-500: #ff0056;
+      --color-accent-200: #ff99bb;
+      --color-secondary-300: #92c9ce;
+      --color-base-50: #fdfcfc;
+      --color-base-100: #f8f8f4;
+      --color-base-200: #f2f0ed;
+      --color-base-300: #ece8e4;
+      --color-base-400: #e6e0db;
+      --color-base-500: #e0d9d3;
+      --color-text-dark: #1a1818;
+      --color-text-primary: #1f1d49;
+      --color-white: #ffffff;
+      --font-family: 'Kumbh Sans', sans-serif;
+      --section-padding: 80px;
+      --card-padding: 32px;
+      --content-max-width: 1200px;
+      --border-radius-pill: 28px;
+      --border-radius-card: 16px;
+      --border-radius-tag: 4px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-family);
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 26px;
+      color: var(--color-text-primary);
+      background-color: var(--color-base-100);
+    }
+
+    .container {
+      max-width: var(--content-max-width);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* Cover / Hero */
+    .cover {
+      background-color: var(--color-primary-500);
+      color: var(--color-white);
+      padding: 120px 0 80px;
+      text-align: center;
+    }
+    .cover h1 {
+      font-size: 54px;
+      font-weight: 500;
+      line-height: 64px;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .cover .subtitle {
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 36px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+    .cover .meta {
+      font-size: 14px;
+      font-weight: 400;
+      opacity: 0.6;
+      margin-top: 24px;
+    }
+    .cover .tag-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      font-size: 14px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: var(--border-radius-tag);
+      display: inline-block;
+    }
+    .tag--pink { background-color: var(--color-accent-200); color: var(--color-text-primary); }
+    .tag--lavender { background-color: var(--color-primary-100); color: var(--color-text-primary); }
+    .tag--teal { background-color: var(--color-secondary-300); color: var(--color-text-primary); }
+
+    /* Sections */
+    section {
+      padding: var(--section-padding) 0;
+    }
+    section h2 {
+      font-size: 44px;
+      font-weight: 500;
+      line-height: 52px;
+      letter-spacing: -0.5px;
+      margin-bottom: 32px;
+    }
+    section h3 {
+      font-size: 37px;
+      font-weight: 400;
+      line-height: 48px;
+      margin-bottom: 20px;
+    }
+    section h4 {
+      font-size: 31px;
+      font-weight: 400;
+      line-height: 40px;
+      margin-bottom: 16px;
+    }
+    section h5 {
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 32px;
+      margin-bottom: 12px;
+    }
+    p { margin-bottom: 16px; }
+    p:last-child { margin-bottom: 0; }
+
+    /* Cards */
+    .card {
+      background: var(--color-base-50);
+      border-radius: var(--border-radius-card);
+      padding: var(--card-padding);
+      margin-bottom: 24px;
+    }
+    .card h5 { margin-bottom: 16px; }
+
+    /* Finding cards */
+    .finding-card {
+      background: var(--color-base-50);
+      border-radius: var(--border-radius-card);
+      padding: var(--card-padding);
+      margin-bottom: 20px;
+      border-left: 4px solid var(--color-accent-500);
+    }
+    .finding-card .finding-number {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-accent-500);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .finding-card h5 {
+      margin-bottom: 12px;
+    }
+    .finding-card .arrow {
+      color: var(--color-accent-500);
+      font-weight: 600;
+    }
+
+    /* Inventory grid */
+    .inventory-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: var(--color-base-50);
+      border-radius: var(--border-radius-card);
+      padding: 24px;
+      text-align: center;
+    }
+    .stat-card .number {
+      font-size: 44px;
+      font-weight: 500;
+      line-height: 52px;
+      color: var(--color-accent-500);
+    }
+    .stat-card .label {
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 4px;
+      color: var(--color-text-primary);
+      opacity: 0.7;
+    }
+
+    /* Tier sections */
+    .tier {
+      background: var(--color-base-50);
+      border-radius: var(--border-radius-card);
+      padding: 48px;
+      margin-bottom: 32px;
+    }
+    .tier-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .tier-label {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+    .tier-hours {
+      background-color: var(--color-primary-500);
+      color: var(--color-white);
+      padding: 8px 20px;
+      border-radius: var(--border-radius-pill);
+      font-size: 18px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .tier h4 { margin-bottom: 16px; }
+    .tier-addresses {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    /* Hour breakdown tables */
+    .hour-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 16px;
+    }
+    .hour-table th,
+    .hour-table td {
+      text-align: left;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--color-base-300);
+    }
+    .hour-table th {
+      font-weight: 600;
+      background: var(--color-base-100);
+    }
+    .hour-table .category-row td {
+      font-weight: 600;
+      background: var(--color-primary-500);
+      color: var(--color-white);
+      border-bottom: none;
+    }
+    .hour-table .subtotal-row td {
+      font-weight: 600;
+      background: var(--color-base-200);
+      border-bottom: 2px solid var(--color-base-400);
+    }
+    .hour-table .total-row td {
+      font-weight: 600;
+      font-size: 18px;
+      background: var(--color-accent-500);
+      color: var(--color-white);
+      border-bottom: none;
+    }
+    .hour-table .buffer-row td {
+      font-weight: 500;
+      font-style: italic;
+      background: var(--color-accent-200);
+      color: var(--color-text-primary);
+      border-bottom: none;
+    }
+    .hour-table .indent td:first-child {
+      padding-left: 32px;
+    }
+
+    /* Template breakdown */
+    .template-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 32px;
+    }
+    .template-table th,
+    .template-table td {
+      text-align: left;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--color-base-300);
+    }
+    .template-table th {
+      font-weight: 600;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--color-text-primary);
+      opacity: 0.7;
+    }
+
+    /* Content assessment bar */
+    .content-bar {
+      display: flex;
+      height: 24px;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 12px 0 24px;
+    }
+    .content-bar .rewrite { background: var(--color-accent-500); }
+    .content-bar .light-edit { background: var(--color-accent-200); }
+    .content-bar .keep { background: var(--color-secondary-300); }
+    .content-bar .new { background: var(--color-primary-100); }
+    .bar-legend {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+      font-size: 14px;
+    }
+    .bar-legend span::before {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+    .bar-legend .rewrite::before { background: var(--color-accent-500); }
+    .bar-legend .light-edit::before { background: var(--color-accent-200); }
+    .bar-legend .keep::before { background: var(--color-secondary-300); }
+    .bar-legend .new::before { background: var(--color-primary-100); }
+
+    /* Recommendations list */
+    .rec-list {
+      list-style: none;
+      padding: 0;
+    }
+    .rec-list li {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--color-base-300);
+      line-height: 28px;
+    }
+    .rec-list li:last-child { border-bottom: none; }
+    .rec-list li strong { color: var(--color-accent-500); }
+
+    /* Footer */
+    footer {
+      background-color: var(--color-primary-500);
+      color: var(--color-white);
+      padding: 48px 0;
+      text-align: center;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+    footer a { color: var(--color-accent-200); text-decoration: none; }
+    a.page-link { color: var(--color-accent-500); text-decoration: none; border-bottom: 1px solid var(--color-accent-200); transition: border-color 0.2s; }
+    a.page-link:hover { border-color: var(--color-accent-500); }
+
+    /* Recommended tier - light style with accent border */
+    .tier--recommended {
+      border-left: 4px solid var(--color-accent-500);
+    }
+    .tier--recommended .tier-label { color: var(--color-accent-500); }
+    .tier--recommended .tier-hours {
+      background-color: var(--color-accent-500);
+      color: var(--color-white);
+    }
+    .assumption-list { list-style: none; padding: 0; margin: 16px 0 0; }
+    .assumption-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--color-base-300);
+      line-height: 26px;
+    }
+    .assumption-list li:last-child { border-bottom: none; }
+    .assumption-list li strong { color: var(--color-accent-500); }
+
+    /* Utility */
+    .divider { border: none; border-top: 2px solid var(--color-base-300); margin: 48px 0; }
+    .accent-text { color: var(--color-accent-500); }
+    .muted { opacity: 0.65; font-size: 14px; }
+
+    /* Print styles */
+    @media print {
+      body { font-size: 12px; line-height: 18px; }
+      .cover { padding: 60px 0 40px; }
+      .cover h1 { font-size: 36px; line-height: 42px; }
+      section { padding: 40px 0; }
+      section h2 { font-size: 28px; line-height: 34px; }
+      .tier { padding: 24px; }
+      .card, .finding-card { padding: 16px; }
+    }
+
+    @media (max-width: 768px) {
+      .cover h1 { font-size: 37px; line-height: 44px; }
+      section h2 { font-size: 31px; line-height: 38px; }
+      .tier { padding: 24px; }
+      .tier-header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COVER -->
+  <header class="cover">
+    <div class="container">
+      <p class="subtitle">Website Redesign Estimate</p>
+      <h1>Glassfagkjeden.no</h1>
+      <div class="tag-row">
+        <span class="tag tag--pink">401 pages</span>
+        <span class="tag tag--lavender">HubSpot CMS</span>
+        <span class="tag tag--teal">~10 templates</span>
+      </div>
+      <p class="meta">Prepared by Inbound Group &middot; March 5, 2026</p>
+      <p style="margin-top: 24px;"><a href="glassfagkjeden-timeline.html" style="color: var(--color-white); background: var(--color-accent-500); padding: 10px 24px; border-radius: var(--border-radius-pill); text-decoration: none; font-weight: 600; font-size: 0.95rem;">View Project Timeline &rarr;</a></p>
+    </div>
+  </header>
+
+  <!-- EXECUTIVE SUMMARY -->
+  <section>
+    <div class="container">
+      <h2>Executive Summary</h2>
+      <div class="card">
+        <p>Glassfagkjeden.no is the website for Norway's first nationwide glass specialist chain, founded in 2001 and backed by Pilkington Norge AS. The site serves two audiences: consumers looking for glass solutions (shower doors, railings, kitchen splashbacks) and professional/commercial clients needing facade, railing, and interior glass work. With 41 member businesses across the country, the site also functions as a dealer locator and network directory.</p>
+        <p>The site has genuine strengths. The blog is substantial (287 posts covering glass topics in depth), several pillar pages like the <a class="page-link" href="https://www.glassfagkjeden.no/interiorglass/glassrekkverk" target="_blank">glassrekkverk guide</a> are thorough and well-structured, and the <a class="page-link" href="https://www.glassfagkjeden.no/referanser" target="_blank">reference project section</a> features notable Norwegian projects (<a class="page-link" href="https://www.glassfagkjeden.no/referanser/salt" target="_blank">SALT</a>, <a class="page-link" href="https://www.glassfagkjeden.no/referanser/ureddplassen" target="_blank">Ureddplassen</a>, Eventyrlig Oppussing). The <a class="page-link" href="https://www.glassfagkjeden.no/finn-glassleverandor" target="_blank">"Finn glassleverandor" dealer directory</a> is functional and well-organized.</p>
+        <p>However, the site has significant structural and content issues that limit its effectiveness. The navigation is bloated with duplicate mega-menu links, <a class="page-link" href="https://www.glassfagkjeden.no/glass/isolerglass" target="_blank">glass type pages</a> are thin with broken FAQ modules, the <a class="page-link" href="https://www.glassfagkjeden.no/kontakt" target="_blank">contact page</a> is essentially empty, and the 70+ individual member pages are inconsistent in quality. The design feels dated, and there is no clear conversion funnel guiding visitors from interest to enquiry. Our recommended scope below outlines a full redesign estimated at 200-296 hours (excluding member pages) by leveraging AI-assisted development and selective content writing for the highest-impact pages. Content hours are rate-based (4-6h per full page rewrite, ~1h per light edit) with the final page count confirmed during the strategy phase. Member page hours will be scoped separately after a technical review of the current setup.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY FINDINGS -->
+  <section>
+    <div class="container">
+      <h2>Key Findings</h2>
+      <p style="margin-bottom: 32px;">These findings are based on a systematic review of the public-facing site: sitemap analysis, navigation audit, and content assessment of all major page types.</p>
+
+      <div class="finding-card">
+        <div class="finding-number">Finding 1</div>
+        <h5>Navigation is bloated with duplicate links and inconsistent structure</h5>
+        <p>The main navigation has 7 top-level items: "<a class="page-link" href="https://www.glassfagkjeden.no/l&oslash;sninger" target="_blank">Losninger</a>", "<a class="page-link" href="https://www.glassfagkjeden.no/glassbiblioteket" target="_blank">Glasstyper</a>", "<a class="page-link" href="https://www.glassfagkjeden.no/referanser" target="_blank">Referanseprosjekter</a>", "Profesjonelle", "<a class="page-link" href="https://www.glassfagkjeden.no/glassbiblioteket" target="_blank">Glassbilioteket</a>" (note the typo), "<a class="page-link" href="https://www.glassfagkjeden.no/om-glassfagkjeden" target="_blank">Om oss</a>", and "<a class="page-link" href="https://www.glassfagkjeden.no/finn-glassleverandor" target="_blank">Finn glassleverandor</a>". The "Losninger" and "Glasstyper" mega-menus each contain 20+ links, and many of these are duplicated -- the same links appear three times in the DOM (desktop, mobile, and an additional repeated set). "Losninger" contains sub-links to both interiorglass and funksjonsglass items, which overlap heavily with "Glasstyper". The result is a menu that feels overwhelming and repetitive. <span class="arrow">&rarr;</span> Consolidate into 4-5 clear top-level categories and eliminate duplication.</p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-number">Finding 2</div>
+        <h5>Homepage lacks a clear value proposition and primary conversion path</h5>
+        <p>The <a class="page-link" href="https://www.glassfagkjeden.no/" target="_blank">homepage</a> opens with "Med glass som lidenskap siden 2001" -- a tagline that describes the company's history rather than addressing the visitor's need. There is no primary CTA above the fold, no clear direction for first-time visitors, and the page meanders between reference projects, solution cards, a company description, blog posts, a "manedens medlem" section, and a FAQ. A visitor wondering "can you help me with my shower glass?" has to figure out the path themselves. <span class="arrow">&rarr;</span> Restructure with a focused hero (headline + CTA), a clear "what we do" section, and defined paths for consumers vs. professionals.</p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-number">Finding 3</div>
+        <h5>Glass type pages are thin and have broken FAQ modules</h5>
+        <p>Pages under /glass/ (<a class="page-link" href="https://www.glassfagkjeden.no/glass/isolerglass" target="_blank">isolerglass</a>, <a class="page-link" href="https://www.glassfagkjeden.no/glass/herdet-glass" target="_blank">herdet-glass</a>, etc.) are very short -- the <a class="page-link" href="https://www.glassfagkjeden.no/glass/isolerglass" target="_blank">isolerglass page</a> has roughly 80 words of descriptive text, a single CTA button, and a list of related glass types. More critically, the FAQ section at the bottom displays answers about "Centrum Glass" (a specific member) for every question, regardless of the actual question being asked. The FAQ module appears to be pulling data from the wrong source. This content error appears across multiple glass type pages. <span class="arrow">&rarr;</span> Fix the FAQ module, expand glass type content substantially, and add use cases, comparison tables, and project photos.</p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-number">Finding 4</div>
+        <h5>Contact page is nearly empty</h5>
+        <p>The <a class="page-link" href="https://www.glassfagkjeden.no/kontakt" target="_blank">"Kontakt oss" page</a> contains a generic heading, two sentences, two link buttons ("Finn glassmester" and "Be om pris"), and a minimal contact form at the very bottom. There is no address, no phone number, no team photo, no map, and no indication of who the visitor is contacting. For a chain with 41 members, the contact experience needs to route people to either the central office or their local member -- currently it does neither effectively. <span class="arrow">&rarr;</span> Redesign contact page with clear routing: central office contact details, a prominent "find your local member" path, and an improved form.</p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-number">Finding 5</div>
+        <h5>Member pages are inconsistent and lack a standard template</h5>
+        <p>There are approximately 40+ individual member pages (e.g., <a class="page-link" href="https://www.glassfagkjeden.no/glass-sikring-as" target="_blank">/glass-sikring-as</a>, <a class="page-link" href="https://www.glassfagkjeden.no/kirkerud-glasservice" target="_blank">/kirkerud-glasservice</a>). The quality varies greatly -- some have partner logos, service lists, and contact forms, while others are minimal. They do not follow a consistent template structure. Many appear as standalone top-level URLs rather than being organized under a shared /medlemmer/ path, making them hard to discover and manage. <span class="arrow">&rarr;</span> Create a standardized member page template with consistent sections: about, services, service area, contact form, and project gallery.</p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-number">Finding 6</div>
+        <h5>Blog has 287 posts but no category structure or internal linking strategy</h5>
+        <p>The <a class="page-link" href="https://www.glassfagkjeden.no/blogg" target="_blank">blog listing</a> shows posts in reverse chronological order across 18 pages with no topic filtering, no categories, and no featured/pinned posts. Most blog post excerpts are truncated without featured images consistently. The blog content itself is solid (topics like energy glass, condensation, railing comparison), but there is no visible internal linking back to service pages and no category structure to help visitors navigate by topic. <span class="arrow">&rarr;</span> Add topic categories, improve the listing page layout with featured images and filters, and implement internal linking between blog posts and service pages.</p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-number">Finding 7</div>
+        <h5>No clear separation between consumer and professional audiences</h5>
+        <p>The site serves both homeowners and professional/commercial clients, but the only professional-specific content is under "Profesjonelle" in the nav with 4 sub-pages (<a class="page-link" href="https://www.glassfagkjeden.no/proff-losninger/glassfasader" target="_blank">glassfasader</a>, <a class="page-link" href="https://www.glassfagkjeden.no/proff-losninger/rulletrapp-og-rekkverk" target="_blank">rulletrapp-og-rekkverk</a>, <a class="page-link" href="https://www.glassfagkjeden.no/proff-losninger/interior-losninger" target="_blank">interior-losninger</a>, <a class="page-link" href="https://www.glassfagkjeden.no/proff-losninger/utstillingsvinduer" target="_blank">utstillingsvinduer</a>). The consumer and professional journeys are mixed throughout -- the homepage, blog, and glass type pages don't differentiate. A construction project manager and a homeowner wanting shower glass land in the same undifferentiated content. <span class="arrow">&rarr;</span> Create distinct entry points and content paths for consumer vs. professional audiences.</p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-number">Finding 8</div>
+        <h5>Reference projects section is underutilized</h5>
+        <p>The <a class="page-link" href="https://www.glassfagkjeden.no/referanser" target="_blank">/referanser section</a> has around 10 case studies featuring impressive projects (<a class="page-link" href="https://www.glassfagkjeden.no/referanser/salt" target="_blank">SALT</a>, <a class="page-link" href="https://www.glassfagkjeden.no/referanser/ureddplassen" target="_blank">Ureddplassen</a>, <a class="page-link" href="https://www.glassfagkjeden.no/referanser/diamanten" target="_blank">Diamanten</a>, Eventyrlig Oppussing collaborations). However, these case studies lack structured data -- there are no "glass type used" tags, no project specs summary, and no clear CTA connecting the reference to a service page or quote request. The <a class="page-link" href="https://www.glassfagkjeden.no/referanser/salt" target="_blank">SALT case study</a>, for example, mentions specific Pilkington products but doesn't link to the relevant glass type pages. <span class="arrow">&rarr;</span> Restructure case studies with standardized metadata (glass type, project scope, member involved) and cross-link to relevant product and service pages.</p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-number">Finding 9</div>
+        <h5>Design system is dated and inconsistent</h5>
+        <p>The site uses a dark blue/teal color scheme with an older visual style. The typography, card components, and spacing feel reminiscent of 2018-era HubSpot templates. There are HubSpot CTA embed scripts visible on multiple pages (hbspt.cta.load), suggesting CTAs are implemented as HubSpot CTA modules rather than native design elements. The overall design lacks the modern, clean feel expected of a brand-forward consumer website in 2026. <span class="arrow">&rarr;</span> Implement a modern design system with updated typography, spacing, and component library.</p>
+      </div>
+
+      <div class="finding-card">
+        <div class="finding-number">Finding 10</div>
+        <h5>Navigation contains a typo and dead-end links</h5>
+        <p>"<a class="page-link" href="https://www.glassfagkjeden.no/glassbiblioteket" target="_blank">Glassbilioteket</a>" in the main nav is misspelled (should be "Glassbiblioteket"). Multiple nav items use "javascript:;" as their href, meaning they are non-functional links that serve only as dropdown triggers -- if JavaScript fails or a user tries to open them in a new tab, they get nothing. The "<a class="page-link" href="https://www.glassfagkjeden.no/om-glassfagkjeden" target="_blank">Om oss</a>" dropdown also contains "<a class="page-link" href="https://www.glassfagkjeden.no/blogg" target="_blank">Blogg</a>" and "<a class="page-link" href="https://www.glassfagkjeden.no/kontakt" target="_blank">Kontakt oss</a>" as sub-items, which feels structurally wrong -- a blog and contact page should be easier to find. <span class="arrow">&rarr;</span> Fix the typo, make all nav items functional URLs, and reconsider the page structure so high-value pages are more prominent.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SITE INVENTORY -->
+  <section>
+    <div class="container">
+      <h2>Site Analysis Summary</h2>
+
+      <div class="inventory-grid">
+        <div class="stat-card">
+          <div class="number">401</div>
+          <div class="label">Total Pages in Sitemap</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">~10</div>
+          <div class="label">Unique Templates</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">287</div>
+          <div class="label">Blog Posts</div>
+        </div>
+        <div class="stat-card">
+          <div class="number">41</div>
+          <div class="label">Member Businesses</div>
+        </div>
+      </div>
+
+      <h4>Template Breakdown</h4>
+      <table class="template-table">
+        <thead>
+          <tr><th>Page Type</th><th>Template</th><th>Pages</th><th>Content Status</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><a class="page-link" href="https://www.glassfagkjeden.no/" target="_blank">Homepage</a></td><td>Homepage (unique)</td><td>1</td><td>Rewrite</td></tr>
+          <tr><td><a class="page-link" href="https://www.glassfagkjeden.no/interiorglass/glassrekkverk" target="_blank">Interiorglass solution pages</a></td><td>Solution pillar template</td><td>11</td><td>Light edit to rewrite</td></tr>
+          <tr><td><a class="page-link" href="https://www.glassfagkjeden.no/glass/isolerglass" target="_blank">Glass type pages</a></td><td>Glass type template</td><td>14</td><td>Rewrite (thin + broken FAQ)</td></tr>
+          <tr><td><a class="page-link" href="https://www.glassfagkjeden.no/proff-losninger/glassfasader" target="_blank">Professional solution pages</a></td><td>Proff template</td><td>4</td><td>Light edit</td></tr>
+          <tr><td><a class="page-link" href="https://www.glassfagkjeden.no/referanser" target="_blank">Reference/case study pages</a></td><td>Reference template</td><td>10</td><td>Light edit</td></tr>
+          <tr><td><a class="page-link" href="https://www.glassfagkjeden.no/glass-sikring-as" target="_blank">Member/dealer pages</a></td><td>Member page template</td><td>~40</td><td>Rewrite (inconsistent)</td></tr>
+          <tr><td><a class="page-link" href="https://www.glassfagkjeden.no/blogg" target="_blank">Blog listing</a></td><td>Blog listing template</td><td>1</td><td>Rewrite</td></tr>
+          <tr><td><a class="page-link" href="https://www.glassfagkjeden.no/blogg/slipp-inn-dagslyset" target="_blank">Blog posts</a></td><td>Blog post template</td><td>287</td><td>Keep (content OK, template needs update)</td></tr>
+          <tr><td><a class="page-link" href="https://www.glassfagkjeden.no/finn-glassleverandor" target="_blank">Dealer finder</a></td><td>Dealer locator page</td><td>1</td><td>Light edit</td></tr>
+          <tr><td><a class="page-link" href="https://www.glassfagkjeden.no/kontakt" target="_blank">Contact</a> / <a class="page-link" href="https://www.glassfagkjeden.no/prisforesp&oslash;rsel" target="_blank">Prisforesp.</a></td><td>Contact template</td><td>2</td><td>Rewrite</td></tr>
+          <tr><td><a class="page-link" href="https://www.glassfagkjeden.no/om-glassfagkjeden" target="_blank">About pages</a></td><td>About template</td><td>3</td><td>Rewrite</td></tr>
+          <tr><td>Utility pages (privacy, etc.)</td><td>Generic page</td><td>~5</td><td>Keep as-is</td></tr>
+        </tbody>
+      </table>
+
+      <h4>Content Assessment</h4>
+      <div class="content-bar">
+        <div class="rewrite" style="width: 45%;"></div>
+        <div class="light-edit" style="width: 20%;"></div>
+        <div class="keep" style="width: 25%;"></div>
+        <div class="new" style="width: 10%;"></div>
+      </div>
+      <div class="bar-legend">
+        <span class="rewrite">Full rewrite (~50 pages)</span>
+        <span class="light-edit">Light edit (~25 pages)</span>
+        <span class="keep">Keep as-is (~290 pages, mostly blog)</span>
+        <span class="new">New content needed (~15 pages)</span>
+      </div>
+
+      <h4>Integrations Detected</h4>
+      <div class="card">
+        <ul style="list-style: none; padding: 0;">
+          <li style="padding: 6px 0;">HubSpot CMS (hosting and templating)</li>
+          <li style="padding: 6px 0;">HubSpot Forms (contact forms on multiple pages)</li>
+          <li style="padding: 6px 0;">HubSpot CTAs (embedded CTA modules via hbspt.cta.load)</li>
+          <li style="padding: 6px 0;">Hotjar (_hjSafeContext detected)</li>
+          <li style="padding: 6px 0;">YouTube video embeds</li>
+          <li style="padding: 6px 0;">Social media links (Facebook, Instagram, LinkedIn, YouTube)</li>
+          <li style="padding: 6px 0;">HubSpot search (site search functionality)</li>
+          <li style="padding: 6px 0;">Cookie consent management</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIER 1 -->
+  <section>
+    <div class="container">
+      <h2>Recommended Scope</h2>
+      <!-- RECOMMENDED SCOPE -->
+      <div class="tier tier--recommended">
+        <div class="tier-header">
+          <div>
+            <div class="tier-label accent-text">Recommended Scope</div>
+            <h3>Full Redesign, Smart Scope</h3>
+            <p class="muted">New design system, new templates, selective content -- accelerated with AI-assisted development</p>
+          </div>
+          <div class="tier-hours">200 - 296 hours + member pages</div>
+        </div>
+
+        <div class="tier-addresses">
+          <span class="tag tag--pink">All 10 findings</span>
+        </div>
+
+        <h5>Scope</h5>
+        <p>This is a full redesign compressed into a realistic scope by making three strategic choices: AI-assisted HubSpot development to cut build time, selective content writing focused on the highest-impact pages, and scoping the member page solution separately after a technical review. You get an entirely new design system, new page structure, and all core templates rebuilt from scratch. The blog migrates with the new design applied but posts keep their existing content. Secondary pages (glass types, reference projects) get a light content edit rather than a full rewrite -- the new templates and design system carry them. The exact pages requiring full rewrites vs. light edits will be confirmed during the strategy phase.</p>
+
+        <h5>What's Included</h5>
+        <p>Strategy workshop (3 people), new sitemap and page structure, new design system in Figma, 7 redesigned HubSpot templates, new content for priority pages (full rewrites at 4-6h/page, light edits at ~1h/page -- page count confirmed after strategy), blog migration with category structure, responsive QA, SEO redirect plan, and client training. Member pages scoped separately after technical review.</p>
+
+        <h5>What's Not Included</h5>
+        <p>Full content rewrite of all 80+ non-blog pages (only priority pages get new copy). No dedicated accessibility audit (basic pass only). No enhanced dealer finder with map integration. No multi-language setup. No e-commerce or membership/login features. One round of design revisions included -- additional rounds would be scoped separately.</p>
+
+        <table class="hour-table">
+          <tr class="category-row"><td>Discovery & Strategy (3 people)</td><td></td></tr>
+          <tr class="indent"><td>Strategy workshop incl. prep (3 people x 4h)</td><td>12</td></tr>
+          <tr class="indent"><td>New sitemap and page structure (information architecture) in FigJam</td><td>2-3</td></tr>
+          <tr class="subtotal-row"><td>Subtotal</td><td>14-15</td></tr>
+
+          <tr class="category-row"><td>UX / Design</td><td></td></tr>
+          <tr class="indent"><td>Design system in Figma (typography, colors, components, spacing)</td><td>20-24</td></tr>
+          <tr class="indent"><td>5 key templates: wireframe + visual design</td><td>12-16</td></tr>
+          <tr class="indent"><td>Design revisions (1 round)</td><td>3-5</td></tr>
+          <tr class="subtotal-row"><td>Subtotal</td><td>35-45</td></tr>
+
+          <tr class="category-row"><td>Content (page count confirmed after strategy)</td><td></td></tr>
+          <tr class="indent"><td>Content strategy for priority pages</td><td>4-6</td></tr>
+          <tr class="indent"><td>Full page rewrites at 4-6h/page (est. 6-10 pages)</td><td>24-60</td></tr>
+          <tr class="indent"><td>Light content edits at ~1h/page (est. 15-20 pages)</td><td>15-20</td></tr>
+          <tr class="subtotal-row"><td>Subtotal (indicative)</td><td>43-86</td></tr>
+
+          <tr class="category-row"><td>Development (AI-Assisted)</td><td></td></tr>
+          <tr class="indent"><td>Design system CSS + global header/footer</td><td>10-14</td></tr>
+          <tr class="indent"><td><a class="page-link" href="https://www.glassfagkjeden.no/" target="_blank">Homepage</a> template</td><td>6-8</td></tr>
+          <tr class="indent"><td>Service/product page template (<a class="page-link" href="https://www.glassfagkjeden.no/interiorglass/glassrekkverk" target="_blank">glassrekkverk</a>, <a class="page-link" href="https://www.glassfagkjeden.no/glass/isolerglass" target="_blank">glass types</a>, etc.)</td><td>6-8</td></tr>
+          <tr class="indent"><td>Member pages -- approach TBD after technical review (see assumptions)</td><td>TBD</td></tr>
+          <tr class="indent"><td><a class="page-link" href="https://www.glassfagkjeden.no/blogg" target="_blank">Blog listing</a> + post template</td><td>6-8</td></tr>
+          <tr class="indent"><td><a class="page-link" href="https://www.glassfagkjeden.no/kontakt" target="_blank">Contact</a> / <a class="page-link" href="https://www.glassfagkjeden.no/om-glassfagkjeden" target="_blank">about</a> template</td><td>4-5</td></tr>
+          <tr class="indent"><td>Form implementations (3-4 forms)</td><td>4-5</td></tr>
+          <tr class="subtotal-row"><td>Subtotal (excl. member pages)</td><td>36-48</td></tr>
+
+          <tr class="category-row"><td>Blog Migration</td><td></td></tr>
+          <tr class="indent"><td>Bulk template migration (287 posts)</td><td>4-6</td></tr>
+          <tr class="indent"><td>Blog category structure implementation</td><td>3-5</td></tr>
+          <tr class="subtotal-row"><td>Subtotal</td><td>7-11</td></tr>
+
+          <tr class="category-row"><td>QA & Testing</td><td></td></tr>
+          <tr class="indent"><td>Template QA across breakpoints (7 templates)</td><td>8-10</td></tr>
+          <tr class="indent"><td>Form + HubDB testing</td><td>3-4</td></tr>
+          <tr class="indent"><td>Bug fix buffer</td><td>4-6</td></tr>
+          <tr class="subtotal-row"><td>Subtotal</td><td>15-20</td></tr>
+
+          <tr class="category-row"><td>SEO & Redirects</td><td></td></tr>
+          <tr class="indent"><td>URL mapping for changed pages</td><td>4-5</td></tr>
+          <tr class="indent"><td>Meta descriptions (priority pages)</td><td>2-3</td></tr>
+          <tr class="indent"><td>301 redirect plan</td><td>2-3</td></tr>
+          <tr class="subtotal-row"><td>Subtotal</td><td>8-11</td></tr>
+
+          <tr class="category-row"><td>Project Management</td><td></td></tr>
+          <tr class="indent"><td>Kickoff + project setup</td><td>3-4</td></tr>
+          <tr class="indent"><td>Weekly check-ins (~8-10 weeks)</td><td>8-10</td></tr>
+          <tr class="indent"><td>Staging review + launch</td><td>3-4</td></tr>
+          <tr class="indent"><td>Client training (HubSpot CMS + HubDB)</td><td>2-3</td></tr>
+          <tr class="subtotal-row"><td>Subtotal</td><td>16-21</td></tr>
+
+          <tr class="total-row"><td>Total (excl. member pages)</td><td>174 - 257</td></tr>
+          <tr class="buffer-row"><td>Buffer (15%)</td><td>26 - 39</td></tr>
+          <tr class="total-row"><td>Grand Total (excl. member pages)</td><td>200 - 296</td></tr>
+        </table>
+
+        <h5>Key Assumptions</h5>
+        <ul class="assumption-list">
+          <li><strong>AI-assisted development.</strong> HubSpot template and module development uses AI tooling (Claude Code or similar) to accelerate build time. The hour estimates above already reflect this -- traditional development without AI would add roughly 30-40% to the development line items.</li>
+          <li><strong>Content hours are rate-based.</strong> Full page rewrites are estimated at 4-6 hours per page and light content edits at approximately 1 hour per page. The exact pages requiring full rewrites vs. light edits will be determined during the strategy phase. The estimates above assume roughly 6-10 full rewrites and 15-20 light edits based on our initial site analysis, but the final count may shift once we have completed strategy with the client. If the client later wants full rewrites for all pages, that can be scoped as a follow-up phase.</li>
+          <li><strong>Blog posts migrate as-is.</strong> The 287 blog posts get the new design system applied via the updated blog post template, and a category structure is added. Post content is not rewritten or edited. Some posts may need manual cleanup where formatting breaks in the new template -- this should be expected and can be handled by the client or as a small follow-up task.</li>
+          <li><strong>Member pages scoped separately.</strong> The current site has 40+ individual member pages, but we do not yet know how they are built (individual HubSpot pages, HubDB, or another approach). The right solution -- whether that is a HubDB-powered template, redesigned individual pages, or something else -- depends on how the current setup works and what the client needs from these pages. Member page hours will be estimated after a technical review and discussion with the client during the strategy phase.</li>
+          <li><strong>One round of design revisions.</strong> The design phase includes one round of client feedback and revisions. Additional revision rounds would be scoped and quoted separately.</li>
+          <li><strong>No enhanced dealer finder.</strong> The existing dealer locator page gets the new design applied but does not get a rebuilt map integration or geolocation features. That could be a follow-up enhancement.</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CROSS-CUTTING RECOMMENDATIONS -->
+  <section>
+    <div class="container">
+      <h2>Cross-Cutting Recommendations</h2>
+      <p style="margin-bottom: 24px;">These should be considered alongside the recommended scope.</p>
+      <div class="card">
+        <ul class="rec-list">
+          <li><strong>Fix the FAQ module immediately.</strong> The broken FAQ on glass type pages (showing Centrum Glass info for every answer) is a visible quality issue that undermines credibility. This is a data source or HubDB configuration problem that can likely be fixed in under an hour by someone with HubSpot backend access.</li>
+          <li><strong>SEO: heading hierarchy.</strong> Multiple pages use H2 and H3 headings inside navigation menus and dropdowns, which pollutes the document outline. Headings in the nav should be semantically neutral (div or span), with proper H1-H2-H3 hierarchy reserved for page content.</li>
+          <li><strong>Accessibility: nav links.</strong> Navigation items using "javascript:;" as href values are inaccessible to keyboard users and screen readers. All nav items should be proper anchor links or button elements. The duplicated nav markup (desktop, mobile, and a third repeated instance) also creates confusion for assistive technology.</li>
+          <li><strong>Content gap: no pricing guidance.</strong> Across all solution and glass type pages, there is no pricing information, no "starting from" ranges, and no indication of what a project might cost. For consumers, adding even basic pricing guidance ("Glassrekkverk typically costs from X to Y kr per meter") would significantly reduce friction and increase enquiry quality.</li>
+          <li><strong>Internal linking.</strong> Blog posts and glass type pages rarely link to each other. The 287 blog posts represent a significant content asset that currently operates in isolation from the service pages. Adding contextual internal links between related blog content and service pages would improve both SEO and user navigation.</li>
+          <li><strong>Member page organization.</strong> The 40+ member pages live as top-level URLs (/glass-sikring-as, /kirkerud-glasservice). Moving them under a shared path (/medlemmer/glass-sikring-as) would improve site structure and make bulk management easier. Combined with HubDB, this becomes a scalable, maintainable system.</li>
+          <li><strong>Performance: HubSpot CTA scripts.</strong> Multiple pages load HubSpot CTA modules via JavaScript (hbspt.cta.load). These add HTTP requests and render-blocking script execution. Where possible, replace these with native HTML CTA buttons styled in the design system for faster page loads.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPENDIX -->
+  <section>
+    <div class="container">
+      <h2>Appendix: Page Inventory Summary</h2>
+      <p style="margin-bottom: 24px;">Full page counts extracted from the sitemap (401 pages total).</p>
+      <div class="card">
+        <table class="template-table">
+          <thead>
+            <tr><th>Section</th><th>Pages</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><a class="page-link" href="https://www.glassfagkjeden.no/blogg" target="_blank">/blogg/</a></td><td>287</td><td>Blog posts, 18 pages of listings</td></tr>
+            <tr><td><a class="page-link" href="https://www.glassfagkjeden.no/glass/isolerglass" target="_blank">/glass/</a></td><td>14</td><td>Glass type pages (isolerglass, herdet, etc.)</td></tr>
+            <tr><td><a class="page-link" href="https://www.glassfagkjeden.no/interiorglass/glassrekkverk" target="_blank">/interiorglass/</a></td><td>11</td><td>Interior glass solutions (rekkverk, vegg, trapp, etc.)</td></tr>
+            <tr><td><a class="page-link" href="https://www.glassfagkjeden.no/referanser" target="_blank">/referanser/</a></td><td>10</td><td>Reference/case study pages</td></tr>
+            <tr><td><a class="page-link" href="https://www.glassfagkjeden.no/proff-losninger/glassfasader" target="_blank">/proff-losninger/</a></td><td>4</td><td>Professional solutions</td></tr>
+            <tr><td><a class="page-link" href="https://www.glassfagkjeden.no/baderom/dusjvegg" target="_blank">/baderom/</a></td><td>2</td><td>Bathroom glass (dusjvegg, dusjdorer)</td></tr>
+            <tr><td>Member pages (top-level)</td><td>~40</td><td>Individual member/dealer pages</td></tr>
+            <tr><td>Utility pages</td><td>~10</td><td>Om oss, kontakt, prisforesp., personvern, etc.</td></tr>
+            <tr><td>Standalone pages</td><td>~23</td><td>Solskjerming, las, glassbiblioteket, etc.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr class="divider">
+
+      <p class="muted" style="text-align: center; margin-top: 32px;">This estimate is indicative and intended to open a conversation about scope and priorities. All hour figures are estimates based on public-facing site analysis and standard industry benchmarks for HubSpot CMS projects. Actual hours may vary based on discovery findings, client content readiness, and technical complexity uncovered during development. Hours only -- no pricing included.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>Prepared by <a href="https://www.inbound.no">Inbound Group</a> &middot; March 2026</p>
+      <p style="margin-top: 8px;">Questions? Reach out to <a href="mailto:ben@inbound.no">ben@inbound.no</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>
