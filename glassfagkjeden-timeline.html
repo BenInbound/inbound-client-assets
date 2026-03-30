@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Timeline: Glassfagkjeden | Inbound</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary-500: #1f1d49;
+      --color-primary-100: #c6c5e8;
+      --color-accent-500: #ff0056;
+      --color-accent-200: #ff99bb;
+      --color-secondary-300: #92c9ce;
+      --color-base-50: #fdfcfc;
+      --color-base-100: #f8f8f4;
+      --color-base-200: #f2f0ed;
+      --color-base-300: #ece8e4;
+      --color-base-400: #e6e0db;
+      --color-base-500: #e0d9d3;
+      --color-text-dark: #1a1818;
+      --color-text-primary: #1f1d49;
+      --color-white: #ffffff;
+      --font-family: 'Kumbh Sans', sans-serif;
+      --section-padding: 80px;
+      --card-padding: 32px;
+      --content-max-width: 1200px;
+      --border-radius-pill: 28px;
+      --border-radius-card: 16px;
+      --border-radius-tag: 4px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-family);
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 26px;
+      color: var(--color-text-primary);
+      background-color: var(--color-base-100);
+    }
+
+    .container {
+      max-width: var(--content-max-width);
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* Cover */
+    .cover {
+      background-color: var(--color-primary-500);
+      color: var(--color-white);
+      padding: 120px 0 80px;
+      text-align: center;
+    }
+    .cover h1 {
+      font-size: 54px;
+      font-weight: 500;
+      line-height: 64px;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .cover .subtitle {
+      font-size: 26px;
+      font-weight: 400;
+      line-height: 36px;
+      opacity: 0.85;
+      margin-bottom: 8px;
+    }
+    .cover .meta {
+      font-size: 14px;
+      font-weight: 400;
+      opacity: 0.6;
+      margin-top: 24px;
+    }
+    .cover .tag-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+    .tag {
+      font-size: 14px;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: var(--border-radius-tag);
+      display: inline-block;
+    }
+    .tag--pink { background-color: var(--color-accent-200); color: var(--color-text-primary); }
+    .tag--lavender { background-color: var(--color-primary-100); color: var(--color-text-primary); }
+    .tag--teal { background-color: var(--color-secondary-300); color: var(--color-text-primary); }
+
+    /* Nav link */
+    .page-nav {
+      background: var(--color-primary-500);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 16px 0;
+      text-align: center;
+    }
+    .page-nav a {
+      color: var(--color-accent-200);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .page-nav a:hover { color: var(--color-white); }
+
+    /* Sections */
+    section {
+      padding: var(--section-padding) 0;
+    }
+    section h2 {
+      font-size: 44px;
+      font-weight: 500;
+      line-height: 52px;
+      letter-spacing: -0.5px;
+      margin-bottom: 32px;
+    }
+    section h3 {
+      font-size: 37px;
+      font-weight: 400;
+      line-height: 48px;
+      margin-bottom: 20px;
+    }
+    p { margin-bottom: 16px; }
+    p:last-child { margin-bottom: 0; }
+
+    .muted { opacity: 0.65; font-size: 14px; }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding-left: 48px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--color-base-400);
+    }
+
+    .week {
+      position: relative;
+      margin-bottom: 48px;
+    }
+    .week:last-child { margin-bottom: 0; }
+
+    .week-dot {
+      position: absolute;
+      left: -48px;
+      top: 4px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--color-accent-500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--color-white);
+      z-index: 1;
+    }
+    .week--milestone .week-dot {
+      background: var(--color-primary-500);
+      width: 36px;
+      height: 36px;
+      left: -50px;
+      top: 2px;
+    }
+    .week--buffer .week-dot {
+      background: var(--color-base-400);
+      color: var(--color-text-primary);
+    }
+
+    .week-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .week-label {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--color-accent-500);
+    }
+    .week--milestone .week-label {
+      color: var(--color-primary-500);
+    }
+    .week--buffer .week-label {
+      color: var(--color-base-500);
+    }
+    .week-title {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      line-height: 1.3;
+    }
+
+    .week-body {
+      background: var(--color-base-50);
+      border-radius: var(--border-radius-card);
+      padding: 24px 28px;
+      border-left: 3px solid var(--color-accent-500);
+    }
+    .week--milestone .week-body {
+      border-left-color: var(--color-primary-500);
+      background: var(--color-primary-500);
+      color: var(--color-white);
+    }
+    .week--milestone .week-body p { color: rgba(255,255,255,0.7); }
+    .week--milestone .week-body .task-who { color: var(--color-accent-200); }
+
+    .week--buffer .week-body {
+      border-left-color: var(--color-base-400);
+      background: var(--color-base-200);
+    }
+
+    .task-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .task-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--color-base-200);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      line-height: 1.5;
+    }
+    .week--milestone .task-list li {
+      border-bottom-color: rgba(255,255,255,0.1);
+    }
+    .task-list li:last-child { border-bottom: none; }
+    .task-name {
+      font-size: 16px;
+      font-weight: 400;
+    }
+    .task-who {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-accent-500);
+      white-space: nowrap;
+    }
+
+    .week-note {
+      font-size: 14px;
+      color: var(--color-text-primary);
+      opacity: 0.6;
+      margin-top: 12px;
+      font-style: italic;
+    }
+
+    /* Summary table */
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 16px;
+    }
+    .summary-table th,
+    .summary-table td {
+      text-align: left;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--color-base-300);
+    }
+    .summary-table th {
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--color-text-primary);
+      opacity: 0.5;
+    }
+    .summary-table .phase-row td {
+      font-weight: 600;
+      background: var(--color-primary-500);
+      color: var(--color-white);
+      border-bottom: none;
+    }
+    .summary-table .total-row td {
+      font-weight: 600;
+      font-size: 18px;
+      background: var(--color-accent-500);
+      color: var(--color-white);
+      border-bottom: none;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--color-primary-500);
+      color: var(--color-white);
+      padding: 48px 0;
+      text-align: center;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+    footer a { color: var(--color-accent-200); text-decoration: none; }
+
+    .divider { border: none; border-top: 2px solid var(--color-base-300); margin: 48px 0; }
+
+    /* Print */
+    @media print {
+      body { font-size: 12px; line-height: 18px; }
+      .cover { padding: 60px 0 40px; }
+      .cover h1 { font-size: 36px; line-height: 42px; }
+      section { padding: 40px 0; }
+      section h2 { font-size: 28px; line-height: 34px; }
+      .timeline { padding-left: 40px; }
+    }
+
+    @media (max-width: 768px) {
+      .cover h1 { font-size: 37px; line-height: 44px; }
+      section h2 { font-size: 31px; line-height: 38px; }
+      .timeline { padding-left: 40px; }
+      .week-dot { left: -40px; }
+      .week--milestone .week-dot { left: -42px; }
+      .task-list li { flex-direction: column; gap: 2px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COVER -->
+  <header class="cover">
+    <div class="container">
+      <p class="subtitle">Project Timeline</p>
+      <h1>Glassfagkjeden.no</h1>
+      <div class="tag-row">
+        <span class="tag tag--pink">~10 weeks</span>
+        <span class="tag tag--lavender">200-296 hours + member pages</span>
+        <span class="tag tag--teal">Full redesign</span>
+      </div>
+      <p class="meta">Prepared by Inbound Group &middot; March 2026</p>
+    </div>
+  </header>
+
+  <div class="page-nav">
+    <div class="container">
+      <a href="glassfagkjeden-website-estimate.html">&larr; Back to Estimate</a>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <section>
+    <div class="container">
+      <h2>Week-by-Week Timeline</h2>
+      <p>This timeline maps the recommended scope to a roughly 10-week delivery schedule. Strategy and design run first to lock in direction before any development begins. Content writing runs in parallel with design and development so finished copy is ready when templates are built. Weeks marked as milestones include client review points.</p>
+      <p class="muted">Timeline assumes reasonable client response times (2-3 business days for feedback). Delays in approvals will shift subsequent phases.</p>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section style="padding-top: 0;">
+    <div class="container">
+      <div class="timeline">
+
+        <!-- WEEK 1 -->
+        <div class="week">
+          <div class="week-dot">1</div>
+          <div class="week-header">
+            <span class="week-label">Week 1</span>
+            <span class="week-title">Strategy & Kickoff</span>
+          </div>
+          <div class="week-body">
+            <ul class="task-list">
+              <li><span class="task-name">Project kickoff and setup (tools, access, Slack channel)</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Strategy workshop with client incl. prep (4h, 3 people)</span><span class="task-who">Ben + Text writer + Martin</span></li>
+              <li><span class="task-name">Document strategy outcomes: goals, audiences, priorities</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Technical review of current HubSpot setup (member pages, modules)</span><span class="task-who">Ben</span></li>
+            </ul>
+            <p class="week-note">Outcome: Agreed priorities, confirmed page list for full rewrites vs. light edits, member page approach decided.</p>
+          </div>
+        </div>
+
+        <!-- WEEK 2 -->
+        <div class="week">
+          <div class="week-dot">2</div>
+          <div class="week-header">
+            <span class="week-label">Week 2</span>
+            <span class="week-title">Sitemap & Style Direction</span>
+          </div>
+          <div class="week-body">
+            <ul class="task-list">
+              <li><span class="task-name">New sitemap and page structure in FigJam</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Homepage mockup / style direction in Figma</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Content strategy for priority pages (define briefs)</span><span class="task-who">Text writer</span></li>
+            </ul>
+            <p class="week-note">Outcome: Sitemap approved, visual direction agreed based on homepage concept.</p>
+          </div>
+        </div>
+
+        <!-- MILESTONE: Client sign-off -->
+        <div class="week week--milestone">
+          <div class="week-dot">&#10003;</div>
+          <div class="week-header">
+            <span class="week-label">Milestone</span>
+            <span class="week-title">Client Approval: Strategy + Style Direction</span>
+          </div>
+          <div class="week-body">
+            <p>Client reviews and approves the sitemap, page structure, and homepage visual direction. This locks in the design system foundation. Content writing begins based on the confirmed page list from the strategy workshop.</p>
+          </div>
+        </div>
+
+        <!-- WEEK 3-4 -->
+        <div class="week">
+          <div class="week-dot">3-4</div>
+          <div class="week-header">
+            <span class="week-label">Weeks 3-4</span>
+            <span class="week-title">Design System & Template Design</span>
+          </div>
+          <div class="week-body">
+            <ul class="task-list">
+              <li><span class="task-name">Full design system in Figma (typography, colors, components, spacing, buttons, forms)</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Wireframe + visual design: service/product page template</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Wireframe + visual design: blog listing + post template</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Wireframe + visual design: contact/about template</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Begin content writing: homepage + top 2-3 priority pages</span><span class="task-who">Text writer</span></li>
+            </ul>
+            <p class="week-note">Design and content run in parallel. Text writer works from agreed briefs while templates are designed.</p>
+          </div>
+        </div>
+
+        <!-- MILESTONE: Design review -->
+        <div class="week week--milestone">
+          <div class="week-dot">&#10003;</div>
+          <div class="week-header">
+            <span class="week-label">Milestone</span>
+            <span class="week-title">Client Review: Template Designs</span>
+          </div>
+          <div class="week-body">
+            <p>Client reviews all 5 template designs in Figma. One round of revisions included. After sign-off, development begins.</p>
+          </div>
+        </div>
+
+        <!-- WEEK 5 -->
+        <div class="week">
+          <div class="week-dot">5</div>
+          <div class="week-header">
+            <span class="week-label">Week 5</span>
+            <span class="week-title">Design Revisions + Dev Kickoff</span>
+          </div>
+          <div class="week-body">
+            <ul class="task-list">
+              <li><span class="task-name">Design revisions from client feedback (1 round)</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Begin HubSpot development: design system CSS + global header/footer</span><span class="task-who">Ben (AI-assisted)</span></li>
+              <li><span class="task-name">Continue content writing: remaining priority pages</span><span class="task-who">Text writer</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- WEEK 6-7 -->
+        <div class="week">
+          <div class="week-dot">6-7</div>
+          <div class="week-header">
+            <span class="week-label">Weeks 6-7</span>
+            <span class="week-title">Core Development</span>
+          </div>
+          <div class="week-body">
+            <ul class="task-list">
+              <li><span class="task-name">Build homepage template in HubSpot</span><span class="task-who">Ben (AI-assisted)</span></li>
+              <li><span class="task-name">Build service/product page template</span><span class="task-who">Ben (AI-assisted)</span></li>
+              <li><span class="task-name">Build contact/about template</span><span class="task-who">Ben (AI-assisted)</span></li>
+              <li><span class="task-name">Build blog listing + post template</span><span class="task-who">Ben (AI-assisted)</span></li>
+              <li><span class="task-name">Form implementations (3-4 forms)</span><span class="task-who">Ben (AI-assisted)</span></li>
+              <li><span class="task-name">Light content edits on secondary pages</span><span class="task-who">Text writer</span></li>
+            </ul>
+            <p class="week-note">Content is populated into templates as both become ready. Member page development runs here too if approach was confirmed in Week 1.</p>
+          </div>
+        </div>
+
+        <!-- WEEK 8 -->
+        <div class="week">
+          <div class="week-dot">8</div>
+          <div class="week-header">
+            <span class="week-label">Week 8</span>
+            <span class="week-title">Blog Migration & SEO</span>
+          </div>
+          <div class="week-body">
+            <ul class="task-list">
+              <li><span class="task-name">Bulk blog template migration (287 posts)</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Blog category structure implementation</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">URL mapping for changed pages</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">301 redirect plan</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Meta descriptions for priority pages</span><span class="task-who">Text writer</span></li>
+            </ul>
+            <p class="week-note">Blog posts may need some manual cleanup where formatting breaks in the new template. Flag these for the client.</p>
+          </div>
+        </div>
+
+        <!-- WEEK 9 -->
+        <div class="week">
+          <div class="week-dot">9</div>
+          <div class="week-header">
+            <span class="week-label">Week 9</span>
+            <span class="week-title">QA & Testing</span>
+          </div>
+          <div class="week-body">
+            <ul class="task-list">
+              <li><span class="task-name">Full template QA across breakpoints (7 templates, all devices)</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Form testing (submissions, notifications, CRM sync)</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Member page / HubDB spot checks (if applicable)</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Bug fixes</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Content QA: proofread all new and edited pages</span><span class="task-who">Text writer</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- MILESTONE: Staging review -->
+        <div class="week week--milestone">
+          <div class="week-dot">&#10003;</div>
+          <div class="week-header">
+            <span class="week-label">Milestone</span>
+            <span class="week-title">Client Review: Staging Site</span>
+          </div>
+          <div class="week-body">
+            <p>Client reviews the complete staging site. All templates, content, blog migration, and redirects are in place. Final feedback collected before launch.</p>
+          </div>
+        </div>
+
+        <!-- WEEK 10 -->
+        <div class="week">
+          <div class="week-dot">10</div>
+          <div class="week-header">
+            <span class="week-label">Week 10</span>
+            <span class="week-title">Launch & Handover</span>
+          </div>
+          <div class="week-body">
+            <ul class="task-list">
+              <li><span class="task-name">Final bug fixes from staging review</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Activate redirects and go live</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Post-launch smoke test (all templates, forms, key pages)</span><span class="task-who">Ben</span></li>
+              <li><span class="task-name">Client training: HubSpot CMS editing, blog publishing, HubDB (if applicable)</span><span class="task-who">Ben</span></li>
+            </ul>
+            <p class="week-note">Site is live. Any blog posts needing manual formatting cleanup are flagged for the client to handle at their own pace.</p>
+          </div>
+        </div>
+
+        <!-- BUFFER -->
+        <div class="week week--buffer">
+          <div class="week-dot">+</div>
+          <div class="week-header">
+            <span class="week-label">Buffer</span>
+            <span class="week-title">Contingency</span>
+          </div>
+          <div class="week-body">
+            <p>The 15% buffer built into the hour estimate covers unexpected complexity, additional bug fixes, or minor scope adjustments discovered during development. If client feedback cycles take longer than 2-3 business days, the timeline may extend by 1-2 weeks.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PHASE SUMMARY -->
+  <section>
+    <div class="container">
+      <h2>Phase Summary</h2>
+      <p style="margin-bottom: 32px;">How the hours map across the timeline.</p>
+
+      <table class="summary-table">
+        <thead>
+          <tr><th>Phase</th><th>Weeks</th><th>Key Activities</th><th>Hours (est.)</th></tr>
+        </thead>
+        <tbody>
+          <tr class="phase-row"><td colspan="4">Phase 1: Strategy & Design</td></tr>
+          <tr><td>Strategy & Kickoff</td><td>1</td><td>Workshop, technical review, kickoff</td><td>14-15</td></tr>
+          <tr><td>Sitemap & Style Direction</td><td>2</td><td>Sitemap, homepage mockup, content briefs</td><td>8-12</td></tr>
+          <tr><td>Design System & Templates</td><td>3-5</td><td>Full design system, 5 templates, 1 round revisions</td><td>35-45</td></tr>
+
+          <tr class="phase-row"><td colspan="4">Phase 2: Content</td></tr>
+          <tr><td>Content Writing</td><td>2-8 (parallel)</td><td>Priority page rewrites, light edits, meta descriptions</td><td>43-86</td></tr>
+
+          <tr class="phase-row"><td colspan="4">Phase 3: Development & Launch</td></tr>
+          <tr><td>Development</td><td>5-7</td><td>All HubSpot templates, CSS, forms (AI-assisted)</td><td>36-48</td></tr>
+          <tr><td>Blog Migration</td><td>8</td><td>Template migration, categories, possible manual cleanup</td><td>7-11</td></tr>
+          <tr><td>SEO & Redirects</td><td>8</td><td>URL mapping, redirects, meta descriptions</td><td>8-11</td></tr>
+          <tr><td>QA & Testing</td><td>9</td><td>Cross-device QA, form testing, bug fixes</td><td>15-20</td></tr>
+          <tr><td>Launch & Training</td><td>10</td><td>Go live, redirects, client training</td><td>4-6</td></tr>
+
+          <tr class="phase-row"><td colspan="4">Project Management</td></tr>
+          <tr><td>PM (ongoing)</td><td>1-10</td><td>Weekly check-ins, coordination, staging review</td><td>16-21</td></tr>
+
+          <tr class="total-row"><td>Total (excl. member pages)</td><td>~10 weeks</td><td></td><td>200 - 296</td></tr>
+        </tbody>
+      </table>
+
+      <hr class="divider">
+
+      <p class="muted" style="text-align: center;">This timeline is indicative and assumes standard client response times. Member page hours will be added once the approach is confirmed during the strategy phase in Week 1. Content hours are rate-based and the final page count is confirmed during strategy.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <p>Prepared by <a href="https://www.inbound.no">Inbound Group</a> &middot; March 2026</p>
+      <p style="margin-top: 8px;">Questions? Reach out to <a href="mailto:ben@inbound.no">ben@inbound.no</a></p>
+      <p style="margin-top: 16px;"><a href="glassfagkjeden-website-estimate.html">&larr; View the full estimate</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>
