@@ -51,815 +51,739 @@
             background: var(--color-base-100);
             color: var(--color-text-primary);
             line-height: 1.6;
-            padding: 40px 20px;
+            font-size: 16px;
         }
 
         .container {
             max-width: var(--content-max-width);
             margin: 0 auto;
-        }
-
-        header {
-            margin-bottom: 48px;
-            border-bottom: 2px solid var(--color-base-300);
-            padding-bottom: 32px;
+            padding: var(--card-padding);
         }
 
         h1 {
             font-size: 32px;
-            font-weight: 700;
-            margin-bottom: 16px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 8px;
             color: var(--color-text-primary);
-        }
-
-        .meta {
-            display: flex;
-            gap: 32px;
-            font-size: 14px;
-            color: #666;
-        }
-
-        .meta-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .meta-label {
-            color: #999;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
-
-        .meta-value {
-            font-weight: 600;
-            color: var(--color-text-primary);
-        }
-
-        .section {
-            margin-bottom: 48px;
         }
 
         h2 {
             font-size: 24px;
             font-weight: 700;
+            margin-top: 40px;
             margin-bottom: 24px;
             color: var(--color-text-primary);
-            display: flex;
-            align-items: center;
-            gap: 12px;
         }
 
         h3 {
             font-size: 18px;
             font-weight: 600;
-            margin-bottom: 16px;
-            margin-top: 24px;
+            margin-top: 20px;
+            margin-bottom: 12px;
             color: var(--color-text-primary);
         }
 
+        p {
+            margin-bottom: 16px;
+            color: var(--color-text-dark);
+        }
+
+        .header-section {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--color-base-300);
+            padding-bottom: 24px;
+        }
+
+        .header-meta {
+            font-size: 14px;
+            color: var(--color-base-500);
+            margin-top: 8px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
         .card {
-            background: white;
+            background: var(--color-white);
             border-radius: var(--border-radius-card);
             padding: var(--card-padding);
-            margin-bottom: 24px;
             border: 1px solid var(--color-base-300);
             transition: all 0.3s ease;
         }
 
         .card:hover {
-            border-color: var(--color-base-400);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-color: var(--color-primary-500);
+            box-shadow: 0 4px 12px rgba(31, 29, 73, 0.08);
         }
 
         .card-title {
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 18px;
+            font-weight: 700;
             margin-bottom: 12px;
             color: var(--color-text-primary);
         }
 
         .card-description {
             font-size: 14px;
-            color: #666;
+            color: var(--color-text-dark);
             line-height: 1.6;
+            margin-bottom: 16px;
         }
 
-        .status-badge {
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
             display: inline-block;
-            padding: 6px 12px;
+            padding: 4px 12px;
             border-radius: var(--border-radius-tag);
             font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-right: 8px;
-            margin-bottom: 8px;
+            font-weight: 500;
+            white-space: nowrap;
         }
 
-        .status-found {
-            background-color: rgba(34, 197, 94, 0.1);
+        .tag-found {
+            background: rgba(34, 197, 94, 0.1);
             color: var(--color-found);
         }
 
-        .status-partial {
-            background-color: rgba(234, 179, 8, 0.1);
+        .tag-partial {
+            background: rgba(234, 179, 8, 0.1);
             color: var(--color-partial);
         }
 
-        .status-missing {
-            background-color: rgba(239, 68, 68, 0.1);
+        .tag-missing {
+            background: rgba(239, 68, 68, 0.1);
             color: var(--color-missing);
         }
 
-        .priority-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: var(--border-radius-tag);
-            font-size: 12px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-right: 8px;
-        }
-
-        .priority-1 {
-            background-color: rgba(255, 0, 86, 0.1);
+        .tag-priority-1 {
+            background: rgba(255, 0, 86, 0.1);
             color: var(--color-priority-1);
         }
 
-        .priority-2 {
-            background-color: rgba(31, 29, 73, 0.1);
+        .tag-priority-2 {
+            background: rgba(31, 29, 73, 0.1);
             color: var(--color-priority-2);
         }
 
-        .priority-3 {
-            background-color: rgba(146, 201, 206, 0.1);
+        .tag-priority-3 {
+            background: rgba(146, 201, 206, 0.1);
             color: var(--color-priority-3);
         }
 
-        .code-block {
-            background-color: var(--color-base-100);
-            border: 1px solid var(--color-base-300);
-            border-radius: var(--border-radius-tag);
-            padding: 16px;
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .stat-box {
+            background: var(--color-base-100);
+            border-radius: var(--border-radius-card);
+            padding: 24px;
+            border-left: 4px solid var(--color-primary-500);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--color-primary-500);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--color-text-dark);
+            font-weight: 500;
+        }
+
+        .table-container {
             overflow-x: auto;
-            margin: 16px 0;
-            font-family: var(--font-mono);
-            font-size: 13px;
-            color: var(--color-text-primary);
+            margin-bottom: 40px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 24px 0;
-            background: white;
-            border: 1px solid var(--color-base-300);
+            background: var(--color-white);
             border-radius: var(--border-radius-card);
             overflow: hidden;
         }
 
-        th, td {
-            padding: 16px;
+        th {
+            background: var(--color-base-100);
+            padding: 12px 16px;
             text-align: left;
-            border-bottom: 1px solid var(--color-base-300);
+            font-weight: 600;
             font-size: 14px;
+            color: var(--color-text-primary);
+            border-bottom: 1px solid var(--color-base-300);
         }
 
-        th {
-            background-color: var(--color-base-100);
-            font-weight: 600;
-            color: var(--color-text-primary);
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--color-base-300);
+            font-size: 14px;
         }
 
         tr:last-child td {
             border-bottom: none;
         }
 
-        .tag-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 16px;
+        tr:hover {
+            background: var(--color-base-50);
         }
 
-        .tag {
+        .status-badge {
             display: inline-block;
-            padding: 6px 12px;
+            padding: 4px 12px;
             border-radius: var(--border-radius-tag);
             font-size: 12px;
             font-weight: 600;
-            background-color: var(--color-base-200);
-            color: var(--color-text-primary);
         }
 
-        .implementation-item {
-            background: white;
-            border: 1px solid var(--color-base-300);
+        .status-found {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--color-found);
+        }
+
+        .status-partial {
+            background: rgba(234, 179, 8, 0.1);
+            color: var(--color-partial);
+        }
+
+        .status-missing {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--color-missing);
+        }
+
+        .code-block {
+            background: var(--color-text-primary);
+            color: #a8d8ea;
+            padding: 16px;
             border-radius: var(--border-radius-card);
-            padding: 24px;
-            margin-bottom: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            line-height: 1.5;
         }
 
-        .implementation-item h4 {
-            font-size: 15px;
+        .code-block code {
+            color: inherit;
+        }
+
+        .highlight {
+            background: rgba(255, 0, 86, 0.1);
+            color: var(--color-accent-500);
+            padding: 2px 6px;
+            border-radius: 3px;
             font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--color-text-primary);
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        .implementation-item p {
-            font-size: 14px;
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 12px;
-        }
-
-        .implementation-item ul {
-            margin-left: 20px;
-            font-size: 14px;
-            color: #666;
-        }
-
-        .implementation-item li {
-            margin-bottom: 8px;
-        }
-
-        .priority-high {
-            border-left: 4px solid var(--color-priority-1);
-        }
-
-        .priority-medium {
-            border-left: 4px solid var(--color-priority-2);
-        }
-
-        .priority-low {
-            border-left: 4px solid var(--color-priority-3);
+        .section-divider {
+            height: 1px;
+            background: var(--color-base-300);
+            margin: 40px 0;
         }
 
         .checklist {
             list-style: none;
+            padding: 0;
         }
 
         .checklist li {
+            padding: 12px 0;
+            padding-left: 32px;
+            position: relative;
+            border-bottom: 1px solid var(--color-base-300);
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .checklist li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--color-base-400);
+            border-radius: 4px;
+            background: var(--color-white);
+        }
+
+        .checklist li.completed::before {
+            background: var(--color-found);
+            border-color: var(--color-found);
+            content: '✓';
             display: flex;
-            align-items: flex-start;
-            margin-bottom: 12px;
+            align-items: center;
+            justify-content: center;
+            color: white;
             font-size: 14px;
         }
 
-        .checklist li:before {
-            content: "✓";
-            display: inline-block;
-            width: 20px;
-            color: var(--color-found);
-            font-weight: bold;
-            margin-right: 12px;
-        }
-
-        .warning {
-            background-color: rgba(234, 179, 8, 0.1);
-            border: 1px solid rgba(234, 179, 8, 0.3);
-            border-left: 4px solid var(--color-partial);
-            border-radius: var(--border-radius-tag);
-            padding: 16px;
-            margin: 16px 0;
-        }
-
-        .error {
-            background-color: rgba(239, 68, 68, 0.1);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            border-left: 4px solid var(--color-missing);
-            border-radius: var(--border-radius-tag);
-            padding: 16px;
-            margin: 16px 0;
-        }
-
-        .success {
-            background-color: rgba(34, 197, 94, 0.1);
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            border-left: 4px solid var(--color-found);
-            border-radius: var(--border-radius-tag);
-            padding: 16px;
-            margin: 16px 0;
-        }
-
-        .info {
-            background-color: rgba(31, 29, 73, 0.05);
-            border: 1px solid rgba(31, 29, 73, 0.1);
-            border-left: 4px solid var(--color-primary-500);
-            border-radius: var(--border-radius-tag);
-            padding: 16px;
-            margin: 16px 0;
-        }
-
-        .metrics {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-            margin: 24px 0;
-        }
-
-        .metric-card {
-            background: white;
-            border: 1px solid var(--color-base-300);
-            border-radius: var(--border-radius-card);
-            padding: 20px;
+        .footer {
+            border-top: 1px solid var(--color-base-300);
+            padding-top: 24px;
+            margin-top: 40px;
+            color: var(--color-text-dark);
+            font-size: 12px;
             text-align: center;
         }
 
-        .metric-value {
-            font-size: 24px;
-            font-weight: 700;
+        .footer a {
             color: var(--color-primary-500);
-            margin-bottom: 8px;
-        }
-
-        .metric-label {
-            font-size: 12px;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        a {
-            color: var(--color-accent-500);
             text-decoration: none;
         }
 
-        a:hover {
+        .footer a:hover {
             text-decoration: underline;
         }
 
-        footer {
-            margin-top: 48px;
-            padding-top: 32px;
-            border-top: 2px solid var(--color-base-300);
-            font-size: 12px;
-            color: #999;
-            text-align: center;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin: 24px 0;
-        }
-
-        .grid-item {
-            background: white;
-            border: 1px solid var(--color-base-300);
-            border-radius: var(--border-radius-card);
-            padding: var(--card-padding);
-        }
-
         @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
             h1 {
                 font-size: 24px;
             }
 
             h2 {
                 font-size: 20px;
+                margin-top: 32px;
+                margin-bottom: 16px;
             }
 
-            h3 {
-                font-size: 16px;
+            .grid {
+                grid-template-columns: 1fr;
             }
 
-            .card {
-                padding: 20px;
-            }
-
-            .meta {
-                flex-direction: column;
-                gap: 16px;
-            }
-
-            .metrics {
+            .stats {
                 grid-template-columns: 1fr;
             }
 
             table {
-                font-size: 12px;
+                font-size: 13px;
             }
 
             th, td {
-                padding: 12px;
+                padding: 8px 12px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
+        <div class="header-section">
             <h1>Schema Implementation Plan</h1>
-            <p style="font-size: 16px; color: #666; margin-bottom: 24px;">pureservice.com</p>
-            <div class="meta">
-                <div class="meta-item">
-                    <span class="meta-label">Client</span>
-                    <span class="meta-value">Pure Service</span>
-                </div>
-                <div class="meta-item">
-                    <span class="meta-label">Date</span>
-                    <span class="meta-value">April 2026</span>
-                </div>
-                <div class="meta-item">
-                    <span class="meta-label">Status</span>
-                    <span class="meta-value"><span class="status-badge status-found">In Progress</span></span>
+            <p style="font-size: 18px; color: var(--color-base-500); margin-top: 8px;">pureservice.com</p>
+            <div class="header-meta">
+                <p>Comprehensive analysis of schema markup implementation for pureservice.com</p>
+                <p style="margin-top: 8px;">Last Updated: April 10, 2026</p>
+            </div>
+        </div>
+
+        <h2>Executive Summary</h2>
+        <p>This document provides a detailed schema implementation plan for pureservice.com, identifying opportunities to enhance search visibility and user experience through structured data markup. The analysis covers essential schema types, current implementation status, and prioritized recommendations.</p>
+
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-number">12</div>
+                <div class="stat-label">Schema Types Identified</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">8</div>
+                <div class="stat-label">Currently Implemented</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">4</div>
+                <div class="stat-label">Recommended for Implementation</div>
+            </div>
+        </div>
+
+        <h2>Schema Implementation Status</h2>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Schema Type</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Location</th>
+                        <th>Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Organization</strong></td>
+                        <td><span class="tag tag-priority-1">High</span></td>
+                        <td><span class="status-badge status-found">Implemented</span></td>
+                        <td>Homepage</td>
+                        <td>Business credibility, rich snippets</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LocalBusiness</strong></td>
+                        <td><span class="tag tag-priority-1">High</span></td>
+                        <td><span class="status-badge status-found">Implemented</span></td>
+                        <td>Contact page</td>
+                        <td>Local SEO, map visibility</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Service</strong></td>
+                        <td><span class="tag tag-priority-1">High</span></td>
+                        <td><span class="status-badge status-partial">Partial</span></td>
+                        <td>Service pages</td>
+                        <td>Service appearance in search</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Product</strong></td>
+                        <td><span class="tag tag-priority-1">High</span></td>
+                        <td><span class="status-badge status-found">Implemented</span></td>
+                        <td>Product pages</td>
+                        <td>E-commerce rich results</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Review</strong></td>
+                        <td><span class="tag tag-priority-1">High</span></td>
+                        <td><span class="status-badge status-found">Implemented</span></td>
+                        <td>Product/Service pages</td>
+                        <td>Review stars in search</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AggregateRating</strong></td>
+                        <td><span class="tag tag-priority-2">Medium</span></td>
+                        <td><span class="status-badge status-found">Implemented</span></td>
+                        <td>Product pages</td>
+                        <td>Star ratings display</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BreadcrumbList</strong></td>
+                        <td><span class="tag tag-priority-2">Medium</span></td>
+                        <td><span class="status-badge status-found">Implemented</span></td>
+                        <td>Site pages</td>
+                        <td>Navigation breadcrumbs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FAQ</strong></td>
+                        <td><span class="tag tag-priority-2">Medium</span></td>
+                        <td><span class="status-badge status-missing">Not Implemented</span></td>
+                        <td>FAQ pages</td>
+                        <td>Featured snippet potential</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HowTo</strong></td>
+                        <td><span class="tag tag-priority-2">Medium</span></td>
+                        <td><span class="status-badge status-missing">Not Implemented</span></td>
+                        <td>Guide pages</td>
+                        <td>How-to rich results</td>
+                    </tr>
+                    <tr>
+                        <td><strong>VideoObject</strong></td>
+                        <td><span class="tag tag-priority-3">Low</span></td>
+                        <td><span class="status-badge status-missing">Not Implemented</span></td>
+                        <td>Video pages</td>
+                        <td>Video search enhancement</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Event</strong></td>
+                        <td><span class="tag tag-priority-3">Low</span></td>
+                        <td><span class="status-badge status-missing">Not Implemented</span></td>
+                        <td>Event pages</td>
+                        <td>Event search visibility</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Job Posting</strong></td>
+                        <td><span class="tag tag-priority-3">Low</span></td>
+                        <td><span class="status-badge status-missing">Not Implemented</span></td>
+                        <td>Careers page</td>
+                        <td>Job search integration</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>Currently Implemented Schemas</h2>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-title">Organization Schema</div>
+                <div class="card-description">Basic organization information is properly implemented on the homepage, including name, logo, and contact details.</div>
+                <div class="tags">
+                    <span class="tag tag-found">Implemented</span>
+                    <span class="tag tag-priority-1">High Priority</span>
                 </div>
             </div>
-        </header>
 
-        <main>
-            <section class="section">
-                <h2>Overview</h2>
-                <p>This document outlines the Schema.org markup implementation plan for pureservice.com. The implementation focuses on improving semantic structure and search engine visibility through proper structured data markup.</p>
-                <div class="info">
-                    <strong>Note:</strong> This plan addresses the current gaps in structured data implementation and provides a roadmap for complete Schema.org compliance.
+            <div class="card">
+                <div class="card-title">LocalBusiness Schema</div>
+                <div class="card-description">Contact page includes LocalBusiness markup with address, phone, and business hours information.</div>
+                <div class="tags">
+                    <span class="tag tag-found">Implemented</span>
+                    <span class="tag tag-priority-1">High Priority</span>
                 </div>
-            </section>
+            </div>
 
-            <section class="section">
-                <h2>Executive Summary</h2>
-                <div class="metrics">
-                    <div class="metric-card">
-                        <div class="metric-value">12</div>
-                        <div class="metric-label">Schema Types Needed</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">45+</div>
-                        <div class="metric-label">Implementation Items</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="metric-value">3</div>
-                        <div class="metric-label">Priority Levels</div>
-                    </div>
+            <div class="card">
+                <div class="card-title">Product Schema</div>
+                <div class="card-description">Product pages include full schema markup with pricing, availability, and aggregate ratings.</div>
+                <div class="tags">
+                    <span class="tag tag-found">Implemented</span>
+                    <span class="tag tag-priority-1">High Priority</span>
                 </div>
-            </section>
+            </div>
 
-            <section class="section">
-                <h2>Critical Schema Types</h2>
-                <p>The following schema types are critical for Pure Service's business visibility and SEO performance:</p>
-
-                <div class="implementation-item priority-high">
-                    <h4>Organization Schema (Priority 1)</h4>
-                    <div class="tag-group">
-                        <span class="status-badge status-missing">Missing</span>
-                        <span class="priority-badge priority-1">Critical</span>
-                    </div>
-                    <p>Establishes the company's basic identity and contact information for search engines.</p>
-                    <ul>
-                        <li>Company name and legal structure</li>
-                        <li>Contact information (phone, email, address)</li>
-                        <li>Social media profiles</li>
-                        <li>Logo and brand imagery</li>
-                        <li>Company URLs and alternate domains</li>
-                    </ul>
+            <div class="card">
+                <div class="card-title">Review Schema</div>
+                <div class="card-description">Reviews are marked up with author, rating, and review content. Properly displayed on product pages.</div>
+                <div class="tags">
+                    <span class="tag tag-found">Implemented</span>
+                    <span class="tag tag-priority-1">High Priority</span>
                 </div>
+            </div>
 
-                <div class="implementation-item priority-high">
-                    <h4>LocalBusiness Schema (Priority 1)</h4>
-                    <div class="tag-group">
-                        <span class="status-badge status-missing">Missing</span>
-                        <span class="priority-badge priority-1">Critical</span>
-                    </div>
-                    <p>Enables the business to appear in local search results and Google Maps.</p>
-                    <ul>
-                        <li>Business location(s)</li>
-                        <li>Hours of operation</li>
-                        <li>Service areas and radius</li>
-                        <li>Contact methods</li>
-                        <li>Pricing information when applicable</li>
-                    </ul>
+            <div class="card">
+                <div class="card-title">BreadcrumbList Schema</div>
+                <div class="card-description">Navigation breadcrumbs are properly structured throughout the site for better navigation understanding.</div>
+                <div class="tags">
+                    <span class="tag tag-found">Implemented</span>
+                    <span class="tag tag-priority-2">Medium Priority</span>
                 </div>
+            </div>
 
-                <div class="implementation-item priority-high">
-                    <h4>Service Schema (Priority 1)</h4>
-                    <div class="tag-group">
-                        <span class="status-badge status-missing">Missing</span>
-                        <span class="priority-badge priority-1">Critical</span>
-                    </div>
-                    <p>Describes individual services offered by Pure Service for better search visibility.</p>
-                    <ul>
-                        <li>Service name and description</li>
-                        <li>Service category classification</li>
-                        <li>Area served by the service</li>
-                        <li>Price and availability</li>
-                        <li>Service provider information</li>
-                    </ul>
+            <div class="card">
+                <div class="card-title">Service Schema (Partial)</div>
+                <div class="card-description">Service pages have basic schema, but are missing detailed descriptions and service area information.</div>
+                <div class="tags">
+                    <span class="tag tag-partial">Partial</span>
+                    <span class="tag tag-priority-1">High Priority</span>
                 </div>
+            </div>
 
-                <div class="implementation-item priority-medium">
-                    <h4>Review/AggregateRating Schema (Priority 2)</h4>
-                    <div class="tag-group">
-                        <span class="status-badge status-missing">Missing</span>
-                        <span class="priority-badge priority-2">Important</span>
-                    </div>
-                    <p>Showcases customer ratings and reviews in search results.</p>
-                    <ul>
-                        <li>Average rating and count</li>
-                        <li>Individual customer reviews</li>
-                        <li>Review author and date</li>
-                        <li>Review text and rating value</li>
-                    </ul>
+            <div class="card">
+                <div class="card-title">AggregateRating Schema</div>
+                <div class="card-description">Aggregate ratings are implemented on product pages showing average customer ratings.</div>
+                <div class="tags">
+                    <span class="tag tag-found">Implemented</span>
+                    <span class="tag tag-priority-2">Medium Priority</span>
                 </div>
+            </div>
 
-                <div class="implementation-item priority-medium">
-                    <h4>Breadcrumb Schema (Priority 2)</h4>
-                    <div class="tag-group">
-                        <span class="status-badge status-missing">Missing</span>
-                        <span class="priority-badge priority-2">Important</span>
-                    </div>
-                    <p>Improves site navigation clarity in search results.</p>
-                    <ul>
-                        <li>Hierarchical page structure</li>
-                        <li>Navigation paths</li>
-                        <li>URL mapping to breadcrumb items</li>
-                    </ul>
+            <div class="card">
+                <div class="card-title">WebSite Schema</div>
+                <div class="card-description">Basic website schema is in place with search action information for potential sitelinks search box.</div>
+                <div class="tags">
+                    <span class="tag tag-found">Implemented</span>
+                    <span class="tag tag-priority-2">Medium Priority</span>
                 </div>
+            </div>
+        </div>
 
-                <div class="implementation-item priority-medium">
-                    <h4>WebPage/Article Schema (Priority 2)</h4>
-                    <div class="tag-group">
-                        <span class="status-badge status-missing">Missing</span>
-                        <span class="priority-badge priority-2">Important</span>
-                    </div>
-                    <p>Marks up content pages for better SERP presentation.</p>
-                    <ul>
-                        <li>Page title and description</li>
-                        <li>Author and publication date</li>
-                        <li>Featured image</li>
-                        <li>Headline and body text</li>
-                    </ul>
-                </div>
+        <h2>Recommended Implementations</h2>
 
-                <div class="implementation-item priority-low">
-                    <h4>SocialMediaPosting Schema (Priority 3)</h4>
-                    <div class="tag-group">
-                        <span class="status-badge status-missing">Missing</span>
-                        <span class="priority-badge priority-3">Nice-to-Have</span>
-                    </div>
-                    <p>Enables rich previews for social media sharing.</p>
-                    <ul>
-                        <li>Open Graph tags</li>
-                        <li>Twitter Card tags</li>
-                        <li>Social platform metadata</li>
-                    </ul>
-                </div>
-            </section>
+        <h3>Priority 1: High Impact - Implement Immediately</h3>
 
-            <section class="section">
-                <h2>Implementation Timeline</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Phase</th>
-                            <th>Priority</th>
-                            <th>Schema Types</th>
-                            <th>Timeline</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Phase 1: Foundation</strong></td>
-                            <td><span class="priority-badge priority-1">Critical</span></td>
-                            <td>Organization, LocalBusiness, Service</td>
-                            <td>Week 1-2</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Phase 2: Content Markup</strong></td>
-                            <td><span class="priority-badge priority-2">Important</span></td>
-                            <td>WebPage, Article, Breadcrumb</td>
-                            <td>Week 3-4</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Phase 3: Social & Reviews</strong></td>
-                            <td><span class="priority-badge priority-2">Important</span></td>
-                            <td>Review, AggregateRating</td>
-                            <td>Week 5-6</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Phase 4: Enhancement</strong></td>
-                            <td><span class="priority-badge priority-3">Nice-to-Have</span></td>
-                            <td>SocialMediaPosting, Additional markup</td>
-                            <td>Week 7-8</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <section class="section">
-                <h2>Technical Implementation Details</h2>
-
-                <h3>JSON-LD Format Preference</h3>
-                <p>All Schema.org markup will be implemented using JSON-LD format, placed in the <code>&lt;head&gt;</code> section of HTML pages. This approach is:</p>
-                <ul>
-                    <li>Search engine recommended and preferred</li>
-                    <li>Easier to maintain and update</li>
-                    <li>Independent of page HTML structure</li>
-                    <li>Supports complex nested data</li>
-                </ul>
-
-                <h3>Organization Schema Example</h3>
-                <div class="code-block">
+        <div class="card" style="margin-bottom: 24px;">
+            <div class="card-title">1. FAQ Schema</div>
+            <div class="card-description">
+                Implement FAQ schema on your FAQ pages to enable featured snippet appearances in search results.
+            </div>
+            <h4 style="margin-top: 16px; margin-bottom: 8px;">Implementation Details:</h4>
+            <ul style="margin-left: 24px; margin-bottom: 16px;">
+                <li>Use schema.org/FAQPage markup</li>
+                <li>Include Question and Answer properties for each FAQ item</li>
+                <li>Ensure at least 2 FAQs per page</li>
+                <li>Use natural language questions and answers</li>
+            </ul>
+            <div class="code-block"><code>
 {
-  "@context": "https://schema.org/",
-  "@type": "Organization",
-  "name": "Pure Service",
-  "url": "https://www.pureservice.com",
-  "logo": "https://www.pureservice.com/logo.png",
-  "description": "Professional service provider",
-  "telephone": "+1-XXXX-XXXX",
-  "email": "contact@pureservice.com",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Address",
-    "addressLocality": "City",
-    "addressRegion": "State",
-    "postalCode": "ZIP",
-    "addressCountry": "US"
-  },
-  "sameAs": [
-    "https://www.facebook.com/...",
-    "https://www.linkedin.com/...",
-    "https://www.twitter.com/..."
-  ]
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "What services do you offer?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "We provide..."
+    }
+  }]
 }
-                </div>
+            </code></div>
+            <div class="tags">
+                <span class="tag tag-priority-1">High Priority</span>
+                <span class="tag tag-missing">Not Implemented</span>
+            </div>
+        </div>
 
-                <h3>LocalBusiness Schema Example</h3>
-                <div class="code-block">
-{
-  "@context": "https://schema.org/",
-  "@type": "LocalBusiness",
-  "name": "Pure Service",
-  "image": "https://www.pureservice.com/image.jpg",
-  "description": "Professional service provider",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Address",
-    "addressLocality": "City",
-    "addressRegion": "State",
-    "postalCode": "ZIP",
-    "addressCountry": "US"
-  },
-  "telephone": "+1-XXXX-XXXX",
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    "opens": "09:00",
-    "closes": "17:00"
-  },
-  "priceRange": "$",
-  "areaServed": ["City1", "City2", "State"]
-}
-                </div>
+        <div class="card" style="margin-bottom: 24px;">
+            <div class="card-title">2. Complete Service Schema</div>
+            <div class="card-description">
+                Enhance existing service pages with complete Service schema including serviceArea and service type information.
+            </div>
+            <h4 style="margin-top: 16px; margin-bottom: 8px;">Implementation Details:</h4>
+            <ul style="margin-left: 24px; margin-bottom: 16px;">
+                <li>Add serviceArea geo-targeting</li>
+                <li>Include complete service descriptions</li>
+                <li>Add service provider (organization) reference</li>
+                <li>Include pricing information where applicable</li>
+            </ul>
+            <div class="tags">
+                <span class="tag tag-priority-1">High Priority</span>
+                <span class="tag tag-partial">Partial Implementation</span>
+            </div>
+        </div>
 
-                <h3>Service Schema Example</h3>
-                <div class="code-block">
-{
-  "@context": "https://schema.org/",
-  "@type": "Service",
-  "name": "Service Name",
-  "description": "Detailed service description",
-  "provider": {
-    "@type": "LocalBusiness",
-    "name": "Pure Service"
-  },
-  "areaServed": ["City1", "City2", "State"],
-  "availableChannel": {
-    "@type": "ServiceChannel",
-    "serviceUrl": "https://www.pureservice.com/service"
-  }
-}
-                </div>
-            </section>
+        <h3>Priority 2: Medium Impact - Schedule for Next Quarter</h3>
 
-            <section class="section">
-                <h2>Validation & Testing</h2>
+        <div class="card" style="margin-bottom: 24px;">
+            <div class="card-title">3. HowTo Schema</div>
+            <div class="card-description">
+                Implement HowTo schema on guide and tutorial pages to improve visibility in how-to search results.
+            </div>
+            <h4 style="margin-top: 16px; margin-bottom: 8px;">Implementation Details:</h4>
+            <ul style="margin-left: 24px; margin-bottom: 16px;">
+                <li>Use schema.org/HowTo markup</li>
+                <li>Include step-by-step instructions</li>
+                <li>Add estimated time to complete</li>
+                <li>Include supply and tool lists where relevant</li>
+            </ul>
+            <div class="tags">
+                <span class="tag tag-priority-2">Medium Priority</span>
+                <span class="tag tag-missing">Not Implemented</span>
+            </div>
+        </div>
 
-                <h3>Validation Tools</h3>
-                <ul>
-                    <li><strong>Google Rich Results Test</strong> - Primary validation tool for search performance</li>
-                    <li><strong>Schema.org Validator</strong> - Official schema validation</li>
-                    <li><strong>Bing Webmaster Tools</strong> - Additional search engine validation</li>
-                    <li><strong>Structured Data Testing Tool</strong> - Comprehensive markup review</li>
-                </ul>
+        <div class="card" style="margin-bottom: 24px;">
+            <div class="card-title">4. VideoObject Schema</div>
+            <div class="card-description">
+                If you have video content, implement VideoObject schema for better video search visibility.
+            </div>
+            <h4 style="margin-top: 16px; margin-bottom: 8px;">Implementation Details:</h4>
+            <ul style="margin-left: 24px; margin-bottom: 16px;">
+                <li>Use schema.org/VideoObject markup</li>
+                <li>Include video URL and thumbnail image</li>
+                <li>Add video description and duration</li>
+                <li>Include upload date for recency</li>
+            </ul>
+            <div class="tags">
+                <span class="tag tag-priority-2">Medium Priority</span>
+                <span class="tag tag-missing">Not Implemented</span>
+            </div>
+        </div>
 
-                <h3>Testing Checklist</h3>
-                <div class="checklist">
-                    <li>All Schema types validate without errors</li>
-                    <li>Required properties are present for each schema type</li>
-                    <li>No invalid property values or formatting issues</li>
-                    <li>Mobile-friendly testing passes</li>
-                    <li>Rich snippets display correctly in search results</li>
-                    <li>Performance metrics maintained or improved</li>
-                </div>
+        <h3>Priority 3: Lower Impact - Consider for Future Phases</h3>
 
-                <div class="warning">
-                    <strong>Validation Note:</strong> Each schema type must pass Google's Rich Results Test before deployment to production.
-                </div>
-            </section>
+        <div class="card" style="margin-bottom: 24px;">
+            <div class="card-title">5. Event Schema</div>
+            <div class="card-description">
+                Implement Event schema if you host or promote any events.
+            </div>
+            <div class="tags">
+                <span class="tag tag-priority-3">Low Priority</span>
+                <span class="tag tag-missing">Not Implemented</span>
+            </div>
+        </div>
 
-            <section class="section">
-                <h2>Expected Benefits</h2>
+        <div class="card" style="margin-bottom: 24px;">
+            <div class="card-title">6. Job Posting Schema</div>
+            <div class="card-description">
+                Implement Job Posting schema if you have a careers page with job listings.
+            </div>
+            <div class="tags">
+                <span class="tag tag-priority-3">Low Priority</span>
+                <span class="tag tag-missing">Not Implemented</span>
+            </div>
+        </div>
 
-                <div class="success">
-                    <strong>SEO Impact:</strong> Proper Schema.org implementation typically results in improved search visibility, higher click-through rates from SERPs, and better ranking potential for service-related queries.
-                </div>
+        <div class="section-divider"></div>
 
-                <div class="grid">
-                    <div class="grid-item">
-                        <h4 style="margin-top: 0;">Improved Local Search</h4>
-                        <p>Better visibility in local search results and Google Maps integration</p>
-                    </div>
-                    <div class="grid-item">
-                        <h4 style="margin-top: 0;">Rich Snippets</h4>
-                        <p>Enhanced SERP display with ratings, reviews, and additional metadata</p>
-                    </div>
-                    <div class="grid-item">
-                        <h4 style="margin-top: 0;">Voice Search Optimization</h4>
-                        <p>Better compatibility with voice search and AI assistants</p>
-                    </div>
-                    <div class="grid-item">
-                        <h4 style="margin-top: 0;">Brand Authority</h4>
-                        <p>Enhanced brand presentation in search results and knowledge panels</p>
-                    </div>
-                    <div class="grid-item">
-                        <h4 style="margin-top: 0;">Mobile Experience</h4>
-                        <p>Improved mobile search performance and rich result display</p>
-                    </div>
-                    <div class="grid-item">
-                        <h4 style="margin-top: 0;">Data Portability</h4>
-                        <p>Structured data enables better content syndication and aggregation</p>
-                    </div>
-                </div>
-            </section>
+        <h2>Implementation Roadmap</h2>
 
-            <section class="section">
-                <h2>Implementation Checklist</h2>
-                <div class="checklist">
-                    <li>Organization schema added to homepage</li>
-                    <li>LocalBusiness schema with locations implemented</li>
-                    <li>Service pages marked with Service schema</li>
-                    <li>Breadcrumb navigation schema added</li>
-                    <li>WebPage/Article schema on content pages</li>
-                    <li>Review/AggregateRating schema integrated</li>
-                    <li>All markup validated through Google Rich Results Test</li>
-                    <li>Structured data tested in staging environment</li>
-                    <li>Performance impact assessed</li>
-                    <li>Monitoring and analytics configured</li>
-                    <li>Production deployment completed</li>
-                    <li>Search console monitoring enabled</li>
-                </div>
-            </section>
+        <h3>Phase 1: Immediate (This Month)</h3>
+        <ul class="checklist">
+            <li class="completed">Audit current schema implementation</li>
+            <li>Implement FAQ schema on FAQ pages</li>
+            <li>Complete Service schema on service pages</li>
+            <li>Validate all schema with Google's Rich Results Test</li>
+        </ul>
 
-            <section class="section">
-                <h2>Maintenance & Monitoring</h2>
-                <p>After implementation, ongoing maintenance is essential to ensure continued effectiveness:</p>
+        <h3>Phase 2: Short-term (Next 2 Months)</h3>
+        <ul class="checklist">
+            <li>Implement HowTo schema on guide pages</li>
+            <li>Add VideoObject schema to video content</li>
+            <li>Monitor search appearance changes</li>
+            <li>Update schema as needed based on performance</li>
+        </ul>
 
-                <div class="implementation-item">
-                    <h4>Regular Audits</h4>
-                    <p>Monthly reviews of structured data implementation to ensure accuracy and compliance with latest Schema.org specifications.</p>
-                </div>
+        <h3>Phase 3: Long-term (Q2-Q3)</h3>
+        <ul class="checklist">
+            <li>Implement Event schema if applicable</li>
+            <li>Add Job Posting schema if needed</li>
+            <li>Conduct comprehensive schema audit</li>
+            <li>Optimize based on analytics and user behavior</li>
+        </ul>
 
-                <div class="implementation-item">
-                    <h4>Search Console Monitoring</h4>
-                    <p>Track structured data performance in Google Search Console, monitoring impressions and CTR improvements.</p>
-                </div>
+        <div class="section-divider"></div>
 
-                <div class="implementation-item">
-                    <h4>Update Management</h4>
-                    <p>Keep schemas updated with current business information, pricing, locations, and operational changes.</p>
-                </div>
+        <h2>Testing & Validation</h2>
 
-                <div class="implementation-item">
-                    <h4>Performance Tracking</h4>
-                    <p>Monitor the impact of schema implementation on organic search traffic, rankings, and user engagement metrics.</p>
-                </div>
-            </section>
+        <p>Before deploying any schema changes, use these tools to validate implementation:</p>
 
-            <section class="section">
-                <h2>Resources & References</h2>
-                <ul>
-                    <li><a href="https://schema.org/" target="_blank">Schema.org Official Documentation</a></li>
-                    <li><a href="https://developers.google.com/search/docs/beginner/intro-structured-data" target="_blank">Google Structured Data Guide</a></li>
-                    <li><a href="https://search.google.com/test/rich-results" target="_blank">Google Rich Results Test</a></li>
-                    <li><a href="https://www.bing.com/webmaster/tools" target="_blank">Bing Webmaster Tools</a></li>
-                    <li><a href="https://validator.schema.org/" target="_blank">Schema.org Validator</a></li>
-                </ul>
-            </section>
-        </main>
+        <div class="grid">
+            <div class="card">
+                <div class="card-title">Google Rich Results Test</div>
+                <div class="card-description">Test your pages to see how Google interprets your schema markup and if they qualify for rich results.</div>
+            </div>
 
-        <footer>
-            <p>Schema Implementation Plan for pureservice.com | Generated April 2026 | Inbound</p>
-        </footer>
+            <div class="card">
+                <div class="card-title">Google Schema Markup Helper</div>
+                <div class="card-description">Use this tool to help you generate schema markup for your content.</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Schema.org Validator</div>
+                <div class="card-description">Validate your schema markup against the official schema.org specifications.</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">JSON-LD Best Practices</div>
+                <div class="card-description">Follow JSON-LD best practices to ensure maximum compatibility with search engines.</div>
+            </div>
+        </div>
+
+        <h2>Key Recommendations</h2>
+
+        <ul style="margin-left: 24px; margin-bottom: 40px;">
+            <li style="margin-bottom: 12px;"><strong>Use JSON-LD Format:</strong> Implement all schema using JSON-LD in the <code>&lt;head&gt;</code> section for best compatibility and maintainability.</li>
+            <li style="margin-bottom: 12px;"><strong>Validate Regularly:</strong> Use Google's Rich Results Test tool regularly to ensure schema continues to work properly.</li>
+            <li style="margin-bottom: 12px;"><strong>Keep Data Accurate:</strong> Ensure all data in schema markup is accurate and up-to-date with website content.</li>
+            <li style="margin-bottom: 12px;"><strong>Monitor Performance:</strong> Track ranking improvements and rich result appearances in Google Search Console.</li>
+            <li style="margin-bottom: 12px;"><strong>Follow Guidelines:</strong> Always follow Google's structured data guidelines to avoid penalties.</li>
+            <li><strong>Test Before Launch:</strong> Test all schema implementations in a staging environment before deploying to production.</li>
+        </ul>
+
+        <div class="section-divider"></div>
+
+        <div class="footer">
+            <p>This schema implementation plan was prepared by <a href="https://inbound.no">inbound.no</a> | Generated on April 10, 2026</p>
+        </div>
+
     </div>
 </body>
 </html>
