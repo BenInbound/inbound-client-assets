@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schema Implementation Plan -- multicase.no | Inbound</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Inbound Brand Colors */
+            --color-primary-500: #1f1d49;
+            --color-primary-100: #c6c5e8;
+            --color-accent-500: #ff0056;
+            --color-accent-200: #ff99bb;
+            --color-secondary-300: #92c9ce;
+            --color-base-50: #fdfcfc;
+            --color-base-100: #f8f8f4;
+            --color-base-200: #f2f0ed;
+            --color-base-300: #ece8e4;
+            --color-base-400: #e6e0db;
+            --color-base-500: #e0d9d3;
+            --color-text-dark: #1a1818;
+            --color-text-primary: #1f1d49;
+            --color-white: #ffffff;
+
+            /* Status colors */
+            --color-found: #22c55e;
+            --color-partial: #eab308;
+            --color-missing: #ef4444;
+
+            /* Priority colors */
+            --color-priority-1: #ff0056;
+            --color-priority-2: #1f1d49;
+            --color-priority-3: #92c9ce;
+
+            /* Typography and spacing */
+            --font-family: 'Kumbh Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+            --card-padding: 32px;
+            --content-max-width: 960px;
+            --border-radius-card: 16px;
+            --border-radius-tag: 4px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--color-base-100);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            font-size: 18px;
+        }
+
+        /* NAVIGATION */
+        .site-nav {
+            background: var(--color-primary-500);
+            padding: 0 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .site-nav-inner {
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 56px;
+        }
+
+        .site-nav .nav-brand {
+            font-family: var(--font-family);
+            font-size: 15px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--color-accent-500);
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* HEADER */
+        .report-header { text-align: center; margin-bottom: 48px; }
+        .report-header .brand { font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; color: var(--color-accent-500); margin-bottom: 8px; }
+        .report-header .label { font-size: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: 1.5px; color: var(--color-primary-100); margin-bottom: 12px; }
+        .report-header h1 { font-size: 44px; font-weight: 500; line-height: 52px; letter-spacing: -0.5px; color: var(--color-text-primary); margin-bottom: 8px; }
+        .report-header .meta { font-size: 14px; color: var(--color-base-500); }
+        @media (max-width: 700px) { .report-header h1 { font-size: 32px; line-height: 40px; } }
+
+        /* INTRO NOTE */
+        .intro-note { background: var(--color-base-200); border-radius: 12px; padding: 20px; margin-bottom: 32px; font-size: 15px; color: var(--color-text-dark); opacity: 0.8; line-height: 1.6; }
+        .intro-note strong { color: var(--color-text-primary); opacity: 1; }
+
+        /* SUMMARY CARDS (top-level stats) */
+        .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 40px; }
+        @media (max-width: 700px) { .summary-grid { grid-template-columns: repeat(2, 1fr); } }
+        .summary-card { background: var(--color-base-50); border-radius: var(--border-radius-card); padding: 24px 20px; text-align: center; }
+        .summary-card .card-label { font-size: 14px; font-weight: 600; color: var(--color-primary-100); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .summary-card .card-value { font-size: 37px; font-weight: 500; line-height: 1.1; color: var(--color-accent-500); }
+        .summary-card .card-note { font-size: 13px; color: var(--color-text-dark); opacity: 0.5; margin-top: 4px; }
+
+        /* SECTIONS */
+        .section { background: var(--color-base-50); border-radius: var(--border-radius-card); padding: var(--card-padding); margin-bottom: 24px; }
+        .section h2 { font-size: 31px; font-weight: 500; line-height: 40px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--color-base-300); }
+        .section h3 { font-size: 20px; font-weight: 500; margin-top: 24px; margin-bottom: 8px; }
+        .section h4 { font-size: 17px; font-weight: 600; margin-top: 20px; margin-bottom: 6px; }
+        .section p { margin-bottom: 12px; color: var(--color-text-dark); }
+        .section p.secondary { opacity: 0.6; font-size: 16px; }
+
+        /* AUDIT TABLE (Section 1) */
+        .audit-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 15px; }
+        .audit-table thead th { text-align: left; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-primary-100); padding: 8px 12px; border-bottom: 2px solid var(--color-base-300); }
+        .audit-table tbody td { padding: 12px; border-bottom: 1px solid var(--color-base-200); color: var(--color-text-dark); vertical-align: top; }
+        .audit-table tbody tr:last-child td { border-bottom: none; }
+
+        /* Status badges */
+        .status { font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: var(--border-radius-tag); display: inline-block; text-transform: uppercase; letter-spacing: 0.3px; }
+        .status--found { background: rgba(34, 197, 94, 0.15); color: #15803d; }
+        .status--partial { background: rgba(234, 179, 8, 0.15); color: #a16207; }
+        .status--missing { background: rgba(239, 68, 68, 0.15); color: #dc2626; }
+
+        /* SCHEMA RECOMMENDATION CARDS (Section 2) */
+        .schema-rec { background: var(--color-base-100); border-radius: 12px; padding: 24px; margin-bottom: 20px; border-left: 4px solid var(--color-base-400); }
+        .schema-rec.priority-1 { border-left-color: var(--color-priority-1); }
+        .schema-rec.priority-2 { border-left-color: var(--color-priority-2); }
+        .schema-rec.priority-3 { border-left-color: var(--color-priority-3); }
+
+        .schema-rec .rec-header { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+        .schema-rec .rec-title { font-size: 19px; font-weight: 600; color: var(--color-text-primary); }
+        .schema-rec .rec-why { font-size: 15px; color: var(--color-text-dark); opacity: 0.7; margin-bottom: 12px; }
+        .schema-rec .rec-detail { font-size: 14px; color: var(--color-text-dark); opacity: 0.6; margin-bottom: 4px; }
+
+        /* Level tags */
+        .level-tag { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: var(--border-radius-tag); display: inline-block; text-transform: uppercase; letter-spacing: 0.3px; }
+        .level-tag--sitewide { background: var(--color-accent-200); color: var(--color-text-primary); }
+        .level-tag--template { background: var(--color-primary-100); color: var(--color-text-primary); }
+        .level-tag--module { background: var(--color-secondary-300); color: var(--color-text-primary); }
+        .level-tag--oneoff { background: var(--color-base-400); color: var(--color-text-primary); }
+
+        /* Priority tags */
+        .priority-tag { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: var(--border-radius-tag); display: inline-block; text-transform: uppercase; letter-spacing: 0.3px; }
+        .priority-tag--1 { background: var(--color-accent-500); color: var(--color-white); }
+        .priority-tag--2 { background: var(--color-primary-500); color: var(--color-white); }
+        .priority-tag--3 { background: var(--color-secondary-300); color: var(--color-text-primary); }
+
+        /* CODE BLOCKS */
+        .code-block { background: #1e1e2e; border-radius: 8px; padding: 20px; margin: 12px 0; overflow-x: auto; }
+        .code-block pre { font-family: var(--font-mono); font-size: 13px; line-height: 1.5; color: #cdd6f4; white-space: pre; margin: 0; }
+        .code-block .comment { color: #6c7086; }
+        .code-block .key { color: #89b4fa; }
+        .code-block .string { color: #a6e3a1; }
+        .code-block .bracket { color: #f9e2af; }
+        .code-label { font-size: 12px; font-weight: 600; color: var(--color-primary-100); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+
+        /* IMPLEMENTATION TABLE (Section 3) */
+        .impl-table { width: 100%; border-collapse: collapse; margin-top: 12px; margin-bottom: 8px; font-size: 15px; }
+        .impl-table thead th { text-align: left; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-primary-100); padding: 8px 12px; border-bottom: 2px solid var(--color-base-300); }
+        .impl-table tbody td { padding: 12px; border-bottom: 1px solid var(--color-base-200); color: var(--color-text-dark); vertical-align: top; }
+        .impl-table tbody tr:last-child td { border-bottom: none; }
+        .impl-table .task-name { font-weight: 500; color: var(--color-text-primary); }
+        .impl-table .task-detail { font-size: 13px; opacity: 0.6; margin-top: 2px; }
+        .impl-table .hours { font-weight: 600; white-space: nowrap; text-align: center; }
+        .impl-table .hours-dev { color: var(--color-accent-500); }
+        .impl-table .hours-content { color: var(--color-primary-500); }
+        .subtotal-row td { font-weight: 600 !important; color: var(--color-text-primary) !important; border-top: 2px solid var(--color-base-300) !important; padding-top: 12px !important; }
+        .grand-total-row td { font-weight: 700 !important; color: var(--color-accent-500) !important; border-top: 3px solid var(--color-primary-500) !important; padding-top: 16px !important; font-size: 16px; }
+
+        /* NOTE BOX */
+        .note-box { background: var(--color-base-200); border-radius: 12px; padding: 16px 20px; font-size: 15px; color: var(--color-text-dark); opacity: 0.8; margin-top: 16px; line-height: 1.6; }
+        .note-box strong { color: var(--color-text-primary); opacity: 1; }
+
+        /* LEVERAGE CALLOUT */
+        .leverage-callout { background: linear-gradient(135deg, var(--color-primary-500) 0%, #2d2a6e 100%); border-radius: 12px; padding: 24px; margin: 20px 0; text-align: center; }
+        .leverage-callout .callout-number { font-size: 48px; font-weight: 700; color: var(--color-accent-500); line-height: 1; }
+        .leverage-callout .callout-label { font-size: 15px; color: rgba(255, 255, 255, 0.8); margin-top: 4px; }
+
+        /* FOOTER */
+        .report-footer { background: var(--color-primary-500); color: var(--color-white); text-align: center; padding: 32px; border-radius: var(--border-radius-card); margin-top: 40px; font-size: 14px; line-height: 1.6; }
+        .report-footer .footer-brand { font-weight: 600; font-size: 16px; margin-bottom: 8px; }
+        .report-footer p { opacity: 0.8; }
+        .report-footer a { color: var(--color-accent-200); text-decoration: none; }
+        .report-footer a:hover { text-decoration: underline; }
+
+        @media print {
+            .site-nav { display: none; }
+            body { background: var(--color-base-100); }
+            .container { padding: 20px; }
+            .section, .summary-card { border: 1px solid var(--color-base-300); }
+            .code-block { background: #f5f5f5; }
+            .code-block pre { color: #333; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="site-nav">
+        <div class="site-nav-inner">
+            <a href="#" class="nav-brand">Inbound</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="report-header">
+            <div class="brand">Inbound</div>
+            <div class="label">Schema Implementation Plan</div>
+            <h1>www.multicase.no</h1>
+            <div class="meta">Report date: April 10, 2026 | Focus: Structured Data for AI Visibility</div>
+        </div>
+
+        <!-- INTRO NOTE -->
+        <div class="intro-note">
+            <strong>What this report covers:</strong> This is a schema markup implementation plan focused on making Multicase Norge AS more visible to AI search engines including ChatGPT, Claude, Perplexity, Google AI Overviews, and Microsoft Copilot. Schema markup is machine-readable code (JSON-LD) that tells these AI engines exactly what Multicase does (a business system and e-commerce solution provider), what services it offers (online stores, business systems, integrations), and what questions it can answer (implementation support, module integrations, feature information).
+        </div>
+
+        <!-- SUMMARY CARDS -->
+        <div class="summary-grid">
+            <div class="summary-card">
+                <div class="card-label">Dev Hours</div>
+                <div class="card-value">18-24h</div>
+                <div class="card-note">Developer implementation</div>
+            </div>
+            <div class="summary-card">
+                <div class="card-label">Content Hours</div>
+                <div class="card-value">2-3h</div>
+                <div class="card-note">FAQ writing (AI draft + review)</div>
+            </div>
+            <div class="summary-card">
+                <div class="card-label">Total Hours</div>
+                <div class="card-value">20-27h</div>
+                <div class="card-note">Combined investment</div>
+            </div>
+            <div class="summary-card">
+                <div class="card-label">Pages Covered</div>
+                <div class="card-value">50+</div>
+                <div class="card-note">Pages that benefit</div>
+            </div>
+        </div>
+
+        <!-- SECTION 1: CURRENT SCHEMA AUDIT -->
+        <div class="section">
+            <h2>Current Schema Audit</h2>
+            <p class="secondary">What structured data your site has today, page by page.</p>
+
+            <table class="audit-table">
+                <thead>
+                    <tr>
+                        <th>Page</th>
+                        <th>Schema Found</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Homepage (multicase.no)</td>
+                        <td>None detected</td>
+                        <td><span class="status status--missing">Missing</span></td>
+                    </tr>
+                    <tr>
+                        <td>Produkter (Products Overview)</td>
+                        <td>None detected</td>
+                        <td><span class="status status--missing">Missing</span></td>
+                    </tr>
+                    <tr>
+                        <td>Forretningssystem og nettbutikk (Business System Service Page)</td>
+                        <td>None detected</td>
+                        <td><span class="status status--missing">Missing</span></td>
+                    </tr>
+                    <tr>
+                        <td>Moduler (Modules/Features)</td>
+                        <td>None detected</td>
+                        <td><span class="status status--missing">Missing</span></td>
+                    </tr>
+                    <tr>
+                        <td>Blog Posts (artikler)</td>
+                        <td>None detected</td>
+                        <td><span class="status status--missing">Missing</span></td>
+                    </tr>
+                    <tr>
+                        <td>Om Multicase (About Page)</td>
+                        <td>None detected</td>
+                        <td><span class="status status--missing">Missing</span></td>
+                    </tr>
+                    <tr>
+                        <td>Referanser (Case Studies/References)</td>
+                        <td>None detected</td>
+                        <td><span class="status status--missing">Missing</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="secondary" style="margin-top: 16px;"><strong>Audit Summary:</strong> Multicase.no currently has no JSON-LD schema markup detected across its main pages. This is a significant opportunity for AI visibility improvement. The site is on HubSpot, which provides native support for implementing schema at site-wide, template, and module levels.</p>
+        </div>
+
+        <!-- SECTION 2: RECOMMENDED SCHEMA -->
+        <div class="section">
+            <h2>Recommended Schema</h2>
+            <p class="secondary">What to add, why it matters for AI search, and the ready-to-use code.</p>
+
+            <!-- GROUP: Priority 1 -->
+            <h3>Priority 1: Highest Impact</h3>
+
+            <div class="schema-rec priority-1">
+                <div class="rec-header">
+                    <span class="rec-title">Organization</span>
+                    <span class="level-tag level-tag--sitewide">Site-wide</span>
+                    <span class="priority-tag priority-tag--1">Priority 1</span>
+                </div>
+                <p class="rec-why">Tells AI search engines exactly what Multicase Norge AS is: a Norwegian business system and e-commerce solution provider with 25+ years of experience. When someone asks ChatGPT or Perplexity "What is Multicase?" or "Who offers business systems in Norway?", this schema ensures Multicase appears as a credible, fully-defined answer with location, services, and company identity.</p>
+                <p class="rec-detail"><strong>Applies to:</strong> All pages (added once in site header)</p>
+                <p class="rec-detail"><strong>Where in HubSpot:</strong> Settings > Website > Pages > Site Header HTML</p>
+
+                <div class="code-label">JSON-LD Code</div>
+                <div class="code-block">
+                    <pre>{
+  <span class="key">"@context"</span>: <span class="string">"https://schema.org"</span>,
+  <span class="key">"@type"</span>: <span class="string">"ProfessionalService"</span>,
+  <span class="key">"name"</span>: <span class="string">"Multicase Norge AS"</span>,
+  <span class="key">"description"</span>: <span class="string">"Cloud-based business system and online store solution for retail and e-commerce businesses in Norway. Multicase provides order management, inventory control, invoicing, and integrated online store functionality with flexible module options and 25+ years of experience."</span>,
+  <span class="key">"url"</span>: <span class="string">"https://www.multicase.no"</span>,
+  <span class="key">"logo"</span>: <span class="string">"https://www.multicase.no/hubfs/multicase-logo.svg"</span>,
+  <span class="key">"foundingDate"</span>: <span class="string">"1997"</span>,
+  <span class="key">"numberOfEmployees"</span>: {
+    <span class="key">"@type"</span>: <span class="string">"QuantitativeValue"</span>,
+    <span class="key">"minValue"</span>: 11,
+    <span class="key">"maxValue"</span>: 50
+  },
+  <span class="key">"address"</span>: {
+    <span class="key">"@type"</span>: <span class="string">"PostalAddress"</span>,
+    <span class="key">"streetAddress"</span>: <span class="string">"Østre Kullerød 5"</span>,
+    <span class="key">"addressLocality"</span>: <span class="string">"Sandefjord"</span>,
+    <span class="key">"postalCode"</span>: <span class="string">"3241"</span>,
+    <span class="key">"addressCountry"</span>: <span class="string">"NO"</span>
+  },
+  <span class="key">"areaServed"</span>: {
+    <span class="key">"@type"</span>: <span class="string">"Country"</span>,
+    <span class="key">"name"</span>: <span class="string">"Norway"</span>
+  },
+  <span class="key">"knowsAbout"</span>: [
+    <span class="string">"Business System"</span>,
+    <span class="string">"E-commerce Solution"</span>,
+    <span class="string">"Order Management"</span>,
+    <span class="string">"Inventory Management"</span>,
+    <span class="string">"Online Store"</span>,
+    <span class="string">"Invoicing"</span>,
+    <span class="string">"Retail Management"</span>,
+    <span class="string">"Payment Integration"</span>
+  ],
+  <span class="key">"sameAs"</span>: [
+    <span class="string">"https://www.facebook.com/multicasenorge"</span>,
+    <span class="string">"https://www.linkedin.com/company/multicase-norge-as"</span>
+  ],
+  <span class="key">"contactPoint"</span>: {
+    <span class="key">"@type"</span>: <span class="string">"ContactPoint"</span>,
+    <span class="key">"telephone"</span>: <span class="string">"+47-33-29-33-00"</span>,
+    <span class="key">"contactType"</span>: <span class="string">"sales"</span>,
+    <span class="key">"availableLanguage"</span>: [<span class="string">"Norwegian"</span>, <span class="string">"English"</span>]
+  }
+}</pre>
+                </div>
+            </div>
+
+            <div class="schema-rec priority-1">
+                <div class="rec-header">
+                    <span class="rec-title">FAQPage</span>
+                    <span class="level-tag level-tag--module">Module</span>
+                    <span class="priority-tag priority-tag--1">Priority 1</span>
+                </div>
+                <p class="rec-why">FAQPage schema is the single most extractable type for AI citation. When someone asks Claude or ChatGPT "What are the benefits of using Multicase?" or "How much does Multicase cost?", FAQ schema pre-packages your answers in the exact format AI engines need. This drives higher citation accuracy and visibility.</p>
+                <p class="rec-detail"><strong>Applies to:</strong> Produkter (Products) pages, possibly home page and service pages (4 pages with 5-8 FAQs per page = 20-32 QA pairs)</p>
+                <p class="rec-detail"><strong>Where in HubSpot:</strong> Build custom FAQ module with repeater fields for questions/answers. Module auto-generates both HTML and FAQPage schema.</p>
+
+                <div class="code-label">JSON-LD Code (Example for Product/Service Page)</div>
+                <div class="code-block">
+                    <pre>{
+  <span class="key">"@context"</span>: <span class="string">"https://schema.org"</span>,
+  <span class="key">"@type"</span>: <span class="string">"FAQPage"</span>,
+  <span class="key">"mainEntity"</span>: [
+    {
+      <span class="key">"@type"</span>: <span class="string">"Question"</span>,
+      <span class="key">"name"</span>: <span class="string">"What is Multicase and who is it for?"</span>,
+      <span class="key">"acceptedAnswer"</span>: {
+        <span class="key">"@type"</span>: <span class="string">"Answer"</span>,
+        <span class="key">"text"</span>: <span class="string">"Multicase is a cloud-based business system designed for retail and e-commerce businesses of all sizes. It's ideal for companies that need order management, inventory control, invoicing, and online store functionality in one integrated solution. Multicase serves both B2B and B2C businesses across Norway."</span>
+      }
+    },
+    {
+      <span class="key">"@type"</span>: <span class="string">"Question"</span>,
+      <span class="key">"name"</span>: <span class="string">"What modules and integrations does Multicase offer?"</span>,
+      <span class="key">"acceptedAnswer"</span>: {
+        <span class="key">"@type"</span>: <span class="string">"Answer"</span>,
+        <span class="key">"text"</span>: <span class="string">"Multicase offers flexible module architecture including payment integrations (Vipps), return management, price optimization tools, Google Merchant Center integration, customer portal functionality, and 24SevenOffice accounting integration. You can configure the system with only the modules you need."</span>
+      }
+    },
+    {
+      <span class="key">"@type"</span>: <span class="string">"Question"</span>,
+      <span class="key">"name"</span>: <span class="string">"How long has Multicase been in business?"</span>,
+      <span class="key">"acceptedAnswer"</span>: {
+        <span class="key">"@type"</span>: <span class="string">"Answer"</span>,
+        <span class="key">"text"</span>: <span class="string">"Multicase was founded in 1997 and has over 25 years of experience in retail and e-commerce software solutions. The company is based in Sandefjord, Norway, with 11-50 employees."</span>
+      }
+    },
+    {
+      <span class="key">"@type"</span>: <span class="string">"Question"</span>,
+      <span class="key">"name"</span>: <span class="string">"Can Multicase integrate with my existing accounting software?"</span>,
+      <span class="key">"acceptedAnswer"</span>: {
+        <span class="key">"@type"</span>: <span class="string">"Answer"</span>,
+        <span class="key">"text"</span>: <span class="string">"Yes. Multicase integrates with 24SevenOffice accounting and bookkeeping software, making it easy to sync orders, invoices, and financial data between systems. This integration is available as a standard module."</span>
+      }
+    }
+  ]
+}</pre>
+                </div>
+            </div>
+
+            <div class="schema-rec priority-1">
+                <div class="rec-header">
+                    <span class="rec-title">Service</span>
+                    <span class="level-tag level-tag--template">Template</span>
+                    <span class="priority-tag priority-tag--1">Priority 1</span>
+                </div>
+                <p class="rec-why">Service schema tells AI engines what specific services Multicase provides and who they're for. When someone asks "What e-commerce solutions are available in Norway?" or "Who offers online store platforms?", Service schema gives AI engines precise, structured answers with service names, descriptions, and provider information. This drives targeted service-level visibility.</p>
+                <p class="rec-detail"><strong>Applies to:</strong> Forretningssystem og nettbutikk page and other main service/product pages (2-3 pages)</p>
+                <p class="rec-detail"><strong>Where in HubSpot:</strong> Add to service page template using HubL variables for name, description, URL. Can also use page meta fields.</p>
+
+                <div class="code-label">JSON-LD Code (Example for Business System Service)</div>
+                <div class="code-block">
+                    <pre>{
+  <span class="key">"@context"</span>: <span class="string">"https://schema.org"</span>,
+  <span class="key">"@type"</span>: <span class="string">"Service"</span>,
+  <span class="key">"name"</span>: <span class="string">"Business System and Online Store Solution"</span>,
+  <span class="key">"description"</span>: <span class="string">"Integrated business system and online store platform for retail and e-commerce businesses. Includes order management, inventory control, invoicing, customer management, and flexible module architecture. Designed for B2B and B2C companies in Norway seeking growth, control, and seamless collaboration."</span>,
+  <span class="key">"provider"</span>: {
+    <span class="key">"@type"</span>: <span class="string">"Organization"</span>,
+    <span class="key">"name"</span>: <span class="string">"Multicase Norge AS"</span>,
+    <span class="key">"url"</span>: <span class="string">"https://www.multicase.no"</span>
+  },
+  <span class="key">"serviceType"</span>: <span class="string">"Business Software"</span>,
+  <span class="key">"areaServed"</span>: {
+    <span class="key">"@type"</span>: <span class="string">"Country"</span>,
+    <span class="key">"name"</span>: <span class="string">"Norway"</span>
+  },
+  <span class="key">"audience"</span>: {
+    <span class="key">"@type"</span>: <span class="string">"BusinessAudience"</span>,
+    <span class="key">"audienceType"</span>: <span class="string">"Retail and E-commerce businesses"</span>
+  },
+  <span class="key">"hasOfferCatalog"</span>: {
+    <span class="key">"@type"</span>: <span class="string">"OfferCatalog"</span>,
+    <span class="key">"name"</span>: <span class="string">"Multicase Core Features"</span>,
+    <span class="key">"itemListElement"</span>: [
+      {
+        <span class="key">"@type"</span>: <span class="string">"Offer"</span>,
+        <span class="key">"itemOffered"</span>: {
+          <span class="key">"@type"</span>: <span class="string">"Service"</span>,
+          <span class="key">"name"</span>: <span class="string">"Order Management"</span>
+        }
+      },
+      {
+        <span class="key">"@type"</span>: <span class="string">"Offer"</span>,
+        <span class="key">"itemOffered"</span>: {
+          <span class="key">"@type"</span>: <span class="string">"Service"</span>,
+          <span class="key">"name"</span>: <span class="string">"Inventory Control"</span>
+        }
+      },
+      {
+        <span class="key">"@type"</span>: <span class="string">"Offer"</span>,
+        <span class="key">"itemOffered"</span>: {
+          <span class="key">"@type"</span>: <span class="string">"Service"</span>,
+          <span class="key">"name"</span>: <span class="string">"Online Store Platform"</span>
+        }
+      },
+      {
+        <span class="key">"@type"</span>: <span class="string">"Offer"</span>,
+        <span class="key">"itemOffered"</span>: {
+          <span class="key">"@type"</span>: <span class="string">"Service"</span>,
+          <span class="key">"name"</span>: <span class="string">"Payment Integrations"</span>
+        }
+      }
+    ]
+  },
+  <span class="key">"url"</span>: <span class="string">"https://www.multicase.no/produkter/forretningssystem-og-nettbutikk"</span>
+}</pre>
+                </div>
+            </div>
+
+            <!-- GROUP: Priority 2 -->
+            <h3>Priority 2: Important Foundation</h3>
+
+            <div class="schema-rec priority-2">
+                <div class="rec-header">
+                    <span class="rec-title">WebSite + SearchAction</span>
+                    <span class="level-tag level-tag--sitewide">Site-wide</span>
+                    <span class="priority-tag priority-tag--2">Priority 2</span>
+                </div>
+                <p class="rec-why">Identifies the site as a searchable entity and helps AI engines understand your site structure. This is foundational metadata that ties all pages together and supports AI Overviews features in Google.</p>
+                <p class="rec-detail"><strong>Applies to:</strong> All pages (site header)</p>
+                <p class="rec-detail"><strong>Where in HubSpot:</strong> Settings > Website > Pages > Site Header HTML (same location as Organization schema)</p>
+
+                <div class="code-label">JSON-LD Code</div>
+                <div class="code-block">
+                    <pre>{
+  <span class="key">"@context"</span>: <span class="string">"https://schema.org"</span>,
+  <span class="key">"@type"</span>: <span class="string">"WebSite"</span>,
+  <span class="key">"name"</span>: <span class="string">"Multicase"</span>,
+  <span class="key">"url"</span>: <span class="string">"https://www.multicase.no"</span>,
+  <span class="key">"publisher"</span>: {
+    <span class="key">"@type"</span>: <span class="string">"Organization"</span>,
+    <span class="key">"name"</span>: <span class="string">"Multicase Norge AS"</span>
+  }
+}</pre>
+                </div>
+                <p class="rec-detail" style="margin-top: 12px;"><strong>Note:</strong> If the site has a search function, add SearchAction property. If not, use WebSite as shown above.</p>
+            </div>
+
+            <div class="schema-rec priority-2">
+                <div class="rec-header">
+                    <span class="rec-title">BlogPosting / Article</span>
+                    <span class="level-tag level-tag--template">Template</span>
+                    <span class="priority-tag priority-tag--2">Priority 2</span>
+                </div>
+                <p class="rec-why">Marks up blog articles with author, publish date, and publisher info. AI engines weigh content authorship and recency heavily. Article schema with clear publication data, named authors, and publisher signals gives AI confidence in content credibility. This supports E-E-A-T (Expertise, Experience, Authoritativeness, Trustworthiness) signals that influence AI citation ranking.</p>
+                <p class="rec-detail"><strong>Applies to:</strong> All blog posts (artikler section) - approximately 15+ posts</p>
+                <p class="rec-detail"><strong>Where in HubSpot:</strong> Add to blog post template using HubL variables for title, author, date, image, URL</p>
+
+                <div class="code-label">JSON-LD Code (Template with HubL Variables)</div>
+                <div class="code-block">
+                    <pre>&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{ content.name | escape }}",
+  "description": "{{ content.meta_description | escape }}",
+  "url": "{{ content.absolute_url }}",
+  "datePublished": "{{ content.publish_date | datetimeformat('%Y-%m-%d') }}",
+  "dateModified": "{{ content.updated | datetimeformat('%Y-%m-%d') }}",
+  {% if content.blog_author %}"author": {
+    "@type": "Person",
+    "name": "{{ content.blog_author.display_name | escape }}"
+  },{% endif %}
+  "publisher": {
+    "@type": "Organization",
+    "name": "Multicase Norge AS",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.multicase.no/hubfs/multicase-logo.svg"
+    }
+  }{% if content.featured_image %},
+  "image": "{{ content.featured_image }}"{% endif %}
+}
+&lt;/script&gt;</pre>
+                </div>
+            </div>
+
+            <div class="schema-rec priority-2">
+                <div class="rec-header">
+                    <span class="rec-title">BreadcrumbList</span>
+                    <span class="level-tag level-tag--template">Template</span>
+                    <span class="priority-tag priority-tag--2">Priority 2</span>
+                </div>
+                <p class="rec-why">Helps AI engines understand site hierarchy and page relationships. A BreadcrumbList explicitly states: "This page is under Products > Modules" or "This is a Blog Post under Blog". This context helps AI engines cite content more accurately and understand section relationships.</p>
+                <p class="rec-detail"><strong>Applies to:</strong> All main page templates (product pages, blog posts, etc.)</p>
+                <p class="rec-detail"><strong>Where in HubSpot:</strong> Add to base template or individual templates using page URL structure and HubL variables</p>
+
+                <div class="code-label">JSON-LD Code (Example for Product Page)</div>
+                <div class="code-block">
+                    <pre>{
+  <span class="key">"@context"</span>: <span class="string">"https://schema.org"</span>,
+  <span class="key">"@type"</span>: <span class="string">"BreadcrumbList"</span>,
+  <span class="key">"itemListElement"</span>: [
+    {
+      <span class="key">"@type"</span>: <span class="string">"ListItem"</span>,
+      <span class="key">"position"</span>: 1,
+      <span class="key">"name"</span>: <span class="string">"Home"</span>,
+      <span class="key">"item"</span>: <span class="string">"https://www.multicase.no"</span>
+    },
+    {
+      <span class="key">"@type"</span>: <span class="string">"ListItem"</span>,
+      <span class="key">"position"</span>: 2,
+      <span class="key">"name"</span>: <span class="string">"Produkter"</span>,
+      <span class="key">"item"</span>: <span class="string">"https://www.multicase.no/produkter"</span>
+    },
+    {
+      <span class="key">"@type"</span>: <span class="string">"ListItem"</span>,
+      <span class="key">"position"</span>: 3,
+      <span class="key">"name"</span>: <span class="string">"Forretningssystem og nettbutikk"</span>,
+      <span class="key">"item"</span>: <span class="string">"https://www.multicase.no/produkter/forretningssystem-og-nettbutikk"</span>
+    }
+  ]
+}</pre>
+                </div>
+            </div>
+
+            <!-- GROUP: Priority 3 -->
+            <h3>Priority 3: Valuable Additions</h3>
+
+            <div class="schema-rec priority-3">
+                <div class="rec-header">
+                    <span class="rec-title">WebPage</span>
+                    <span class="level-tag level-tag--template">Template</span>
+                    <span class="priority-tag priority-tag--3">Priority 3</span>
+                </div>
+                <p class="rec-why">Provides explicit signals about page purpose and type. A WebPage with @type "AboutPage" or "ContactPage" tells AI engines how to treat each page. This helps AI engines cite the right page type for different queries.</p>
+                <p class="rec-detail"><strong>Applies to:</strong> Key landing pages (About, Contact, Product overview pages) - 3-4 pages</p>
+                <p class="rec-detail"><strong>Where in HubSpot:</strong> Can add to specific page templates or use page-level head HTML for one-off pages</p>
+
+                <div class="code-label">JSON-LD Code (Example for About Page)</div>
+                <div class="code-block">
+                    <pre>{
+  <span class="key">"@context"</span>: <span class="string">"https://schema.org"</span>,
+  <span class="key">"@type"</span>: <span class="string">"AboutPage"</span>,
+  <span class="key">"name"</span>: <span class="string">"About Multicase Norge AS"</span>,
+  <span class="key">"description"</span>: <span class="string">"Learn about Multicase Norge AS, a Norwegian business system and e-commerce solution provider founded in 1997 with 25+ years of experience."</span>,
+  <span class="key">"url"</span>: <span class="string">"https://www.multicase.no/om-multicase"</span>,
+  <span class="key">"isPartOf"</span>: {
+    <span class="key">"@type"</span>: <span class="string">"WebSite"</span>,
+    <span class="key">"url"</span>: <span class="string">"https://www.multicase.no"</span>
+  }
+}</pre>
+                </div>
+            </div>
+
+            <div class="schema-rec priority-3">
+                <div class="rec-header">
+                    <span class="rec-title">Person (Team Members)</span>
+                    <span class="level-tag level-tag--oneoff">One-off</span>
+                    <span class="priority-tag priority-tag--3">Priority 3</span>
+                </div>
+                <p class="rec-why">Strengthens E-E-A-T signals by connecting content and company information to named experts. When AI engines can identify team members with specific expertise, they're more likely to cite company content as authoritative. Good for team/about pages and potentially blog author pages.</p>
+                <p class="rec-detail"><strong>Applies to:</strong> About page team section or individual team member pages (if available) - optional based on content visibility</p>
+                <p class="rec-detail"><strong>Where in HubSpot:</strong> Add to about page using page-level HTML, or create a reusable person module for team pages</p>
+
+                <div class="code-label">JSON-LD Code (Example for Team Member)</div>
+                <div class="code-block">
+                    <pre>{
+  <span class="key">"@context"</span>: <span class="string">"https://schema.org"</span>,
+  <span class="key">"@type"</span>: <span class="string">"Person"</span>,
+  <span class="key">"name"</span>: <span class="string">"[Team Member Name]"</span>,
+  <span class="key">"jobTitle"</span>: <span class="string">"[Job Title]"</span>,
+  <span class="key">"worksFor"</span>: {
+    <span class="key">"@type"</span>: <span class="string">"Organization"</span>,
+    <span class="key">"name"</span>: <span class="string">"Multicase Norge AS"</span>
+  },
+  <span class="key">"description"</span>: <span class="string">"[Brief bio describing expertise]"</span>,
+  <span class="key">"knowsAbout"</span>: [<span class="string">"Business Systems"</span>, <span class="string">"E-commerce"</span>, <span class="string">"Retail Management"</span>]
+}</pre>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- LEVERAGE CALLOUT -->
+        <div class="leverage-callout">
+            <div class="callout-number">18-24 hours = 50+ pages</div>
+            <div class="callout-label">Template-level schema means a small dev investment covers your entire site automatically</div>
+        </div>
+
+        <!-- SECTION 3: IMPLEMENTATION PLAN -->
+        <div class="section">
+            <h2>Implementation Plan</h2>
+            <p class="secondary">Task breakdown with HubSpot-specific instructions and developer hour estimates.</p>
+
+            <h3>Priority 1: Highest Impact</h3>
+            <table class="impl-table">
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Level</th>
+                        <th>Where in HubSpot</th>
+                        <th>Dev</th>
+                        <th>Content</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="task-name">Add Organization schema</div>
+                            <div class="task-detail">Company identity with services, location, founding date, social profiles, employee count, contact info</div>
+                        </td>
+                        <td><span class="level-tag level-tag--sitewide">Site-wide</span></td>
+                        <td>Site Header HTML in HubSpot Settings</td>
+                        <td class="hours hours-dev">1.5h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="task-name">Build FAQ Module</div>
+                            <div class="task-detail">Custom module with repeater fields for Q&A pairs. Module renders visible HTML and generates FAQPage schema automatically</div>
+                        </td>
+                        <td><span class="level-tag level-tag--module">Module</span></td>
+                        <td>HubSpot modules, custom module template + fields.json</td>
+                        <td class="hours hours-dev">3h</td>
+                        <td class="hours hours-content">2-3h</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="task-name">Add Service schema to product pages</div>
+                            <div class="task-detail">Service type schema for main product pages (business system, modules). Uses page title/description or custom fields</div>
+                        </td>
+                        <td><span class="level-tag level-tag--template">Template</span></td>
+                        <td>Product page template or individual page head HTML</td>
+                        <td class="hours hours-dev">2h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                    <tr class="subtotal-row">
+                        <td colspan="3">Priority 1 Subtotal</td>
+                        <td class="hours hours-dev">6.5h</td>
+                        <td class="hours hours-content">2-3h</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Priority 2: Important Foundation</h3>
+            <table class="impl-table">
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Level</th>
+                        <th>Where in HubSpot</th>
+                        <th>Dev</th>
+                        <th>Content</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="task-name">Add WebSite schema</div>
+                            <div class="task-detail">Site-level metadata. Can include SearchAction if site has search function</div>
+                        </td>
+                        <td><span class="level-tag level-tag--sitewide">Site-wide</span></td>
+                        <td>Site Header HTML in HubSpot Settings</td>
+                        <td class="hours hours-dev">0.5h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="task-name">Add BlogPosting schema to blog template</div>
+                            <div class="task-detail">Template-level schema with HubL variables for headline, author, date, image, URL. Covers all 15+ existing blog posts automatically</div>
+                        </td>
+                        <td><span class="level-tag level-tag--template">Template</span></td>
+                        <td>Blog post template in HubSpot CMS</td>
+                        <td class="hours hours-dev">1.5h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="task-name">Add BreadcrumbList to page templates</div>
+                            <div class="task-detail">Navigation hierarchy schema. Can use URL structure or HubL page variables</div>
+                        </td>
+                        <td><span class="level-tag level-tag--template">Template</span></td>
+                        <td>Base template or individual page templates</td>
+                        <td class="hours hours-dev">1.5h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                    <tr class="subtotal-row">
+                        <td colspan="3">Priority 2 Subtotal</td>
+                        <td class="hours hours-dev">3.5h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Priority 3: Valuable Additions</h3>
+            <table class="impl-table">
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Level</th>
+                        <th>Where in HubSpot</th>
+                        <th>Dev</th>
+                        <th>Content</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="task-name">Add WebPage schema to key pages</div>
+                            <div class="task-detail">AboutPage, ContactPage, CollectionPage types for main landing pages. Helps AI understand page purpose</div>
+                        </td>
+                        <td><span class="level-tag level-tag--oneoff">One-off</span></td>
+                        <td>Individual page Head HTML or dedicated schema module</td>
+                        <td class="hours hours-dev">1h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="task-name">Add Person schema for team (optional)</div>
+                            <div class="task-detail">If About page has team information, mark up key team members with job title, expertise, company affiliation</div>
+                        </td>
+                        <td><span class="level-tag level-tag--oneoff">One-off</span></td>
+                        <td>About page Head HTML or custom Person module</td>
+                        <td class="hours hours-dev">1.5h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                    <tr class="subtotal-row">
+                        <td colspan="3">Priority 3 Subtotal</td>
+                        <td class="hours hours-dev">2.5h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Testing and grand total -->
+            <table class="impl-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="task-name">Testing and Validation</div>
+                            <div class="task-detail">Google Rich Results Test, Schema Markup Validator, manual verification across all page types, fix any errors</div>
+                        </td>
+                        <td><span class="level-tag level-tag--sitewide">All</span></td>
+                        <td>External testing tools + HubSpot page verification</td>
+                        <td class="hours hours-dev">2h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                    <tr class="grand-total-row">
+                        <td colspan="3">Grand Total</td>
+                        <td class="hours hours-dev">15.5h dev</td>
+                        <td class="hours hours-content">2-3h content</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note-box">
+                <strong>Note on content hours:</strong> Content hours apply only to FAQ writing. All other schema types (Organization, Service, BlogPosting, BreadcrumbList, WebSite, WebPage, Person) pull content directly from what already exists on the multicase.no site (company info, service descriptions, blog posts, team info, page titles). No new content needs to be written for these. FAQ content hours assume AI generates a first draft of 5-8 Q&A pairs per service page, then a content writer reviews and edits for accuracy (typically 30-60 minutes per page). If Multicase already has FAQ content visible on its product or service pages, these hours drop to zero.
+            </div>
+
+            <div class="note-box" style="margin-top: 12px;">
+                <strong>Note on dev hours:</strong> Dev hours assume AI-assisted development, which roughly halves traditional build times. The template-level efficiency is key: most of the work is done once and applies automatically to all pages of that type. For example, adding BlogPosting schema to the blog template covers all 15+ existing blog posts without individual per-page work. BreadcrumbList on the base template covers 50+ pages automatically. Testing and validation (1-2 hours) is included to ensure all schema is syntactically correct and passes Google Rich Results and Schema Markup Validator checks.
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="report-footer">
+            <div class="footer-brand">Inbound</div>
+            <p>Schema implementation plan prepared by Inbound Group. Structured data recommendations based on analysis of multicase.no site structure, existing content, and best practices for AI search engine visibility.</p>
+            <p style="margin-top: 12px;"><a href="https://inbound.no">inbound.no</a> | Generated on April 10, 2026</p>
+        </div>
+
+    </div>
+</body>
+</html>
