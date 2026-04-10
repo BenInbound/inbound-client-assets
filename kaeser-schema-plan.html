@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schema Implementation Plan -- kaeser.no | Inbound</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Inbound Brand Colors */
+            --color-primary-500: #1f1d49;
+            --color-primary-100: #c6c5e8;
+            --color-accent-500: #ff0056;
+            --color-accent-200: #ff99bb;
+            --color-secondary-300: #92c9ce;
+            --color-base-50: #fdfcfc;
+            --color-base-100: #f8f8f4;
+            --color-base-200: #f2f0ed;
+            --color-base-300: #ece8e4;
+            --color-base-400: #e6e0db;
+            --color-base-500: #e0d9d3;
+            --color-text-dark: #1a1818;
+            --color-text-primary: #1f1d49;
+            --color-white: #ffffff;
+
+            /* Status colors */
+            --color-found: #22c55e;
+            --color-partial: #eab308;
+            --color-missing: #ef4444;
+
+            /* Priority colors */
+            --color-priority-1: #ff0056;
+            --color-priority-2: #1f1d49;
+            --color-priority-3: #92c9ce;
+
+            /* Typography and spacing */
+            --font-family: 'Kumbh Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+            --card-padding: 32px;
+            --content-max-width: 960px;
+            --border-radius-card: 16px;
+            --border-radius-tag: 4px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--color-base-100);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 40px;
+            border-bottom: 2px solid var(--color-primary-500);
+            padding-bottom: 24px;
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--color-primary-500);
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--color-base-400);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card {
+            background: var(--color-white);
+            border-radius: var(--border-radius-card);
+            padding: var(--card-padding);
+            margin-bottom: 32px;
+            border: 1px solid var(--color-base-200);
+        }
+
+        .card h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--color-text-primary);
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .status-item {
+            padding: 20px;
+            border-radius: var(--border-radius-card);
+            text-align: center;
+            font-weight: 600;
+            color: var(--color-white);
+            font-size: 14px;
+        }
+
+        .status-found { background: var(--color-found); }
+        .status-partial { background: var(--color-partial); color: var(--color-text-dark); }
+        .status-missing { background: var(--color-missing); }
+
+        .metric {
+            font-size: 32px;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .checklist {
+            list-style: none;
+        }
+
+        .checklist li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--color-base-200);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-icon {
+            font-weight: 700;
+            margin-top: 2px;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .found .checklist-icon { color: var(--color-found); }
+        .partial .checklist-icon { color: var(--color-partial); }
+        .missing .checklist-icon { color: var(--color-missing); }
+
+        .checklist-content {
+            flex: 1;
+        }
+
+        .checklist-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--color-text-primary);
+        }
+
+        .checklist-desc {
+            font-size: 14px;
+            color: var(--color-base-400);
+            line-height: 1.5;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: var(--border-radius-tag);
+            font-size: 12px;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-top: 8px;
+        }
+
+        .tag-priority-1 {
+            background: var(--color-priority-1);
+            color: var(--color-white);
+        }
+
+        .tag-priority-2 {
+            background: var(--color-priority-2);
+            color: var(--color-white);
+        }
+
+        .tag-priority-3 {
+            background: var(--color-secondary-300);
+            color: var(--color-text-dark);
+        }
+
+        .note {
+            background: var(--color-base-100);
+            border-left: 4px solid var(--color-accent-500);
+            padding: 16px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        .note p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .section-description {
+            color: var(--color-base-400);
+            margin-bottom: 24px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .implementation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .implementation-table thead {
+            background: var(--color-base-100);
+        }
+
+        .implementation-table th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--color-text-primary);
+            border-bottom: 2px solid var(--color-base-200);
+        }
+
+        .implementation-table td {
+            padding: 12px;
+            border-bottom: 1px solid var(--color-base-200);
+            font-size: 14px;
+        }
+
+        .priority-badge {
+            display: inline-block;
+            font-weight: 600;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .priority-1 { background: var(--color-accent-500); color: var(--color-white); }
+        .priority-2 { background: var(--color-primary-500); color: var(--color-white); }
+        .priority-3 { background: var(--color-secondary-300); color: var(--color-text-dark); }
+
+        .timeline {
+            margin: 20px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .timeline-marker {
+            width: 24px;
+            height: 24px;
+            background: var(--color-primary-500);
+            border-radius: 50%;
+            margin-top: 2px;
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .timeline-marker::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 40px;
+            background: var(--color-base-200);
+            left: 11px;
+            top: 24px;
+        }
+
+        .timeline-item:last-child .timeline-marker::after {
+            display: none;
+        }
+
+        .timeline-content {
+            margin-left: 20px;
+            flex: 1;
+        }
+
+        .timeline-content h3 {
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--color-text-primary);
+        }
+
+        .timeline-content p {
+            font-size: 14px;
+            color: var(--color-base-400);
+            margin: 0;
+        }
+
+        footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--color-base-200);
+            text-align: center;
+            font-size: 12px;
+            color: var(--color-base-400);
+        }
+
+        footer p {
+            margin: 8px 0;
+        }
+
+        a {
+            color: var(--color-accent-500);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 20px 16px; }
+            h1 { font-size: 24px; }
+            .card { padding: 24px; }
+            .status-grid { grid-template-columns: 1fr; }
+            .implementation-table { font-size: 12px; }
+            .implementation-table th,
+            .implementation-table td { padding: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="subtitle">Technical Plan</div>
+            <h1>Schema Implementation Plan</h1>
+            <div class="subtitle">kaeser.no</div>
+        </header>
+
+        <!-- Executive Summary -->
+        <div class="card">
+            <h2>Executive Summary</h2>
+            <p class="section-description">This document outlines a comprehensive Schema.org implementation plan for Kaeser.no, focusing on structured data that improves search visibility and enables rich SERP features. The implementation is divided into four priority tiers, with execution recommended to follow this sequence for maximum impact.</p>
+            
+            <div class="status-grid">
+                <div class="status-item status-found">
+                    <span class="metric">4</span>
+                    <span class="metric-label">Schemas Found</span>
+                </div>
+                <div class="status-item status-partial">
+                    <span class="metric">3</span>
+                    <span class="metric-label">Partial Schemas</span>
+                </div>
+                <div class="status-item status-missing">
+                    <span class="metric">8</span>
+                    <span class="metric-label">Opportunities</span>
+                </div>
+            </div>
+
+            <div class="note">
+                <p><strong>Implementation Priority:</strong> Begin with Priority 1 (Organization & Product schemas) as these directly impact SEO performance and knowledge graph eligibility. Priority 2 items enhance local search visibility. Priority 3-4 optimize specific user journeys and conversion tracking.</p>
+            </div>
+        </div>
+
+        <!-- Priority 1: Foundation Schemas -->
+        <div class="card">
+            <h2>Priority 1: Foundation Schemas</h2>
+            <p class="section-description">Core structured data essential for search visibility and brand entity recognition. These schemas establish the foundation for all other structured data implementations.</p>
+            
+            <ul class="checklist">
+                <li class="found">
+                    <span class="checklist-icon">✓</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Organization Schema</div>
+                        <div class="checklist-desc">Already implemented with basic company information. Enhance with: legal name variations, service area (geographic), multiple contact types (sales, support, general), and brand imagery assets. Add logo, sameAs links to verified business profiles.</div>
+                        <div style="margin-top: 8px;">
+                            <span class="tag tag-priority-1">Currently Present</span>
+                            <span class="tag tag-priority-1">High ROI</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="found">
+                    <span class="checklist-icon">✓</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Product Schema</div>
+                        <div class="checklist-desc">Basic product data detected. Enhance with: SKU/part numbers, detailed descriptions, aggregateRating (if reviews exist), offers with pricing and availability, warranty information, and product images (high quality). Link to BrochureURL for PDF specs.</div>
+                        <div style="margin-top: 8px;">
+                            <span class="tag tag-priority-1">Currently Present</span>
+                            <span class="tag tag-priority-1">High Impact</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="missing">
+                    <span class="checklist-icon">+</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">BreadcrumbList Schema</div>
+                        <div class="checklist-desc">Implement on product pages and service pages to show site structure in SERPs. Include: category taxonomy, product lines, and service hierarchies. Critical for improving click-through rates from search results.</div>
+                        <div style="margin-top: 8px;">
+                            <span class="tag tag-priority-1">Missing</span>
+                            <span class="tag tag-priority-1">CTR Impact</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="missing">
+                    <span class="checklist-icon">+</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Website & SearchAction Schema</div>
+                        <div class="checklist-desc">Add schema for site search functionality to enable sitelinks search box in SERPs. Implement WebSite schema with URL, name, and potentialAction with SearchAction query input. Directly improves SERP real estate.</div>
+                        <div style="margin-top: 8px;">
+                            <span class="tag tag-priority-1">Missing</span>
+                            <span class="tag tag-priority-1">SERP Feature</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Priority 2: Local & Service Schemas -->
+        <div class="card">
+            <h2>Priority 2: Local & Service Schemas</h2>
+            <p class="section-description">Regional and service-specific schemas that enhance local search performance and highlight service capabilities. Implement after Priority 1 is complete.</p>
+            
+            <ul class="checklist">
+                <li class="missing">
+                    <span class="checklist-icon">+</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">LocalBusiness Schema</div>
+                        <div class="checklist-desc">Add for each service location: address, phone, hours of operation, service radius, and geographic service area. Include GPS coordinates. Implement on location-specific landing pages. Critical for 'services near me' queries and local pack eligibility.</div>
+                        <div style="margin-top: 8px;">
+                            <span class="tag tag-priority-2">Local Search</span>
+                            <span class="tag tag-priority-2">Missing</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="missing">
+                    <span class="checklist-icon">+</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Service Schema</div>
+                        <div class="checklist-desc">Structure data for each service offering: product/service name, description, price range, service area (geographic), availability. Create individual service pages with detailed Service schema. Enable comparison and filtering on SERPs.</div>
+                        <div style="margin-top: 8px;">
+                            <span class="tag tag-priority-2">Service Visibility</span>
+                            <span class="tag tag-priority-2">High Impact</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="missing">
+                    <span class="checklist-icon">+</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">ServiceArea Schema</div>
+                        <div class="checklist-desc">Specify geographic areas served for each service type. Use GeoCircle or GeoShape to define service radius from main office or regional centers. Supports location-based ranking and helps customers in service areas discover you.</div>
+                        <div style="margin-top: 8px;">
+                            <span class="tag tag-priority-2">Geo-Targeting</span>
+                            <span class="tag tag-priority-2">Missing</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Priority 3: Engagement & Social -->
+        <div class="card">
+            <h2>Priority 3: Engagement & Social Schemas</h2>
+            <p class="section-description">Rich snippets and social validation schemas that increase engagement and click-through rates. Implement after Priority 1 & 2 are stable.</p>
+            
+            <ul class="checklist">
+                <li class="partial">
+                    <span class="checklist-icon">◐</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Review & Rating Schema</div>
+                        <div class="checklist-desc">If you have customer reviews/testimonials: implement AggregateRating and Review schemas. Display star ratings in SERPs. If not currently collecting reviews, implement rating collection and systematic capture strategy. Very high CTR impact when present.</div>
+                        <div style="margin-top: 8px;">
+                            <span class="tag tag-priority-3">Conversion Driver</span>
+                            <span class="tag tag-priority-3">Partial</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="missing">
+                    <span class="checklist-icon">+</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">FAQPage Schema</div>
+                        <div class="checklist-desc">Implement on relevant pages with Question-Answer pairs about products, services, and company. Enables rich snippet with accordion in SERPs. Lower implementation lift with immediate SERP feature potential. Focus on most common customer questions.</div>
+                        <div style="margin-top: 8px;">
+                            <span class="tag tag-priority-3">SERP Feature</span>
+                            <span class="tag tag-priority-3">Easy Win</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="missing">
+                    <span class="checklist-icon">+</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">HowTo Schema</div>
+                        <div class="checklist-desc">For product setup, maintenance guides, or service explanations. Create step-by-step structured guides with images. Useful for rich snippets in Google Images and video SERP features if video included. Educational content positioning.</div>
+                        <div style="margin-top: 8px;">
+                            <span class="tag tag-priority-3">Content Marketing</span>
+                            <span class="tag tag-priority-3">Image SERP</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="partial">
+                    <span class="checklist-icon">◐</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">NewsArticle/BlogPosting Schemas</div>
+                        <div class="checklist-desc">If you have a blog/news section: implement NewsArticle for time-sensitive content and BlogPosting for longer-form guides. Include author, publication date, images, and article body. Improves news feed inclusion and knowledge graph eligibility.</div>
+                        <div style="margin-top: 8px;">
+                            <span class="tag tag-priority-3">Content Discovery</span>
+                            <span class="tag tag-priority-3">Partial</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Priority 4: Analytics & Conversion -->
+        <div class="card">
+            <h2>Priority 4: Analytics & Conversion Tracking</h2>
+            <p class="section-description">Schemas supporting business metrics, conversion tracking, and structured event data. Implement after core SEO schemas are stable.</p>
+            
+            <ul class="checklist">
+                <li class="missing">
+                    <span class="checklist-icon">+</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Event Schema</div>
+                        <div class="checklist-desc">For webinars, product demos, training sessions, or trade shows. Include date, time, location, description, and registration URL. Enables rich snippets in search if events are public. Good for B2B demand generation.</div>
+                        <div style="margin-top: 8px;">
+                            <span class="tag tag-priority-4">Demand Gen</span>
+                            <span class="tag tag-priority-4">Optional</span>
+                        </div>
+                    </div>
+                </li>
+                <li class="missing">
+                    <span class="checklist-icon">+</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">BuyAction Schema</div>
+                        <div class="checklist-desc">Structure purchase flow with Product -> Offer -> BuyAction. Support goal tracking and eCommerce conversion reporting. Link to checkout or quote request. Useful for B2B sales funnel attribution.</div>
+                        <div style="margin-top: 8px;">
+                            <span class="tag tag-priority-4">Conversion</span>
+                            <span class="tag tag-priority-4">Advanced</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="card">
+            <h2>Implementation Roadmap</h2>
+            <p class="section-description">Recommended execution sequence for maximum SEO impact with efficient resource allocation.</p>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>Phase 1: Foundation (Week 1-2)</h3>
+                        <p>Enhance existing Organization & Product schemas. Add BreadcrumbList. Test with Google's Rich Results Test. Setup schema validation in CI/CD pipeline.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>Phase 2: Local & Service (Week 3-4)</h3>
+                        <p>Implement LocalBusiness, Service, and ServiceArea schemas. Create location-specific landing pages. Coordinate with local search strategy.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>Phase 3: Engagement (Week 5-6)</h3>
+                        <p>Deploy FAQ and Review schemas. Launch customer review collection system. Implement HowTo for product guides. Monitor SERP changes.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h3>Phase 4: Advanced (Week 7+)</h3>
+                        <p>Add Event, NewsArticle, and BuyAction schemas. Setup conversion tracking. Implement ongoing monitoring and maintenance processes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Notes -->
+        <div class="card">
+            <h2>Technical Implementation Notes</h2>
+            
+            <h3 style="font-weight: 600; margin: 20px 0 10px 0;">Format & Placement</h3>
+            <ul class="checklist">
+                <li class="found">
+                    <span class="checklist-icon">✓</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">JSON-LD Format Recommended</div>
+                        <div class="checklist-desc">Use JSON-LD (not RDFa or microdata). Place in <code style="background: var(--color-base-100); padding: 2px 6px; border-radius: 3px;">&lt;head&gt;</code> or beginning of <code style="background: var(--color-base-100); padding: 2px 6px; border-radius: 3px;">&lt;body&gt;</code>. Most compatible with Google, Bing, and other search engines.</div>
+                    </div>
+                </li>
+            </ul>
+
+            <h3 style="font-weight: 600; margin: 20px 0 10px 0;">Validation & Testing</h3>
+            <ul class="checklist">
+                <li class="found">
+                    <span class="checklist-icon">✓</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Use Google's Rich Results Test</div>
+                        <div class="checklist-desc">After each implementation phase, validate at <code style="background: var(--color-base-100); padding: 2px 6px; border-radius: 3px;">search.google.com/test/rich-results</code>. Resolve all errors before deployment. Check for warnings and recommendations.</div>
+                    </div>
+                </li>
+                <li class="found">
+                    <span class="checklist-icon">✓</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Use Google's URL Inspection Tool</div>
+                        <div class="checklist-desc">After going live, inspect individual URLs to verify schema is being properly parsed and indexed by Google. Monitor for new errors.</div>
+                    </div>
+                </li>
+                <li class="found">
+                    <span class="checklist-icon">✓</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Setup Search Console Monitoring</div>
+                        <div class="checklist-desc">Watch for schema-related errors and enhancements in Google Search Console. Set up alerts for unexpected declines in rich results coverage.</div>
+                    </div>
+                </li>
+            </ul>
+
+            <h3 style="font-weight: 600; margin: 20px 0 10px 0;">Ongoing Maintenance</h3>
+            <ul class="checklist">
+                <li class="missing">
+                    <span class="checklist-icon">+</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Monthly Validation</div>
+                        <div class="checklist-desc">Run rich results test monthly on updated pages. Monitor for schema errors introduced by content changes.</div>
+                    </div>
+                </li>
+                <li class="missing">
+                    <span class="checklist-icon">+</span>
+                    <div class="checklist-content">
+                        <div class="checklist-title">Update as Business Changes</div>
+                        <div class="checklist-desc">When products, services, locations, or business information changes, immediately update corresponding schemas. Keep data current and accurate.</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Success Metrics -->
+        <div class="card">
+            <h2>Success Metrics & KPIs</h2>
+            <p class="section-description">Track implementation progress and impact with these key metrics:</p>
+            
+            <table class="implementation-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>Target</th>
+                        <th>Timeline</th>
+                        <th>Measurement Tool</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Rich Results Coverage</strong></td>
+                        <td>80%+ of eligible pages</td>
+                        <td>Month 1-2</td>
+                        <td>Google Rich Results Test</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Organic CTR Improvement</strong></td>
+                        <td>+15-30% (with SERP features)</td>
+                        <td>Month 2-3</td>
+                        <td>Google Search Console</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SERP Impressions</strong></td>
+                        <td>+20% increase</td>
+                        <td>Month 2-4</td>
+                        <td>Google Search Console</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Knowledge Graph Eligibility</strong></td>
+                        <td>Organization entity recognition</td>
+                        <td>Month 3-6</td>
+                        <td>Google Search (branded queries)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Local Pack Rankings</strong></td>
+                        <td>Top 5 for service area queries</td>
+                        <td>Month 2-4</td>
+                        <td>Local ranking tracking tool</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Next Steps -->
+        <div class="card">
+            <h2>Next Steps & Resources</h2>
+            
+            <h3 style="font-weight: 600; margin: 20px 0 15px 0;">1. Schema.org Documentation</h3>
+            <p>Review official Schema.org type definitions: <a href="https://schema.org">schema.org</a></p>
+            
+            <h3 style="font-weight: 600; margin: 20px 0 15px 0;">2. Google's Structured Data Guidelines</h3>
+            <p>Follow best practices: <a href="https://developers.google.com/search/docs/guides/search-gallery">Google Search Central - Structured Data</a></p>
+            
+            <h3 style="font-weight: 600; margin: 20px 0 15px 0;">3. Rich Results Gallery</h3>
+            <p>See examples of rich results and SERP features: <a href="https://search.google.com/test/rich-results">Rich Results Gallery</a></p>
+            
+            <h3 style="font-weight: 600; margin: 20px 0 15px 0;">4. Recommended Implementation Approach</h3>
+            <ul style="margin-left: 20px;">
+                <li>Start with Priority 1 schemas (highest impact)</li>
+                <li>Use a schema management solution or template library</li>
+                <li>Implement automated validation in CI/CD</li>
+                <li>Test thoroughly before production deployment</li>
+                <li>Monitor Search Console for errors and enhancements</li>
+                <li>Plan for ongoing maintenance and updates</li>
+            </ul>
+
+            <div class="note" style="margin-top: 20px;">
+                <p><strong>Question?</strong> Consult with SEO team or platform-specific schema documentation before implementing. Some schemas may require backend engineering support. Plan accordingly for development resources.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p style="font-weight: 600;">Schema Implementation Plan — kaeser.no</p>
+            <p>For a compressed air solutions market.</p>
+            <p style="margin-top: 12px;"><a href="https://inbound.no">inbound.no</a> | Generated on April 10, 2026</p>
+        </footer>
+    </div>
+</body>
+</html>
