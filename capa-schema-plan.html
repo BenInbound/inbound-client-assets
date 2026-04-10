@@ -228,17 +228,17 @@
         <div class="summary-grid">
             <div class="summary-card">
                 <div class="card-label">Dev Hours</div>
-                <div class="card-value">17–21h</div>
+                <div class="card-value">17-21h</div>
                 <div class="card-note">Developer implementation</div>
             </div>
             <div class="summary-card">
                 <div class="card-label">Content Hours</div>
-                <div class="card-value">0.5–1h</div>
+                <div class="card-value">0.5-1h</div>
                 <div class="card-note">FAQ review (AI drafted)</div>
             </div>
             <div class="summary-card">
                 <div class="card-label">Total Hours</div>
-                <div class="card-value">17.5–22h</div>
+                <div class="card-value">17.5-22h</div>
                 <div class="card-note">Combined investment</div>
             </div>
             <div class="summary-card">
@@ -247,3 +247,704 @@
                 <div class="card-note">All template-based content</div>
             </div>
         </div>
+
+        <!-- SECTION 1: CURRENT SCHEMA AUDIT -->
+        <div class="section">
+            <h2>Current Schema Audit</h2>
+            <p class="secondary">What structured data your site has today, page by page.</p>
+
+            <table class="audit-table">
+                <thead>
+                    <tr>
+                        <th>Page / Section</th>
+                        <th>Schema Found</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Homepage (capa.no)</td>
+                        <td>Basic Organization (partial)</td>
+                        <td><span class="status status--partial">Partial</span></td>
+                    </tr>
+                    <tr>
+                        <td>Service: Kinoreklame (Cinema Advertising)</td>
+                        <td>None detected</td>
+                        <td><span class="status status--missing">Missing</span></td>
+                    </tr>
+                    <tr>
+                        <td>Service: Filmpartnerskap (Film Partnerships)</td>
+                        <td>None detected</td>
+                        <td><span class="status status--missing">Missing</span></td>
+                    </tr>
+                    <tr>
+                        <td>Service: Events / Experiences</td>
+                        <td>None detected</td>
+                        <td><span class="status status--missing">Missing</span></td>
+                    </tr>
+                    <tr>
+                        <td>About / About CAPA</td>
+                        <td>None detected</td>
+                        <td><span class="status status--missing">Missing</span></td>
+                    </tr>
+                    <tr>
+                        <td>Contact Page</td>
+                        <td>None detected</td>
+                        <td><span class="status status--missing">Missing</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="margin-top: 16px; font-size: 14px; color: var(--color-text-dark); opacity: 0.7;"><strong>Summary:</strong> CAPA's current website has minimal schema markup. While a basic Organization structure exists on the homepage, it is incomplete and lacks critical properties for AI visibility (description, services/knowsAbout, service details, social profiles, contact information). Service pages have no structured data, which means AI engines cannot identify CAPA's specific offerings or match queries about cinema advertising, film placement, or venue rentals to your company.</p>
+        </div>
+
+        <!-- SECTION 2: RECOMMENDED SCHEMA -->
+        <div class="section">
+            <h2>Recommended Schema</h2>
+            <p class="secondary">What to add, why it matters for AI search, and the ready-to-use code.</p>
+
+            <!-- GROUP: Priority 1 -->
+            <h3>Priority 1: Highest Impact</h3>
+
+            <!-- ORGANIZATION -->
+            <div class="schema-rec priority-1">
+                <div class="rec-header">
+                    <span class="rec-title">Organization</span>
+                    <span class="level-tag level-tag--sitewide">Site-wide</span>
+                    <span class="priority-tag priority-tag--1">Priority 1</span>
+                </div>
+                <p class="rec-why">Tells AI search engines exactly what CAPA is: Norway's leading cinema advertising company with expertise in film placement, brand experiences, and audience engagement. This is the foundation for getting cited when someone asks ChatGPT "What companies do cinema advertising in Norway?" or "Where can I place my product in a Norwegian film?"</p>
+                <p class="rec-detail"><strong>Applies to:</strong> All pages (added once in site header)</p>
+                <p class="rec-detail"><strong>Where in HubSpot:</strong> Settings > Website > Pages > Site Header HTML</p>
+                <p class="rec-detail"><strong>Implementation level:</strong> Site-wide. This single block applies to every page of your site.</p>
+
+                <div class="code-label">JSON-LD Code</div>
+                <div class="code-block">
+                    <pre>{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "CAPA Kinoreklame AS",
+  "alternateName": "CAPA",
+  "description": "CAPA is Norway's oldest and most competent company in cinema advertising and film partnerships. We deliver integrated brand solutions through on-screen advertising, product placement, experiential marketing, and premium venue experiences. With reach to approximately 45 cinemas representing 50% of Norwegian cinema visits and 5+ million annual visitors, CAPA connects brands with focused, undisturbed audiences across Norway.",
+  "url": "https://capa.no",
+  "logo": "https://capa.no/assets/logo.svg",
+  "image": "https://capa.no/assets/hero-cinema.jpg",
+  "foundingDate": "1990",
+  "numberOfEmployees": {
+    "@type": "QuantitativeValue",
+    "minValue": 200,
+    "maxValue": 210
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Wergelandsveien 21",
+    "addressLocality": "Oslo",
+    "postalCode": "0167",
+    "addressCountry": "NO"
+  },
+  "areaServed": [
+    {
+      "@type": "Country",
+      "name": "Norway"
+    }
+  ],
+  "knowsAbout": [
+    "Cinema Advertising",
+    "Film Partnerships and Product Placement",
+    "Brand Experiential Marketing",
+    "Venue Marketing and Events",
+    "Audience Targeting and Analytics",
+    "Norwegian Media and Entertainment"
+  ],
+  "sameAs": [
+    "https://www.linkedin.com/company/capa-kinoreklame-as",
+    "https://www.facebook.com/capakinoreklame/"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+47-XXXX-XXXX",
+    "contactType": "sales",
+    "availableLanguage": ["Norwegian", "English"]
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "CAPA Services",
+    "itemListElement": [
+      {
+        "@type": "Service",
+        "name": "Kinoreklame (Cinema Advertising)"
+      },
+      {
+        "@type": "Service",
+        "name": "Filmpartnerskap (Film Partnerships & Product Placement)"
+      },
+      {
+        "@type": "Service",
+        "name": "Events & Venue Experiences"
+      }
+    ]
+  }
+}</pre>
+                </div>
+            </div>
+
+            <!-- SERVICE: CINEMA ADVERTISING -->
+            <div class="schema-rec priority-1">
+                <div class="rec-header">
+                    <span class="rec-title">Service (Cinema Advertising)</span>
+                    <span class="level-tag level-tag--template">Template</span>
+                    <span class="priority-tag priority-tag--1">Priority 1</span>
+                </div>
+                <p class="rec-why">Defines cinema advertising as a specific service CAPA offers, with clear description of how it works, target audiences, and geographic coverage. When AI engines search for "cinema advertising services in Norway" or "film advertising agencies," this schema makes CAPA discoverable and citable with precise details about the service offering.</p>
+                <p class="rec-detail"><strong>Applies to:</strong> /kinoreklame (Cinema Advertising service page)</p>
+                <p class="rec-detail"><strong>Where in HubSpot:</strong> Add to the service page template or directly to the Kinoreklame page via Settings > Advanced > Head HTML</p>
+                <p class="rec-detail"><strong>Implementation level:</strong> Template or one-off page. This is a single service page so template approach is optional.</p>
+
+                <div class="code-label">JSON-LD Code</div>
+                <div class="code-block">
+                    <pre>{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Kinoreklame (Cinema Advertising)",
+  "description": "Professional cinema advertising services that leverage the unique power of film environments to deliver high-impact brand messages. Cinema provides attention that no other media channel can match, with audiences fully present, focused, and undisturbed. CAPA offers flexible targeting options: reach all cinemas and audiences, or select specific locations, cinemas, and programs that match your target demographic. All formats (pre-roll, intervals, post-roll) and creative options available.",
+  "provider": {
+    "@type": "Organization",
+    "name": "CAPA Kinoreklame AS",
+    "url": "https://capa.no"
+  },
+  "serviceType": "Media and Advertising Services",
+  "areaServed": {
+    "@type": "Country",
+    "name": "Norway"
+  },
+  "audience": {
+    "@type": "BusinessAudience",
+    "audienceType": "B2B Brands and Advertisers"
+  },
+  "url": "https://capa.no/kinoreklame",
+  "availableChannel": "https://capa.no/kontakt",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Cinema Advertising Options",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Broad Cinema Coverage"
+        },
+        "description": "Reach all participating cinemas nationwide (45 cinemas, 50% of market, 5M+ annual visitors)"
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Targeted Cinema Selection"
+        },
+        "description": "Select specific regions, locations, and programs to reach your target audience"
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Premium Advertising Formats"
+        },
+        "description": "Pre-roll, interval placement, and post-roll advertising with creative options"
+      }
+    ]
+  }
+}</pre>
+                </div>
+            </div>
+
+            <!-- SERVICE: FILM PARTNERSHIPS -->
+            <div class="schema-rec priority-1">
+                <div class="rec-header">
+                    <span class="rec-title">Service (Film Partnerships & Product Placement)</span>
+                    <span class="level-tag level-tag--template">Template</span>
+                    <span class="priority-tag priority-tag--1">Priority 1</span>
+                </div>
+                <p class="rec-why">Describes film partnerships and product placement as a distinct service, helping AI engines understand that CAPA facilitates brand integration directly into film content. This unlocks queries like "Where can I place my product in a Norwegian film?" or "Product placement services Scandinavia," positioning CAPA as a specialized partner for entertainment marketing.</p>
+                <p class="rec-detail"><strong>Applies to:</strong> /filmpartnerskap (Film Partnerships page)</p>
+                <p class="rec-detail"><strong>Where in HubSpot:</strong> Add to the Filmpartnerskap page via Settings > Advanced > Head HTML or service template</p>
+
+                <div class="code-label">JSON-LD Code</div>
+                <div class="code-block">
+                    <pre>{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Filmpartnerskap (Film Partnerships & Product Placement)",
+  "description": "Strategic brand integration services that place products or brands directly into film narratives. CAPA matches brands with films and audiences, creating authentic brand moments that resonate emotionally and drive recall. Whether through product placement, brand partnerships, or unique film-based brand elements, we help your brand become part of the story audiences remember.",
+  "provider": {
+    "@type": "Organization",
+    "name": "CAPA Kinoreklame AS",
+    "url": "https://capa.no"
+  },
+  "serviceType": "Entertainment Marketing and Brand Integration",
+  "areaServed": {
+    "@type": "Country",
+    "name": "Norway"
+  },
+  "audience": {
+    "@type": "BusinessAudience",
+    "audienceType": "B2B Brands and Advertisers"
+  },
+  "url": "https://capa.no/filmpartnerskap",
+  "availableChannel": "https://capa.no/kontakt",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Film Partnership Options",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Product Placement in Norwegian Films"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Brand Partnership Development"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Film-Based Brand Storytelling"
+        }
+      }
+    ]
+  }
+}</pre>
+                </div>
+            </div>
+
+            <!-- SERVICE: EVENTS & EXPERIENCES -->
+            <div class="schema-rec priority-1">
+                <div class="rec-header">
+                    <span class="rec-title">Service (Events & Premium Venue Experiences)</span>
+                    <span class="level-tag level-tag--template">Template</span>
+                    <span class="priority-tag priority-tag--1">Priority 1</span>
+                </div>
+                <p class="rec-why">Clarifies that CAPA provides venue rental and event services for screenings, product launches, conferences, and brand experiences. This helps AI engines categorize CAPA not just as an advertising company but as a full-service venue and event partner, unlocking queries about cinema rentals and experiential marketing in Norway.</p>
+                <p class="rec-detail"><strong>Applies to:</strong> Events or Venue Services section (if exists, or create)</p>
+                <p class="rec-detail"><strong>Where in HubSpot:</strong> Add via page head HTML or as a dedicated event services template</p>
+
+                <div class="code-label">JSON-LD Code</div>
+                <div class="code-block">
+                    <pre>{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Events & Premium Venue Experiences",
+  "description": "Premium cinema venues available for private screenings, product launches, corporate events, conferences, and brand experiences. CAPA cinemas provide a sophisticated, high-attention environment with professional technology and seamless execution. Perfect for client presentations, team building, premiere events, and exclusive brand moments.",
+  "provider": {
+    "@type": "Organization",
+    "name": "CAPA Kinoreklame AS",
+    "url": "https://capa.no"
+  },
+  "serviceType": "Event Venue and Experience Services",
+  "areaServed": {
+    "@type": "Country",
+    "name": "Norway"
+  },
+  "audience": {
+    "@type": "BusinessAudience",
+    "audienceType": "Corporate Clients and Event Organizers"
+  },
+  "url": "https://capa.no/events",
+  "availableChannel": "https://capa.no/kontakt",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Event Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Private Film Screenings and Premieres"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Product Launch Venues"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Corporate Events and Conferences"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Brand Experience Activations"
+        }
+      }
+    ]
+  }
+}</pre>
+                </div>
+            </div>
+
+            <!-- GROUP: Priority 2 -->
+            <h3>Priority 2: Important Foundation</h3>
+
+            <!-- WEBSITE -->
+            <div class="schema-rec priority-2">
+                <div class="rec-header">
+                    <span class="rec-title">WebSite (with SearchAction)</span>
+                    <span class="level-tag level-tag--sitewide">Site-wide</span>
+                    <span class="priority-tag priority-tag--2">Priority 2</span>
+                </div>
+                <p class="rec-why">Identifies capa.no as a searchable website and provides AI engines with top-level navigation context. Helps AI understand how to query your site and supports features like sitelinks in Google AI Overviews. If CAPA has a site search function, this schema tells AI engines how to search it.</p>
+                <p class="rec-detail"><strong>Applies to:</strong> All pages (added once in site header)</p>
+                <p class="rec-detail"><strong>Where in HubSpot:</strong> Settings > Website > Pages > Site Header HTML (alongside Organization schema)</p>
+
+                <div class="code-label">JSON-LD Code</div>
+                <div class="code-block">
+                    <pre>{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "CAPA Kinoreklame",
+  "url": "https://capa.no",
+  "publisher": {
+    "@type": "Organization",
+    "name": "CAPA Kinoreklame AS"
+  }
+}</pre>
+                </div>
+
+                <p class="rec-detail" style="margin-top: 12px;"><strong>Note:</strong> Include SearchAction only if CAPA has a site search feature. If not currently searchable, omit the potentialAction property. This keeps schema accurate and honest.</p>
+            </div>
+
+            <!-- BREADCRUMBLIST -->
+            <div class="schema-rec priority-2">
+                <div class="rec-header">
+                    <span class="rec-title">BreadcrumbList</span>
+                    <span class="level-tag level-tag--template">Template</span>
+                    <span class="priority-tag priority-tag--2">Priority 2</span>
+                </div>
+                <p class="rec-why">Defines the navigation hierarchy on every page, helping AI engines understand site structure and categorization. When an AI engine reads that a page is under "Services > Cinema Advertising," it better understands context and relevance for user queries.</p>
+                <p class="rec-detail"><strong>Applies to:</strong> All main pages (added to base template)</p>
+                <p class="rec-detail"><strong>Where in HubSpot:</strong> Base template head or individual page templates; uses HubL variables to build breadcrumbs dynamically</p>
+
+                <div class="code-label">JSON-LD Code (Example: Cinema Advertising page)</div>
+                <div class="code-block">
+                    <pre>{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://capa.no"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Services",
+      "item": "https://capa.no/services"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Kinoreklame (Cinema Advertising)",
+      "item": "https://capa.no/kinoreklame"
+    }
+  ]
+}</pre>
+                </div>
+
+                <p class="rec-detail" style="margin-top: 12px;"><strong>Build approach in HubSpot:</strong> Use HubL variables (content.name, content.parent_blog, URL structure) to dynamically generate breadcrumbs. Adjust position and item values based on actual site navigation.</p>
+            </div>
+
+            <!-- GROUP: Priority 3 -->
+            <h3>Priority 3: Valuable Additions</h3>
+
+            <!-- FAQ PAGE (for service pages) -->
+            <div class="schema-rec priority-3">
+                <div class="rec-header">
+                    <span class="rec-title">FAQPage Module</span>
+                    <span class="level-tag level-tag--module">Module</span>
+                    <span class="priority-tag priority-tag--3">Priority 3</span>
+                </div>
+                <p class="rec-why">Captures question-and-answer content about CAPA's services in a structured format that AI engines can extract and cite directly. If someone asks ChatGPT "How much does cinema advertising cost?" or "What is product placement in film?", having FAQ schema with clear answers increases the likelihood CAPA is cited as the source.</p>
+                <p class="rec-detail"><strong>Applies to:</strong> Service pages (Kinoreklame, Filmpartnerskap, Events) if FAQ sections exist</p>
+                <p class="rec-detail"><strong>Where in HubSpot:</strong> Build as a reusable FAQ module. Editors add Q&A pairs; the module generates both visible HTML and hidden FAQPage schema automatically.</p>
+
+                <div class="code-label">Sample FAQ Schema (from Cinema Advertising page)</div>
+                <div class="code-block">
+                    <pre>{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much does cinema advertising cost in Norway?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cinema advertising pricing depends on your target audience, selected cinemas, program placement, and duration. CAPA offers flexible packages ranging from broad national campaigns to targeted regional and demographic selections. Contact CAPA for a custom quote based on your campaign goals and budget."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How many cinemas does CAPA reach?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CAPA distributes to approximately 45 cinemas across Norway, representing roughly 50% of the total cinema market and reaching over 5 million annual visitors."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I target specific audiences with cinema advertising?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. CAPA allows you to select specific cinemas, locations, and film programs to match your target demographic. You can choose broad national coverage or precise segment targeting depending on your campaign strategy."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What advertising formats are available?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "CAPA offers pre-roll (before the film), interval (during intermission), and post-roll (after the film) advertising placements in various creative formats."
+      }
+    }
+  ]
+}</pre>
+                </div>
+
+                <p class="rec-detail" style="margin-top: 12px;"><strong>Important:</strong> Only add FAQ schema for questions that are actually visible and answered on the page. Do not create schema for hidden Q&A. The FAQ content must be real and user-facing.</p>
+            </div>
+
+            <!-- WEBSITE (AboutPage) -->
+            <div class="schema-rec priority-3">
+                <div class="rec-header">
+                    <span class="rec-title">WebPage (AboutPage)</span>
+                    <span class="level-tag level-tag--oneoff">One-off Page</span>
+                    <span class="priority-tag priority-tag--3">Priority 3</span>
+                </div>
+                <p class="rec-why">Marks the about page as an authoritative source for company information. AI engines treat AboutPage differently from regular content pages, prioritizing it when seeking facts about the company's mission, history, and leadership.</p>
+                <p class="rec-detail"><strong>Applies to:</strong> /om-capa (About page)</p>
+                <p class="rec-detail"><strong>Where in HubSpot:</strong> Page settings > Advanced > Head HTML</p>
+
+                <div class="code-label">JSON-LD Code</div>
+                <div class="code-block">
+                    <pre>{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "About CAPA",
+  "description": "Learn about CAPA Kinoreklame, Norway's oldest and most competent cinema advertising company. Founded in 1990, CAPA delivers integrated brand solutions through cinema advertising, film partnerships, and premium venue experiences.",
+  "url": "https://capa.no/om-capa",
+  "isPartOf": {
+    "@type": "WebSite",
+    "url": "https://capa.no",
+    "name": "CAPA Kinoreklame"
+  }
+}</pre>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- LEVERAGE CALLOUT -->
+        <div class="leverage-callout">
+            <div class="callout-number">4-6 hours = 45+ pages</div>
+            <div class="callout-label">Template-level schema means one implementation covers all service pages, reaching 45+ cinemas and millions of potential customers</div>
+        </div>
+
+        <!-- SECTION 3: IMPLEMENTATION PLAN -->
+        <div class="section">
+            <h2>Implementation Plan</h2>
+            <p class="secondary">Task breakdown with HubSpot-specific instructions and developer hour estimates.</p>
+
+            <h3>Priority 1: Highest Impact</h3>
+            <table class="impl-table">
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Level</th>
+                        <th>Where in HubSpot</th>
+                        <th>Dev</th>
+                        <th>Content</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="task-name">Add Organization schema</div>
+                            <div class="task-detail">Rich company identity with services, locations, expertise, social profiles</div>
+                        </td>
+                        <td><span class="level-tag level-tag--sitewide">Site-wide</span></td>
+                        <td>Site Header HTML in HubSpot Settings</td>
+                        <td class="hours hours-dev">1.5-2h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="task-name">Add Service schema: Cinema Advertising</div>
+                            <div class="task-detail">Kinoreklame service definition with audience, areaServed, and catalog of offer options</div>
+                        </td>
+                        <td><span class="level-tag level-tag--template">Template</span></td>
+                        <td>Kinoreklame page head HTML or service template</td>
+                        <td class="hours hours-dev">1-1.5h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="task-name">Add Service schema: Film Partnerships</div>
+                            <div class="task-detail">Filmpartnerskap service definition with product placement and brand integration details</div>
+                        </td>
+                        <td><span class="level-tag level-tag--template">Template</span></td>
+                        <td>Filmpartnerskap page head HTML or service template</td>
+                        <td class="hours hours-dev">1-1.5h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="task-name">Add Service schema: Events & Experiences</div>
+                            <div class="task-detail">Events/venue service definition for corporate events, screenings, product launches</div>
+                        </td>
+                        <td><span class="level-tag level-tag--template">Template</span></td>
+                        <td>Events page head HTML (create if needed)</td>
+                        <td class="hours hours-dev">1-1.5h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                    <tr class="subtotal-row">
+                        <td colspan="3">Priority 1 Subtotal</td>
+                        <td class="hours hours-dev">4.5-6h</td>
+                        <td class="hours hours-content">0h</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Priority 2: Important Foundation</h3>
+            <table class="impl-table">
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Level</th>
+                        <th>Where in HubSpot</th>
+                        <th>Dev</th>
+                        <th>Content</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="task-name">Add WebSite schema</div>
+                            <div class="task-detail">Site-wide WebSite definition with SearchAction (if applicable)</div>
+                        </td>
+                        <td><span class="level-tag level-tag--sitewide">Site-wide</span></td>
+                        <td>Site Header HTML in HubSpot Settings (alongside Organization)</td>
+                        <td class="hours hours-dev">0.5-1h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="task-name">Add BreadcrumbList to templates</div>
+                            <div class="task-detail">Dynamic breadcrumb schema for service pages and other hierarchical content</div>
+                        </td>
+                        <td><span class="level-tag level-tag--template">Template</span></td>
+                        <td>Base template head or individual page templates (HubL)</td>
+                        <td class="hours hours-dev">1.5-2h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                    <tr class="subtotal-row">
+                        <td colspan="3">Priority 2 Subtotal</td>
+                        <td class="hours hours-dev">2-3h</td>
+                        <td class="hours hours-content">0h</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Priority 3: Valuable Additions</h3>
+            <table class="impl-table">
+                <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Level</th>
+                        <th>Where in HubSpot</th>
+                        <th>Dev</th>
+                        <th>Content</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="task-name">Build FAQ module</div>
+                            <div class="task-detail">Reusable module for service pages; editors add Q&A, module outputs HTML + FAQPage schema</div>
+                        </td>
+                        <td><span class="level-tag level-tag--module">Module</span></td>
+                        <td>Custom module (fields.json + module.html)</td>
+                        <td class="hours hours-dev">2-3h</td>
+                        <td class="hours hours-content">0.5-1h</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="task-name">Add AboutPage schema</div>
+                            <div class="task-detail">Mark about page as authoritative source for company info</div>
+                        </td>
+                        <td><span class="level-tag level-tag--oneoff">One-off Page</span></td>
+                        <td>About page head HTML</td>
+                        <td class="hours hours-dev">0.5-1h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                    <tr class="subtotal-row">
+                        <td colspan="3">Priority 3 Subtotal</td>
+                        <td class="hours hours-dev">2.5-4h</td>
+                        <td class="hours hours-content">0.5-1h</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Testing and Grand Total -->
+            <table class="impl-table">
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="task-name">Testing and Validation</div>
+                            <div class="task-detail">Google Rich Results Test, Schema.org validator, manual verification across all page types, fixes for any issues</div>
+                        </td>
+                        <td><span class="level-tag level-tag--sitewide">All</span></td>
+                        <td>External testing tools + HubSpot page editor</td>
+                        <td class="hours hours-dev">2-3h</td>
+                        <td class="hours hours-content">--</td>
+                    </tr>
+                    <tr class="grand-total-row">
+                        <td colspan="3">Grand Total (All Priorities)</td>
+                        <td class="hours hours-dev">17-21h dev</td>
+                        <td class="hours hours-content">0.5-1h content</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note-box">
+                <strong>Note on content hours:</strong> Content hours apply only to FAQ writing. All other schema types (Organization, Service, WebSite, BreadcrumbList, AboutPage) pull content directly from what already exists on CAPA's site: company description, service names, team bios, page titles, social media URLs. No new content needs to be written for these. FAQ content hours assume AI generates a first draft of 5-8 Q&A pairs per service page (0.5-1h total), then a content writer reviews and edits for accuracy and brand voice. This is significantly faster than writing FAQ content from scratch. If CAPA already has FAQ sections on its service pages, these hours drop to zero--the developer just maps the existing content into the schema.
+            </div>
+
+            <div class="note-box" style="margin-top: 12px;">
+                <strong>Note on dev hours:</strong> Estimates assume AI-assisted development using code generation and templates from this plan. Traditional implementation (writing schema from scratch without AI support) would take 1.5-2x longer. Template-level work (BreadcrumbList, Service schema) means a small up-front investment that automatically covers all pages of that type--for example, one BreadcrumbList implementation in the base template applies to 45+ pages across CAPA's site. Testing is included in the final 2-3 hours. Work can be split across multiple sprints if needed (e.g., Priority 1 in Sprint 1, Priority 2-3 in Sprint 2).
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="report-footer">
+            <div class="footer-brand">Inbound</div>
+            <p>Schema implementation plan prepared by Inbound Group. Structured data recommendations based on analysis of CAPA's existing markup, site structure, business model, and best practices for AI search engine visibility.</p>
+            <p>For more information about schema implementation and AI visibility, visit <a href="https://inbound.no">inbound.no</a></p>
+            <p style="margin-top: 12px;">Generated on April 10, 2026</p>
+        </div>
+
+    </div>
+</body>
+</html>
