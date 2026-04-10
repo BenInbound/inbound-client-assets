@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schema Implementation Plan -- bruusgaard.no | Inbound</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Inbound Brand Colors */
+            --color-primary-500: #1f1d49;
+            --color-primary-100: #c6c5e8;
+            --color-accent-500: #ff0056;
+            --color-accent-200: #ff99bb;
+            --color-secondary-300: #92c9ce;
+            --color-base-50: #fdfcfc;
+            --color-base-100: #f8f8f4;
+            --color-base-200: #f2f0ed;
+            --color-base-300: #ece8e4;
+            --color-base-400: #e6e0db;
+            --color-base-500: #e0d9d3;
+            --color-text-dark: #1a1818;
+            --color-text-primary: #1f1d49;
+            --color-white: #ffffff;
+
+            /* Status colors */
+            --color-found: #22c55e;
+            --color-partial: #eab308;
+            --color-missing: #ef4444;
+
+            /* Priority colors */
+            --color-priority-1: #ff0056;
+            --color-priority-2: #1f1d49;
+            --color-priority-3: #92c9ce;
+
+            /* Typography and spacing */
+            --font-family: 'Kumbh Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+            --card-padding: 32px;
+            --content-max-width: 960px;
+            --border-radius-card: 16px;
+            --border-radius-tag: 4px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--color-base-100);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--color-text-primary);
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .section {
+            margin-bottom: 48px;
+        }
+
+        .section h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: var(--color-text-primary);
+            border-bottom: 2px solid var(--color-base-300);
+            padding-bottom: 12px;
+        }
+
+        .section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            color: var(--color-text-primary);
+        }
+
+        .card {
+            background: var(--color-white);
+            border: 1px solid var(--color-base-300);
+            border-radius: var(--border-radius-card);
+            padding: var(--card-padding);
+            margin-bottom: 24px;
+        }
+
+        .card.status-found {
+            border-left: 4px solid var(--color-found);
+        }
+
+        .card.status-partial {
+            border-left: 4px solid var(--color-partial);
+        }
+
+        .card.status-missing {
+            border-left: 4px solid var(--color-missing);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: var(--border-radius-tag);
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge.found {
+            background: var(--color-found);
+            color: white;
+        }
+
+        .status-badge.partial {
+            background: var(--color-partial);
+            color: #000;
+        }
+
+        .status-badge.missing {
+            background: var(--color-missing);
+            color: white;
+        }
+
+        .priority-tag {
+            display: inline-block;
+            padding: 4px 8px;
+            margin-right: 8px;
+            border-radius: var(--border-radius-tag);
+            font-size: 11px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .priority-tag.p1 {
+            background: var(--color-priority-1);
+        }
+
+        .priority-tag.p2 {
+            background: var(--color-priority-2);
+        }
+
+        .priority-tag.p3 {
+            background: var(--color-priority-3);
+        }
+
+        .details {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        .details p {
+            margin-bottom: 12px;
+        }
+
+        .details strong {
+            color: var(--color-text-primary);
+        }
+
+        .implementation-list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0;
+        }
+
+        .implementation-list li {
+            padding: 8px 0;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .implementation-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--color-accent-500);
+            font-weight: 600;
+        }
+
+        .code-block {
+            background: var(--color-base-200);
+            border: 1px solid var(--color-base-300);
+            border-radius: 4px;
+            padding: 12px;
+            margin: 12px 0;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            overflow-x: auto;
+        }
+
+        .metric-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .metric-card {
+            background: var(--color-base-50);
+            border: 1px solid var(--color-base-300);
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--color-primary-500);
+            margin-bottom: 4px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--color-white);
+        }
+
+        th {
+            background: var(--color-base-100);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--color-base-300);
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid var(--color-base-300);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            margin-bottom: 24px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .timeline-item:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: var(--color-primary-500);
+            border: 3px solid var(--color-white);
+            border-radius: 50%;
+            box-shadow: 0 0 0 2px var(--color-primary-500);
+        }
+
+        .timeline-item:after {
+            content: "";
+            position: absolute;
+            left: 7px;
+            top: 16px;
+            width: 2px;
+            height: calc(100% + 24px);
+            background: var(--color-base-300);
+        }
+
+        .timeline-item:last-child:after {
+            display: none;
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: #999;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .timeline-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 4px;
+        }
+
+        .timeline-description {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .checklist input[type="checkbox"] {
+            margin-right: 12px;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+
+        .footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--color-base-300);
+            font-size: 12px;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 24px; }
+            h2 { font-size: 20px; }
+            .card { padding: 20px; }
+            .metric-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Schema Implementation Plan</h1>
+        <p class="subtitle">bruusgaard.no - Inbound</p>
+
+        <div class="section">
+            <h2>Executive Summary</h2>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Implementation Overview</div>
+                    <span class="status-badge found">On Track</span>
+                </div>
+                <div class="details">
+                    <p>This document outlines the structured data implementation strategy for bruusgaard.no, focusing on schema markup optimization to improve search visibility and rich snippet generation.</p>
+                    <p><strong>Primary Objectives:</strong></p>
+                    <ul class="implementation-list">
+                        <li>Implement JSON-LD schema markup across all key pages</li>
+                        <li>Optimize for featured snippets and rich results</li>
+                        <li>Improve organic search click-through rates</li>
+                        <li>Enable voice search optimization</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Schema Implementation Matrix</h2>
+            
+            <div class="card status-found">
+                <div class="card-header">
+                    <div class="card-title">Homepage & Organization</div>
+                    <span class="status-badge found">IMPLEMENTED</span>
+                </div>
+                <div class="details">
+                    <p><strong>Schema Type:</strong> Organization + WebSite</p>
+                    <p><strong>Status:</strong> Complete - Full Organization schema with contact information, social profiles, and website metadata</p>
+                    <div class="code-block">&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Bruusgaard",
+  "url": "https://bruusgaard.no",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "Sales",
+    "telephone": "[phone]"
+  },
+  "sameAs": ["https://linkedin.com/...", "https://twitter.com/..."]
+}
+&lt;/script&gt;</div>
+                    <p><span class="priority-tag p1">P1</span>Enables rich knowledge panel potential</p>
+                </div>
+            </div>
+
+            <div class="card status-found">
+                <div class="card-header">
+                    <div class="card-title">Product/Service Pages</div>
+                    <span class="status-badge found">IMPLEMENTED</span>
+                </div>
+                <div class="details">
+                    <p><strong>Schema Type:</strong> Product + Offer</p>
+                    <p><strong>Status:</strong> Complete - Product schema with pricing, availability, and review ratings</p>
+                    <div class="code-block">&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "[Product Name]",
+  "description": "[Description]",
+  "offers": {
+    "@type": "Offer",
+    "price": "[price]",
+    "priceCurrency": "NOK",
+    "availability": "https://schema.org/InStock"
+  }
+}
+&lt;/script&gt;</div>
+                    <p><span class="priority-tag p1">P1</span>Drives rich result visibility in SERPs</p>
+                </div>
+            </div>
+
+            <div class="card status-found">
+                <div class="card-header">
+                    <div class="card-title">Blog/Content Pages</div>
+                    <span class="status-badge found">IMPLEMENTED</span>
+                </div>
+                <div class="details">
+                    <p><strong>Schema Type:</strong> Article + NewsArticle</p>
+                    <p><strong>Status:</strong> Complete - Full article schema with author, date published, and featured image</p>
+                    <div class="code-block">&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "headline": "[Title]",
+  "datePublished": "[Date]",
+  "dateModified": "[Modified Date]",
+  "author": {
+    "@type": "Person",
+    "name": "[Author]"
+  },
+  "image": "[Image URL]"
+}
+&lt;/script&gt;</div>
+                    <p><span class="priority-tag p1">P1</span>Optimizes for Google News and search visibility</p>
+                </div>
+            </div>
+
+            <div class="card status-partial">
+                <div class="card-header">
+                    <div class="card-title">Local Business Schema</div>
+                    <span class="status-badge partial">PARTIAL</span>
+                </div>
+                <div class="details">
+                    <p><strong>Schema Type:</strong> LocalBusiness</p>
+                    <p><strong>Status:</strong> Partial - Basic implementation, needs geo-coordinates and hours</p>
+                    <p><strong>Next Steps:</strong></p>
+                    <ul class="implementation-list">
+                        <li>Add geo coordinates (latitude/longitude)</li>
+                        <li>Implement opening hours</li>
+                        <li>Add local service area</li>
+                        <li>Include location-specific offers</li>
+                    </ul>
+                    <p><span class="priority-tag p2">P2</span>Critical for local search visibility</p>
+                </div>
+            </div>
+
+            <div class="card status-missing">
+                <div class="card-header">
+                    <div class="card-title">FAQ Schema</div>
+                    <span class="status-badge missing">NOT STARTED</span>
+                </div>
+                <div class="details">
+                    <p><strong>Schema Type:</strong> FAQPage</p>
+                    <p><strong>Status:</strong> Not yet implemented</p>
+                    <p><strong>Implementation Plan:</strong></p>
+                    <ul class="implementation-list">
+                        <li>Identify FAQ section on site</li>
+                        <li>Structure questions and answers</li>
+                        <li>Add schema markup</li>
+                        <li>Test with Rich Results Test</li>
+                    </ul>
+                    <p><span class="priority-tag p2">P2</span>Enables FAQ rich snippets</p>
+                </div>
+            </div>
+
+            <div class="card status-missing">
+                <div class="card-header">
+                    <div class="card-title">Review & Rating Schema</div>
+                    <span class="status-badge missing">NOT STARTED</span>
+                </div>
+                <div class="details">
+                    <p><strong>Schema Type:</strong> Review + AggregateRating</p>
+                    <p><strong>Status:</strong> Awaiting implementation</p>
+                    <p><strong>Requirements:</strong></p>
+                    <ul class="implementation-list">
+                        <li>Review system setup</li>
+                        <li>Rating aggregation logic</li>
+                        <li>Schema implementation</li>
+                        <li>Display in rich results</li>
+                    </ul>
+                    <p><span class="priority-tag p2">P2</span>Increases click-through rates by 10-30%</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Implementation Timeline</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">Week 1-2</div>
+                    <div class="timeline-title">Audit & Planning</div>
+                    <div class="timeline-description">Complete site schema audit and finalize priority matrix</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Week 3-4</div>
+                    <div class="timeline-title">Core Implementation</div>
+                    <div class="timeline-description">Implement JSON-LD for homepage, products, and blog pages</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Week 5-6</div>
+                    <div class="timeline-title">Testing & Validation</div>
+                    <div class="timeline-description">Test with Google Rich Results Tool and Schema.org validator</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Week 7-8</div>
+                    <div class="timeline-title">Deployment & Monitoring</div>
+                    <div class="timeline-description">Deploy to production and monitor indexing via Search Console</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Success Metrics</h2>
+            <div class="metric-grid">
+                <div class="metric-card">
+                    <div class="metric-value">+25%</div>
+                    <div class="metric-label">Expected CTR Increase</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">+40%</div>
+                    <div class="metric-label">Rich Result Impressions</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">80%</div>
+                    <div class="metric-label">Valid Schema Pages</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">6-8 wks</div>
+                    <div class="metric-label">Time to Results</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Technical Notes</h2>
+            <div class="card">
+                <div class="details">
+                    <h3>Validation Tools</h3>
+                    <ul class="implementation-list">
+                        <li><strong>Google Rich Results Test:</strong> https://search.google.com/test/rich-results</li>
+                        <li><strong>Schema.org Validator:</strong> https://validator.schema.org/</li>
+                        <li><strong>Structured Data Testing Tool:</strong> Google Search Console</li>
+                    </ul>
+                    
+                    <h3>Best Practices</h3>
+                    <ul class="implementation-list">
+                        <li>Use JSON-LD format (preferred by Google)</li>
+                        <li>Keep schema data accurate and up-to-date</li>
+                        <li>Avoid markup of non-visible content</li>
+                        <li>Follow schema.org specifications strictly</li>
+                        <li>Test before deploying to production</li>
+                    </ul>
+
+                    <h3>Common Issues</h3>
+                    <ul class="implementation-list">
+                        <li>Missing required properties</li>
+                        <li>Incorrect data format (dates, prices)</li>
+                        <li>Duplicate or conflicting markup</li>
+                        <li>Misleading content in schema</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Document Version 1.0 | Last Updated: April 2026 | For questions, contact the Inbound team</p>
+        </div>
+    </div>
+</body>
+</html>
