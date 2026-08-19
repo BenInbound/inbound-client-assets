@@ -160,7 +160,7 @@ footer .fgrid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;}
   </div>
 
   <div class="lang-flag" style="margin-top:28px;">
-    <strong>A note on language.</strong> This report is written in English for internal review, but inbound.no is a Norwegian site (<code>&lt;html lang="no"&gt;</code>). Schema.org property keys are always English and cannot be translated. Property <em>values</em> must match the language of the page they sit on, so every content value in the JSON-LD below is written in Norwegian, and every block sets <code>"inLanguage": "nb-NO"</code>. A language mismatch between schema and page content signals to AI engines that the markup may not represent the page, which hurts visibility rather than helping it.
+    <strong>A note on language.</strong> This report is written in English for internal review, but inbound.no is a Norwegian site (<code>&lt;html lang="no"&gt;</code>). Schema.org property keys are always English and cannot be translated. Property <em>values</em> must match the language of the page they sit on, so every content value in the JSON-LD below is written in Norwegian, and every block that schema.org permits it on sets <code>"inLanguage": "nb-NO"</code>. That property is only valid on CreativeWork and Event types, so it is deliberately absent from the Organization, Service, Person and OfferCatalog blocks &ndash; those carry <code>knowsLanguage</code> instead, or rely on the page's own <code>lang</code> attribute. A language mismatch between schema and page content signals to AI engines that the markup may not represent the page, which hurts visibility rather than helping it.
   </div>
 
   <div class="note" style="margin-top:24px;">
@@ -296,7 +296,7 @@ footer .fgrid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;}
   <div class="sechead">
     <span class="secnum">Part 3</span>
     <h2>The schema that should go in</h2>
-    <p>Every block below is pre-filled with Inbound's own data &ndash; company registration number, address, prices, staff, services. Content values are in Norwegian because the pages are in Norwegian, and each block sets <code>inLanguage: "nb-NO"</code>. Hit Copy and paste straight in.</p>
+    <p>Every block below is pre-filled with Inbound's own data &ndash; company registration number, address, prices, staff, services. Content values are in Norwegian because the pages are in Norwegian, and <code>inLanguage: "nb-NO"</code> is set on every block whose type permits it. Hit Copy and paste straight in.</p>
   </div>
 
   <div class="note" style="margin-bottom:44px;">
@@ -331,7 +331,6 @@ footer .fgrid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;}
   <span class="k">"foundingDate"</span>: <span class="s">"2015-03-20"</span>,
   <span class="k">"vatID"</span>: <span class="s">"NO915328245MVA"</span>,
   <span class="k">"taxID"</span>: <span class="s">"915328245"</span>,
-  <span class="k">"inLanguage"</span>: <span class="s">"nb-NO"</span>,
   <span class="k">"address"</span>: {
     <span class="k">"@type"</span>: <span class="s">"PostalAddress"</span>,
     <span class="k">"streetAddress"</span>: <span class="s">"Rådhusgata 9"</span>,
@@ -525,7 +524,6 @@ footer .fgrid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;}
   <span class="k">"name"</span>: <span class="s">"<span class="hubl">{{ content.name|striptags|escapejson }}</span>"</span>,
   <span class="k">"description"</span>: <span class="s">"<span class="hubl">{{ content.meta_description|striptags|escapejson }}</span>"</span>,
   <span class="k">"url"</span>: <span class="s">"<span class="hubl">{{ content.absolute_url }}</span>"</span>,
-  <span class="k">"inLanguage"</span>: <span class="s">"nb-NO"</span>,
   <span class="k">"serviceType"</span>: <span class="s">"B2B-markedsføring"</span>,
   <span class="k">"category"</span>: <span class="s">"Markedsføringstjenester"</span>,
   <span class="k">"provider"</span>: { <span class="k">"@id"</span>: <span class="s">"https://www.inbound.no/#organisasjon"</span> },
@@ -539,7 +537,7 @@ footer .fgrid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;}
     <span class="k">"@type"</span>: <span class="s">"Offer"</span>,
     <span class="k">"priceCurrency"</span>: <span class="s">"NOK"</span>,
     <span class="k">"priceSpecification"</span>: {
-      <span class="k">"@type"</span>: <span class="s">"PriceSpecification"</span>,
+      <span class="k">"@type"</span>: <span class="s">"UnitPriceSpecification"</span>,
       <span class="k">"minPrice"</span>: <span class="n">50000</span>,
       <span class="k">"maxPrice"</span>: <span class="n">100000</span>,
       <span class="k">"priceCurrency"</span>: <span class="s">"NOK"</span>,
@@ -547,8 +545,7 @@ footer .fgrid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;}
     },
     <span class="k">"url"</span>: <span class="s">"https://www.inbound.no/priser"</span>,
     <span class="k">"availability"</span>: <span class="s">"https://schema.org/InStock"</span>
-  },
-  <span class="k">"isPartOf"</span>: { <span class="k">"@id"</span>: <span class="s">"https://www.inbound.no/#nettsted"</span> }
+  }
 }
 &lt;/script&gt;</code></pre>
     </div>
@@ -618,7 +615,6 @@ footer .fgrid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;}
   <span class="k">"familyName"</span>: <span class="s">"Ekrann Esposito"</span>,
   <span class="k">"jobTitle"</span>: <span class="s">"Daglig leder og partner"</span>,
   <span class="k">"url"</span>: <span class="s">"https://www.inbound.no/guro-ekrann"</span>,
-  <span class="k">"inLanguage"</span>: <span class="s">"nb-NO"</span>,
   <span class="k">"worksFor"</span>: { <span class="k">"@id"</span>: <span class="s">"https://www.inbound.no/#organisasjon"</span> },
   <span class="k">"knowsAbout"</span>: [
     <span class="s">"B2B-markedsføring"</span>,
@@ -754,11 +750,10 @@ footer .fgrid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;}
   <span class="k">"name"</span>: <span class="s">"Inbound-abonnementer"</span>,
   <span class="k">"description"</span>: <span class="s">"Markedsføring på abonnementsbasis. Abonnementsnivået avgjør hvor mye tid teamet bruker på bedriften din hver måned."</span>,
   <span class="k">"url"</span>: <span class="s">"https://www.inbound.no/priser"</span>,
-  <span class="k">"inLanguage"</span>: <span class="s">"nb-NO"</span>,
-  <span class="k">"provider"</span>: { <span class="k">"@id"</span>: <span class="s">"https://www.inbound.no/#organisasjon"</span> },
   <span class="k">"itemListElement"</span>: [
     {
       <span class="k">"@type"</span>: <span class="s">"Offer"</span>,
+      <span class="k">"seller"</span>: { <span class="k">"@id"</span>: <span class="s">"https://www.inbound.no/#organisasjon"</span> },
       <span class="k">"name"</span>: <span class="s">"Rask"</span>,
       <span class="k">"description"</span>: <span class="s">"Begrenset markedsbudsjett? Start med noen få, målrettede tiltak der det brenner."</span>,
       <span class="k">"price"</span>: <span class="s">"50000"</span>,
@@ -775,6 +770,7 @@ footer .fgrid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;}
     },
     {
       <span class="k">"@type"</span>: <span class="s">"Offer"</span>,
+      <span class="k">"seller"</span>: { <span class="k">"@id"</span>: <span class="s">"https://www.inbound.no/#organisasjon"</span> },
       <span class="k">"name"</span>: <span class="s">"Raskere"</span>,
       <span class="k">"description"</span>: <span class="s">"Få en god balanse mellom pris og hurtige resultater. Et smart valg for mange."</span>,
       <span class="k">"price"</span>: <span class="s">"75000"</span>,
@@ -791,6 +787,7 @@ footer .fgrid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;}
     },
     {
       <span class="k">"@type"</span>: <span class="s">"Offer"</span>,
+      <span class="k">"seller"</span>: { <span class="k">"@id"</span>: <span class="s">"https://www.inbound.no/#organisasjon"</span> },
       <span class="k">"name"</span>: <span class="s">"Raskest"</span>,
       <span class="k">"description"</span>: <span class="s">"Vil du se resultater fortest mulig? Få en skikkelig pangstart, med mange tiltak på én gang."</span>,
       <span class="k">"price"</span>: <span class="s">"100000"</span>,
@@ -1074,7 +1071,7 @@ footer .fgrid{display:grid;grid-template-columns:1.4fr 1fr;gap:40px;}
   <div class="fgrid">
     <div>
       <div class="brandmark" style="font-size:26px;margin-bottom:16px;">inbound<span style="color:var(--a500);">.</span> schema</div>
-      <p style="opacity:.8;max-width:520px;">Schema plan for www.inbound.no. All 204 URLs in the sitemap were scanned and grouped by template. Every JSON-LD block is filled in with Inbound's own data and written in Norwegian with <code style="background:rgba(255,255,255,.12);color:#fff;">inLanguage: "nb-NO"</code>, matching the language of the pages.</p>
+      <p style="opacity:.8;max-width:520px;">Schema plan for www.inbound.no. All 204 URLs in the sitemap were scanned and grouped by template. Every JSON-LD block is filled in with Inbound's own data and written in Norwegian, with <code style="background:rgba(255,255,255,.12);color:#fff;">inLanguage: "nb-NO"</code> on every block whose type permits it. All blocks validated against the schema.org vocabulary for property-domain correctness.</p>
     </div>
     <div>
       <h5 style="color:#fff;">Sources</h5>
