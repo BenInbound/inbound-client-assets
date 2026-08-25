@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KI – funksjonalitet, strategi og tanker | Pureservice</title>
+<meta name="description" content="35 minutter inne i selve løsningen: hva KI gjør i Pureservice i dag, hva som er på vei, og hvor du ikke bør bruke det. Se opptaket gratis.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="icon" href="assets/logo.svg">
+<style>
+
+/* ==========================================================================
+   Tokens – hentet fra pureservice.com
+   ========================================================================== */
+:root{
+  --peach:#FFEBD9;
+  --peach-deep:#FFDBBB;
+  --blush:#FFF2EF;
+  --white:#FFFFFF;
+  --orange:#FEB35C;
+  --yellow:#FFBD59;
+  --coral:#F98C69;
+  --burgundy:#53162D;
+  --ink:#000000;
+
+  --r-card:16px;
+  --r-img:8px;
+  --r-pill:72px;
+  --r-tab:88px;
+  --r-btn:25px;
+
+  --shadow:0 6px 28px rgba(0,0,0,.08);
+  --maxw:1298px;
+  --gut:24px;
+
+  --font:"AT Surt","Helvetica Neue",Arial,system-ui,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:104px}
+body{
+  margin:0;
+  background:var(--peach);
+  color:var(--burgundy);
+  font-family:var(--font);
+  font-weight:300;
+  font-size:16px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+img,svg{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+h1,h2,h3,h4{color:var(--ink);margin:0;font-weight:300;letter-spacing:normal;text-wrap:balance}
+p{margin:0}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gut)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip:focus{position:fixed;top:10px;left:10px;z-index:100;width:auto;height:auto;margin:0;clip:auto;
+  background:var(--white);color:var(--ink);padding:12px 20px;border-radius:var(--r-btn);
+  box-shadow:var(--shadow);font-weight:600}
+
+
+/* ==========================================================================
+   Topp – kun logo. Ingen meny: ingenting skal lekke klikk bort fra skjemaet.
+   ========================================================================== */
+.lp-top{background:var(--peach-deep);border-bottom:1px solid #E1C4AB;position:sticky;top:0;z-index:50}
+.lp-top .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding-block:16px;min-height:96px}
+.lp-top .brand{flex:none}
+.lp-top img{width:190px;height:45px;margin-left:-13px}
+.lp-top .assure{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--burgundy)}
+.lp-top .assure svg{width:16px;height:16px;flex:none}
+
+/* ==========================================================================
+   Oppsett – tekst venstre, skjema oppe til høyre, båndkanten går bak begge
+   ========================================================================== */
+.lp{position:relative;padding-bottom:88px}
+.band{position:absolute;left:0;right:0;top:0;height:384px;background:var(--peach-deep)}
+.lp-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 408px;
+  gap:88px;align-items:start;padding-top:56px}
+.lp-side{position:sticky;top:120px}
+
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.tag{background:var(--blush);color:var(--burgundy);
+  font-size:12px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;
+  line-height:22.5px;padding:1px 20px;border-radius:var(--r-pill);white-space:nowrap}
+.tag--case{background:var(--yellow);color:var(--ink)}
+
+h1{font-size:clamp(28px,3.2vw,41.6px);line-height:1.2;margin-bottom:18px;max-width:680px}
+.deck{font-size:18px;line-height:22.5px;max-width:680px;margin-bottom:24px}
+.factline{display:flex;flex-wrap:wrap;gap:12px 31px;font-size:14px;margin-bottom:72px}
+.factline span{display:inline-flex;align-items:center;gap:8px}
+.factline svg{width:15px;height:15px;flex:none;opacity:.75}
+
+/* ==========================================================================
+   Skjemakort
+   ========================================================================== */
+.form-card{background:var(--white);border-radius:var(--r-card);padding:23px 30px 29px}
+.form-card h2{font-size:24px;line-height:1.2;margin-bottom:8px}
+.form-card .sub{font-size:14px;line-height:1.5;margin-bottom:22px}
+.field{margin-bottom:12px}
+.field input::placeholder{color:var(--burgundy);opacity:.7}
+.field input{width:100%;font:inherit;font-size:16px;font-weight:300;color:var(--ink);
+  background:var(--white);border:1px solid #E1C4AB;border-radius:var(--r-img);
+  padding:12px 16px;transition:border-color .15s ease}
+.field input:hover{border-color:var(--burgundy)}
+.field input:focus-visible{outline:2px solid var(--burgundy);outline-offset:2px;border-color:var(--burgundy)}
+.field input[aria-invalid="true"]{border-color:var(--burgundy);border-width:2px}
+.err{display:none;font-size:13px;color:var(--burgundy);font-weight:600;margin-top:6px}
+.field.is-bad .err{display:block}
+
+.consent{display:flex;gap:10px;align-items:flex-start;margin:4px 0 18px;font-size:13px;line-height:1.5}
+.consent input{width:20px;height:20px;flex:none;margin-top:1px;accent-color:var(--burgundy)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  background:var(--yellow);border:1px solid var(--yellow);color:var(--ink);
+  font-size:14px;font-weight:500;line-height:20px;padding:12px 32px;border-radius:var(--r-btn);
+  transition:filter .15s ease,transform .15s ease}
+.btn:hover{filter:brightness(.94)}
+.btn:active{transform:translateY(1px)}
+.btn--wide{width:100%;font-size:18px;padding:12px 32px;border-radius:99px}
+.btn--ghost{background:transparent;border-color:var(--burgundy);color:var(--burgundy)}
+.btn--ghost:hover{background:var(--burgundy);color:var(--peach);filter:none}
+
+.legalese{font-size:12px;line-height:1.5;margin-top:12px;color:var(--burgundy)}
+.legalese a{color:var(--burgundy)}
+.reassure{margin-top:16px;display:grid;gap:10px;font-size:13px;line-height:1.5}
+.reassure>span{display:flex;align-items:flex-start;gap:8px}
+.reassure strong{color:var(--ink);font-weight:600}
+.reassure svg{width:15px;height:15px;flex:none;margin-top:3px}
+.reassure>span>span{flex:1;min-width:0}
+
+.done .mark{width:52px;height:52px;border-radius:50%;background:var(--orange);
+  display:grid;place-items:center;margin-bottom:16px}
+.done .mark svg{width:24px;height:24px}
+.done h2{margin-bottom:10px}
+.done p{font-size:16px;line-height:1.5;margin-bottom:18px}
+
+/* ==========================================================================
+   Venstre innhold
+   ========================================================================== */
+.lp-main h2{font-size:clamp(22px,2.4vw,32px);line-height:1.2;margin-bottom:16px}
+.lp-main h3{font-size:18px;font-weight:600;line-height:1.3;margin-bottom:6px}
+.block{margin-bottom:72px}
+.prose{display:grid;gap:16px;max-width:680px;font-size:16px;line-height:22.5px}
+
+.locked{position:relative;border-radius:var(--r-img);overflow:hidden;margin-bottom:72px;
+  background:var(--orange);aspect-ratio:16/9}
+.locked img{width:100%;height:100%;object-fit:cover}
+.locked__veil{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px}
+.locked__inner{max-width:420px;background:var(--white);border-radius:var(--r-card);padding:23px 30px 29px}
+.locked__ring{width:52px;height:52px;border-radius:50%;background:var(--blush);
+  display:grid;place-items:center;margin:0 auto 14px}
+.locked__ring svg{width:22px;height:22px}
+.locked__veil strong{display:block;color:var(--ink);font-size:18px;font-weight:600;margin-bottom:6px}
+.locked__veil span{color:var(--burgundy);font-size:16px;line-height:22.5px}
+.locked.is-open .locked__veil{display:none}
+.locked__badge{position:absolute;left:16px;top:16px;background:var(--burgundy);color:var(--peach);
+  font-size:12px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;
+  line-height:22.5px;padding:1px 20px;border-radius:var(--r-pill);z-index:1}
+
+ul.gains{list-style:none;margin:0;padding:0;display:grid;gap:18px;max-width:680px}
+ul.gains li{display:grid;grid-template-columns:26px 1fr;gap:14px;align-items:start;
+  font-size:16px;line-height:22.5px}
+ul.gains .tick{width:26px;height:26px;border-radius:50%;background:var(--orange);
+  display:grid;place-items:center;margin-top:1px}
+ul.gains .tick svg{width:13px;height:13px}
+ul.gains strong{color:var(--ink);font-weight:600}
+
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.step{background:var(--peach-deep);border-radius:var(--r-card);padding:24px 24px 28px}
+.step .n{width:56px;height:56px;border-radius:16px;background:var(--blush);color:var(--ink);
+  display:grid;place-items:center;font-size:18px;font-weight:600;margin-bottom:20px}
+.step h3{margin-bottom:8px}
+.step p{font-size:14px;line-height:20px}
+
+.speaker{background:var(--white);border-radius:var(--r-card);padding:23px 30px 29px;
+  display:flex;gap:20px;align-items:center;max-width:680px}
+.speaker .av{width:64px;height:64px;border-radius:50%;flex:none;background:var(--orange);
+  display:grid;place-items:center;color:var(--ink);font-size:18px;font-weight:600}
+.speaker .role{font-size:16px;line-height:22.5px;margin-top:4px}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:680px}
+.stat{background:var(--white);border-radius:var(--r-card);padding:23px 30px 29px}
+.stat b{display:block;font-size:18px;font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:6px}
+.stat span{font-size:16px;line-height:22.5px}
+
+.faq{max-width:680px;border-top:1px solid var(--burgundy)}
+.faq details{border-bottom:1px solid var(--burgundy)}
+.faq summary{list-style:none;cursor:pointer;padding:20px 44px 20px 0;position:relative;
+  font-size:18px;font-weight:600;color:var(--ink);line-height:1.3}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before,.faq summary::after{content:"";position:absolute;right:6px;
+  background:var(--burgundy);transition:transform .18s ease,opacity .18s ease}
+.faq summary::before{top:calc(50% - 2px);width:20px;height:4px}
+.faq summary::after{top:calc(50% - 10px);right:14px;width:4px;height:20px}
+.faq details[open] summary::after{opacity:0;transform:rotate(90deg)}
+.faq p{padding:0 0 20px;font-size:16px;line-height:22.5px;max-width:640px}
+
+.mobile-cta{display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;
+  background:var(--white);border-top:1px solid #E1C4AB;
+  padding:12px var(--gut) calc(12px + env(safe-area-inset-bottom));box-shadow:var(--shadow)}
+
+.lp-foot{background:var(--peach);border-top:1px solid #E1C4AB;padding:80px 0;font-size:14px;color:var(--ink)}
+.lp-foot .wrap{display:flex;flex-wrap:wrap;gap:16px 31px;align-items:center;justify-content:space-between}
+.lp-foot a{color:var(--ink)}
+.back{display:inline-flex;align-items:center;gap:8px;font-weight:600}
+.back svg{width:18px;height:10px;transform:rotate(180deg)}
+
+a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible{
+  outline:2px solid var(--burgundy);outline-offset:3px}
+
+@media (max-width:1080px){
+  .lp-grid{grid-template-columns:1fr;gap:40px}
+  .lp-side{position:static}
+  .band{height:320px}
+  .steps,.stats{grid-template-columns:1fr}
+  .factline{margin-bottom:40px}
+}
+@media (max-width:640px){
+  :root{--gut:18px}
+  .lp-grid{padding-top:32px}
+  .lp{padding-bottom:120px}
+  .lp-top .wrap{min-height:0;padding-block:14px}
+  .lp-top img{width:170px;height:40px}
+  .lp-top .assure{display:none}
+  .lp-side{top:auto}
+  .speaker{flex-direction:column;align-items:flex-start;gap:14px}
+  .block{margin-bottom:48px}
+  .locked{margin-bottom:48px}
+  .mobile-cta{display:block}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<a class="sr-only skip" href="#innhold">Hopp til innhold</a>
+
+<header class="lp-top">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Pureservice"><img src="assets/logo.svg" alt="Pureservice" width="190" height="45"></a>
+    <p class="assure">
+      <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5.5v6c0 5 3.4 9.3 8 10.5 4.6-1.2 8-5.5 8-10.5v-6z"/><path d="m9 12 2 2 4-4"/></svg>
+      Gratis opptak · ingen forpliktelser
+    </p>
+  </div>
+</header>
+
+<main id="innhold" class="lp">
+  <div class="band" aria-hidden="true"></div>
+  <div class="wrap lp-grid">
+
+    <div class="lp-main">
+
+      <div class="tags">
+        <span class="tag tag--case">Webinaropptak</span>
+        <span class="tag">KI – funksjonalitet, strategi og tanker</span>
+        <span class="tag">Se når du vil</span>
+      </div>
+
+      <h1>Kan KI gjøre saksbehandlingen enklere?</h1>
+
+      <p class="deck">35 minutter inne i selve løsningen: hva som finnes i Pureservice i dag, hva som er på vei, og hvor vi mener KI ikke hører hjemme.</p>
+
+      <div class="factline">
+        <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>35 minutter</span>
+        <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Marte Lund, rådgiver i Pureservice</span>
+        <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="m9 12 2 2 4-4"/></svg>Gratis, uten forpliktelser</span>
+      </div>
+
+      <div class="locked" id="locked">
+        <span class="locked__badge">35 min</span>
+        <img src="assets/img/thumb-ki.svg" alt="">
+        <div class="locked__veil">
+          <div class="locked__inner">
+            <div class="locked__ring">
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="#53162D" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            </div>
+            <strong>Opptaket låses opp når du fyller ut skjemaet</strong>
+            <span>Det starter her på siden. Ingen ventetid.</span>
+          </div>
+        </div>
+      </div>
+
+      <section class="block">
+        <h2>Du blir bedt om å «gjøre noe med KI». Ingen har vist deg hva det betyr for en sak i køen din.</h2>
+        <div class="prose">
+          <p>Samtidig vokser køen. De samme spørsmålene kommer inn igjen og igjen, og tar like lang tid hver gang. Noen sender saken som en Teams-melding utenom systemet. Saker havner hos feil person og må rutes på nytt. Og kategoriseringen blir slurvete når det haster.</p>
+          <p>I dette opptaket går Marte inn i selve løsningen, i stedet for å holde et foredrag om KI generelt. Hun viser hva som skjer med en ekte sak – og hvor hun ville satt grensen.</p>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2>Dette sitter du igjen med</h2>
+        <ul class="gains">
+          <li>
+            <span class="tick"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><path d="m5 12 5 5L19 7"/></svg></span>
+            <span><strong>Svar ledelsen med eksempler, ikke gjetninger</strong> – du får se hver KI-funksjon som ligger i Pureservice i dag, og hva hver enkelt tar bort av arbeid.</span>
+          </li>
+          <li>
+            <span class="tick"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><path d="m5 12 5 5L19 7"/></svg></span>
+            <span><strong>Vis at KI ikke overtar svaret</strong> – du ser svarforslag og automatisk kategorisering i praksis, og hvor saksbehandleren fortsatt godkjenner alt som går ut.</span>
+          </li>
+          <li>
+            <span class="tick"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><path d="m5 12 5 5L19 7"/></svg></span>
+            <span><strong>Legg neste års verktøybudsjett med åpne øyne</strong> – hva som kommer i Pureservice, så du slipper å kjøpe enda et verktøy som løser det samme.</span>
+          </li>
+          <li>
+            <span class="tick"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><path d="m5 12 5 5L19 7"/></svg></span>
+            <span><strong>Ha et begrunnet nei klart</strong> – hvor KI ikke bør røre saken: personalsaker, varsling og alt annet der sporbarhet og skjønn veier tyngre enn hastighet.</span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="block">
+        <h2>Slik får du tilgang</h2>
+        <div class="steps">
+          <div class="step">
+            <span class="n">1</span>
+            <h3>Fyll ut skjemaet</h3>
+            <p>Navn, firma og jobb-e-post. Det er alt.</p>
+          </div>
+          <div class="step">
+            <span class="n">2</span>
+            <h3>Se opptaket</h3>
+            <p>Det starter her på siden, uten bekreftelses-e-post først.</p>
+          </div>
+          <div class="step">
+            <span class="n">3</span>
+            <h3>Behold lenken</h3>
+            <p>Vi sender den også på e-post, så du kan dele den internt.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2>Hvem du hører fra</h2>
+        <div class="speaker">
+          <span class="av" aria-hidden="true">ML</span>
+          <div>
+            <h3>Marte Lund</h3>
+            <p class="role">Rådgiver i Pureservice. Hun har satt opp servicedesk for IT-, HR- og økonomiavdelinger i ni år, og bruker mesteparten av tiden på å gjøre eksisterende oppsett enklere.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2>Hvorfor Pureservice</h2>
+        <!-- SLOT: en ekte kundeuttalelse hører hjemme her, helst fra en kunde som
+             faktisk bruker KI-funksjonene. Ikke publiser siden med en oppdiktet quote. -->
+        <div class="stats">
+          <div class="stat"><b>Norges mest brukte</b><span>servicedesk for IT-avdelinger</span></div>
+          <div class="stat"><b>Alt inkludert</b><span>ingen tillegg per modul</span></div>
+          <div class="stat"><b>60 dager gratis</b><span>test løsningen uten forpliktelser</span></div>
+        </div>
+      </section>
+
+      <section class="block" style="margin-bottom:0">
+        <h2>Før du fyller ut</h2>
+        <div class="faq">
+          <details>
+            <summary>Blir jeg ringt av en selger?</summary>
+            <p>Nei. Du får opptaket, og en e-post med lenken. Vi tar bare kontakt hvis du ber om det.</p>
+          </details>
+          <details>
+            <summary>Havner e-postadressen min i et salgsløp?</summary>
+            <p>Nei. Den brukes til å sende deg lenken. Vil du ha nyhetsbrevet, krysser du av for det – ellers hører du ikke fra oss.</p>
+          </details>
+          <details>
+            <summary>Vi bruker ikke Pureservice i dag – er dette relevant?</summary>
+            <p>Ja. Første halvdel handler om hva KI faktisk kan gjøre med en sak, uansett hvilket verktøy du bruker. Resten er en gjennomgang i Pureservice, så du ser hvordan det ser ut i praksis.</p>
+          </details>
+          <details>
+            <summary>Må jeg se hele opptaket på én gang?</summary>
+            <p>Nei. Du får lenken på e-post, så du kan hoppe inn og ut. De fire temaene er merket underveis, så du kan gå rett til det som er relevant.</p>
+          </details>
+        </div>
+      </section>
+
+    </div>
+
+    <aside class="lp-side">
+      <div class="form-card" id="formCard">
+
+        <form id="gate" novalidate>
+          <h2>Se opptaket nå</h2>
+          <p class="sub">Navn, firma og jobb-e-post. Så starter opptaket her på siden.</p>
+
+          <div class="field" id="f-navn">
+            <label class="sr-only" for="navn">Navn</label>
+            <input id="navn" name="navn" type="text" autocomplete="name" required
+                   placeholder="Navn" aria-describedby="e-navn">
+            <p class="err" id="e-navn">Fyll inn navnet ditt.</p>
+          </div>
+
+          <div class="field" id="f-firma">
+            <label class="sr-only" for="firma">Firma</label>
+            <input id="firma" name="firma" type="text" autocomplete="organization" required
+                   placeholder="Firma" aria-describedby="e-firma">
+            <p class="err" id="e-firma">Fyll inn hvilket firma du jobber i.</p>
+          </div>
+
+          <div class="field" id="f-epost">
+            <label class="sr-only" for="epost">Jobb-e-post</label>
+            <input id="epost" name="epost" type="email" autocomplete="email" inputmode="email" required
+                   placeholder="Jobb-e-post" aria-describedby="e-epost">
+            <p class="err" id="e-epost">Skriv inn en gyldig e-postadresse, for eksempel marte@bedrift.no.</p>
+          </div>
+
+          <div class="consent">
+            <input id="nyhetsbrev" name="nyhetsbrev" type="checkbox">
+            <label for="nyhetsbrev" style="font-weight:300;font-size:13px;margin:0">
+              Send meg gjerne nyhetsbrevet med nye opptak. <em>(valgfritt)</em>
+            </label>
+          </div>
+
+          <button class="btn btn--wide" type="submit">Start opptaket</button>
+
+          <p class="legalese">Vi bruker opplysningene til å gi deg tilgang til opptaket. Se <a href="#">personvernerklæringen</a>.</p>
+
+          <div class="reassure">
+            <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><span><strong>Ingen selger ringer deg.</strong> Du får opptaket, ikke en oppfølgingssamtale.</span></span>
+            <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Starter her på siden. Ingen bekreftelseslenke.</span></span>
+            <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Behandles i tråd med GDPR.</span></span>
+          </div>
+        </form>
+
+        <div class="done" id="done" hidden role="status">
+          <div class="mark"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><path d="m5 12 5 5L19 7"/></svg></div>
+          <h2>Takk, <span id="hei">du</span>. Opptaket er låst opp.</h2>
+          <p>Det ligger klart til venstre. Vi har også sendt lenken til <strong id="sendt">e-posten din</strong>, så du kan se det senere eller dele det videre internt.</p>
+          <a class="btn btn--ghost" href="index.html">Se flere opptak</a>
+        </div>
+
+      </div>
+    </aside>
+
+  </div>
+</main>
+
+<div class="mobile-cta" id="mobileCta">
+  <a class="btn btn--wide" href="#gate">Se opptaket – 35 min, gratis</a>
+</div>
+
+<footer class="lp-foot">
+  <div class="wrap">
+    <a class="back" href="index.html">
+      <svg aria-hidden="true" viewBox="0 0 18 10" fill="none"><path d="M17.44 5.04a.9.9 0 0 1-.16.24l-4 4a.75.75 0 1 1-1.06-1.06L14.94 5.5H.75a.75.75 0 0 1 0-1.5h14.19l-2.72-2.72A.75.75 0 0 1 13.28.22l4 4c.07.07.12.15.16.24a.75.75 0 0 1 0 .58z" fill="#000"/></svg>
+      Tilbake til alle webinaropptak
+    </a>
+    <p>© 2025 Pureservice · <a href="#">Personvern</a> · <a href="mailto:salg@pureservice.com">salg@pureservice.com</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var form  = document.getElementById('gate');
+  var done  = document.getElementById('done');
+  var locked= document.getElementById('locked');
+  var navn  = document.getElementById('navn');
+  var firma = document.getElementById('firma');
+  var epost = document.getElementById('epost');
+
+  function okTekst(v){ return v.trim().length > 0; }
+  function okEpost(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()); }
+
+  var fields = [
+    {el:navn,  wrap:'f-navn',  test:okTekst},
+    {el:firma, wrap:'f-firma', test:okTekst},
+    {el:epost, wrap:'f-epost', test:okEpost}
+  ];
+
+  function mark(f, bad){
+    document.getElementById(f.wrap).classList.toggle('is-bad', bad);
+    f.el.setAttribute('aria-invalid', String(bad));
+  }
+
+  // Valider først ved innsending, deretter fortløpende mens brukeren retter.
+  fields.forEach(function(f){
+    f.el.addEventListener('input', function(){
+      if (form.dataset.tried) mark(f, !f.test(f.el.value));
+    });
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    form.dataset.tried = '1';
+
+    var first = null;
+    fields.forEach(function(f){
+      var bad = !f.test(f.el.value);
+      mark(f, bad);
+      if (bad && !first) first = f.el;
+    });
+    if (first){ first.focus(); return; }
+
+    // Ingen backend her. Kobles til skjemaverktøyet ved lansering.
+    document.getElementById('hei').textContent = navn.value.trim().split(' ')[0];
+    document.getElementById('sendt').textContent = epost.value.trim();
+    // Dummy-skjema for kundedemo: send brukeren videre til opptakssiden.
+    window.location.href = 'se-opptaket.html';
+  });
+
+  // Skjul mobilknappen når skjemaet er synlig – den skal ikke dekke det den peker på.
+  if ('IntersectionObserver' in window){
+    var card = document.getElementById('formCard');
+    var cta  = document.getElementById('mobileCta');
+    cta.style.transition = 'transform .22s ease';
+    new IntersectionObserver(function(entries){
+      if (form.hidden) return;
+      cta.style.transform = entries[0].isIntersecting ? 'translateY(120%)' : 'translateY(0)';
+    }, {threshold:.35}).observe(card);
+  }
+})();
+</script>
+</body>
+</html>
