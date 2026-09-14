@@ -633,7 +633,7 @@ body.nav-open{overflow:hidden}
       </div>
       <div>
         <h3>Selskap</h3>
-        <ul><li><a href="#">Om oss</a></li><li><a href="#">Kundecaser</a></li><li><a href="#">Jobb hos oss</a></li><li><a href="#">Personvern</a></li></ul>
+        <ul><li><a href="#">Om oss</a></li><li><a href="#">Kundecaser</a></li><li><a href="#">Jobb hos oss</a></li><li><a href="https://pureservice.com/personvernerklaering">Personvern</a></li></ul>
       </div>
       <div>
         <h3>Kontakt</h3>
@@ -692,7 +692,9 @@ body.nav-open{overflow:hidden}
   // empty hash means "alle", a known filter selects it, anything else (#hovedinnhold,
   // a card's "#") leaves the current filter alone.
   function syncFromLocation(){
-    var hash = (location.hash || '').replace('#','');
+    var raw = location.hash;                 // '' | '#' | '#ki' | '#hovedinnhold'
+    if (raw === '#') return;                 // bare placeholder link: leave the filter alone
+    var hash = raw.replace('#','');
     if (hash === ''){ if (current !== 'alle') apply('alle'); return; }
     if (FILTERS.indexOf(hash) !== -1 && hash !== current) apply(hash);
   }
@@ -709,6 +711,11 @@ body.nav-open{overflow:hidden}
     if (card.getAttribute('href') === '#') e.preventDefault();
   });
   document.querySelectorAll('.featured-card a[href="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){ e.preventDefault(); });
+  });
+
+  // Alle plassholderlenker: ikke hopp til toppen, ikke rør filteret.
+  document.querySelectorAll('a[href="#"]').forEach(function(a){
     a.addEventListener('click', function(e){ e.preventDefault(); });
   });
 
